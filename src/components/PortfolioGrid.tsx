@@ -1,9 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Folder, Calendar } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { FocusCards } from '@/components/ui/focus-cards';
 
 interface Project {
   id: number;
@@ -79,35 +75,12 @@ const projects: Project[] = [
   }
 ];
 
+const focusCards = projects.map(project => ({
+  title: project.title,
+  src: project.image
+}));
+
 const PortfolioGrid = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 }
-    }
-  };
-
-  const getTypeColor = (type: Project['type']) => {
-    const colors = {
-      residential: 'bg-blue-100 text-blue-800',
-      commercial: 'bg-green-100 text-green-800',
-      conceptual: 'bg-purple-100 text-purple-800',
-      urban: 'bg-orange-100 text-orange-800'
-    };
-    return colors[type];
-  };
 
   return (
     <section id="portfolio" className="py-24 bg-secondary/30">
@@ -128,82 +101,14 @@ const PortfolioGrid = () => {
         </motion.div>
 
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {projects.map((project) => (
-            <motion.div key={project.id} variants={itemVariants}>
-              <Card className="group hover:shadow-elegant transition-smooth cursor-pointer h-full">
-                <Link to={`/project/${project.id}`}>
-                  <CardHeader className="p-0">
-                    <div className="relative overflow-hidden rounded-t-lg">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-64 object-cover group-hover:scale-105 transition-smooth"
-                      />
-                      <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-smooth" />
-                      <Badge 
-                        className={`absolute top-4 left-4 ${getTypeColor(project.type)}`}
-                      >
-                        {project.category}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="p-6">
-                    <h3 className="font-display text-2xl font-semibold mb-2 group-hover:text-accent transition-smooth">
-                      {project.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4 line-clamp-3">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-
-                  <CardFooter className="px-6 pb-6 pt-0 flex items-center justify-between">
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {project.year}
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button variant="ghost" size="sm">
-                        <Folder className="h-4 w-4 mr-1" />
-                        View Files
-                      </Button>
-                      <Button variant="ghost" size="sm">
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardFooter>
-                </Link>
-              </Card>
-            </motion.div>
-          ))}
+          <FocusCards cards={focusCards} />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <Button size="lg" variant="outline" asChild>
-            <Link to="/portfolio">
-              View All Projects
-            </Link>
-          </Button>
-        </motion.div>
       </div>
     </section>
   );
