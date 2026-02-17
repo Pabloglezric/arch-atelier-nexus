@@ -1,17 +1,45 @@
-import { motion } from 'framer-motion';
-import { Box } from 'lucide-react';
+import { useState, lazy, Suspense } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Box, X, Loader2 } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { PaperDesignBackground } from '@/components/ui/neon-dither';
 
+const ParametricPavilion = lazy(() => import('@/components/3d/ParametricPavilion'));
+
+interface ModelSlot {
+  label: string;
+  description: string;
+  hasModel: boolean;
+}
+
+const modelSlots: ModelSlot[] = [
+  { label: 'Parametric Pavilion Simulation', description: 'Interactive parametric brick wall with dynamic sun cycle', hasModel: true },
+  { label: 'Model Viewer 2', description: 'Section cut or MEP overlay — glTF / Three.js embed', hasModel: false },
+  { label: 'Model Viewer 3', description: 'Context model or site plan — glTF / Three.js embed', hasModel: false },
+];
+
 const InteractiveModels = () => {
-  const placeholders = [
-    { label: 'Model Viewer 1', description: 'Primary BIM model — glTF / Three.js embed' },
-    { label: 'Model Viewer 2', description: 'Section cut or MEP overlay' },
-    { label: 'Model Viewer 3', description: 'Context model or site plan' },
-  ];
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const openModel = (index: number) => {
+    if (modelSlots[index].hasModel) {
+      setExpandedIndex(index);
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeModel = () => {
+    setExpandedIndex(null);
+    document.body.style.overflow = '';
+  };
+
+  // ESC key handler
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') closeModel();
+  };
 
   return (
-    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }} onKeyDown={handleKeyDown} tabIndex={-1}>
       <PaperDesignBackground themeMode="dark" intensity={0.85} />
 
       <div className="relative" style={{ zIndex: 1 }}>
@@ -41,20 +69,23 @@ const InteractiveModels = () => {
           </div>
         </section>
 
-        {/* Model placeholders */}
+        {/* Model slots */}
         <section className="px-6 pb-24">
           <div className="container mx-auto max-w-6xl space-y-8">
-            {placeholders.map((item, idx) => (
+            {modelSlots.map((item, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
-                className="relative aspect-[16/9] rounded-xl overflow-hidden"
+                className={`relative aspect-[16/9] rounded-xl overflow-hidden ${item.hasModel ? 'cursor-pointer' : ''}`}
                 style={{
                   backgroundColor: 'hsl(0 0% 5%)',
                   border: '1px solid hsl(0 0% 12%)',
+                  transition: 'border-color 0.3s',
                 }}
+                onClick={() => openModel(idx)}
+                whileHover={item.hasModel ? { borderColor: 'hsl(45 100% 60%)' } : undefined}
               >
                 {/* Grid pattern */}
                 <div
@@ -69,23 +100,23 @@ const InteractiveModels = () => {
                   <div
                     className="w-16 h-16 rounded-full flex items-center justify-center"
                     style={{
-                      backgroundColor: 'hsl(45 100% 60% / 0.06)',
-                      border: '1px solid hsl(45 100% 60% / 0.15)',
+                      backgroundColor: item.hasModel ? 'hsl(45 100% 60% / 0.12)' : 'hsl(45 100% 60% / 0.06)',
+                      border: `1px solid hsl(45 100% 60% / ${item.hasModel ? '0.3' : '0.15'})`,
                     }}
                   >
-                    <Box size={28} strokeWidth={1.2} style={{ color: 'hsl(45 100% 60% / 0.4)' }} />
+                    <Box size={28} strokeWidth={1.2} style={{ color: `hsl(45 100% 60% / ${item.hasModel ? '0.7' : '0.4'})` }} />
                   </div>
                   <span
-                    className="text-xs font-medium tracking-wider uppercase"
-                    style={{ color: 'hsl(0 0% 30%)' }}
+                    className="text-sm font-semibold tracking-wider uppercase"
+                    style={{ color: item.hasModel ? 'hsl(45 100% 60%)' : 'hsl(0 0% 30%)' }}
                   >
-                    {item.description}
+                    {item.label}
                   </span>
                   <span
-                    className="text-[10px] tracking-wide"
-                    style={{ color: 'hsl(0 0% 22%)' }}
+                    className="text-xs tracking-wide"
+                    style={{ color: 'hsl(0 0% 35%)' }}
                   >
-                    Drop model files here to preview
+                    {item.hasModel ? 'Click to interact' : item.description}
                   </span>
                 </div>
 
@@ -101,6 +132,63 @@ const InteractiveModels = () => {
           </div>
         </section>
       </div>
+
+      {/* Expanded 3D viewer overlay */}
+      <AnimatePresence>
+        {expandedIndex !== null && modelSlots[expandedIndex].hasModel && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50"
+            style={{ backgroundColor: 'hsl(0 0% 0%)' }}
+          >
+            {/* Close button */}
+            <button
+              onClick={closeModel}
+              className="absolute top-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-200"
+              style={{
+                backgroundColor: 'hsl(0 0% 0% / 0.6)',
+                color: 'hsl(0 0% 100%)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid hsl(0 0% 20%)',
+              }}
+            >
+              <X size={16} />
+              <span className="text-xs font-medium tracking-wider uppercase">ESC</span>
+            </button>
+
+            {/* Title */}
+            <div
+              className="absolute top-6 left-6 z-50 px-5 py-2.5 rounded-full"
+              style={{
+                backgroundColor: 'hsl(0 0% 0% / 0.6)',
+                backdropFilter: 'blur(12px)',
+                border: '1px solid hsl(0 0% 20%)',
+              }}
+            >
+              <span className="text-xs font-semibold tracking-wider uppercase" style={{ color: 'hsl(45 100% 60%)' }}>
+                {modelSlots[expandedIndex].label}
+              </span>
+            </div>
+
+            {/* 3D Canvas */}
+            <Suspense
+              fallback={
+                <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: 'hsl(0 0% 2%)' }}>
+                  <div className="flex flex-col items-center gap-4">
+                    <Loader2 size={32} className="animate-spin" style={{ color: 'hsl(45 100% 60%)' }} />
+                    <span className="text-sm" style={{ color: 'hsl(0 0% 40%)' }}>Loading 3D scene…</span>
+                  </div>
+                </div>
+              }
+            >
+              <ParametricPavilion className="w-full h-full" />
+            </Suspense>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
