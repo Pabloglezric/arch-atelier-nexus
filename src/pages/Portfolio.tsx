@@ -3,9 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import leedsCityCollege1 from '@/assets/leeds-city-college-1.png';
 import leedsCityCollege2 from '@/assets/leeds-city-college-2.png';
+import jlrMunich1 from '@/assets/jlr-munich-1.jpg';
+import jlrMunich2 from '@/assets/jlr-munich-2.jpg';
+import jlrMunich3 from '@/assets/jlr-munich-3.jpg';
 import Navigation from '@/components/Navigation';
 
-type Category = 'all' | 'technical' | 'parametric' | 'bim' | 'construction';
+type Category = 'all' | 'technical' | 'parametric' | 'bim' | 'construction' | 'retail';
 
 interface Project {
   id: number;
@@ -22,6 +25,7 @@ const categories: { key: Category; label: string }[] = [
   { key: 'parametric', label: 'Parametric Design' },
   { key: 'bim', label: 'BIM Models' },
   { key: 'construction', label: 'Construction Details' },
+  { key: 'retail', label: 'Retail' },
 ];
 
 const projects: Project[] = [
@@ -31,6 +35,7 @@ const projects: Project[] = [
   { id: 4, title: 'Steel Connection Details', description: 'Detailed construction drawings for custom steel-to-concrete connections.', category: 'construction', hasFile: false },
   { id: 5, title: 'Adaptive Roof Structure', description: 'Grasshopper-driven parametric roof with structural optimization.', category: 'parametric', hasFile: false },
   { id: 6, title: 'Mixed-Use Development — Stage 4', description: 'RIBA Stage 4 construction package including specifications and schedules.', category: 'technical', hasFile: false },
+  { id: 7, title: 'JLR STATEMENT MUNICH', description: 'Jaguar Land Rover. Ground Floor and First Floor proposal of car dealership Jaguar Land Rover Statement Munich, Germany', category: 'retail', hasFile: true, images: [jlrMunich1, jlrMunich2, jlrMunich3] },
 ];
 
 const categoryLabels: Record<Category, string> = {
@@ -39,6 +44,7 @@ const categoryLabels: Record<Category, string> = {
   parametric: 'Parametric Design',
   bim: 'BIM Models',
   construction: 'Construction Details',
+  retail: 'Retail',
 };
 
 const Portfolio = () => {
