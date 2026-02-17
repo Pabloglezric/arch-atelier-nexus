@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload } from 'lucide-react';
+import leedsCityCollege1 from '@/assets/leeds-city-college-1.png';
+import leedsCityCollege2 from '@/assets/leeds-city-college-2.png';
 import Navigation from '@/components/Navigation';
 
 type Category = 'all' | 'technical' | 'parametric' | 'bim' | 'construction';
@@ -11,6 +13,7 @@ interface Project {
   description: string;
   category: Category;
   hasFile: boolean;
+  images?: string[];
 }
 
 const categories: { key: Category; label: string }[] = [
@@ -24,7 +27,7 @@ const categories: { key: Category; label: string }[] = [
 const projects: Project[] = [
   { id: 1, title: 'Residential Complex — Stage 3 Package', description: 'Full RIBA Stage 3 technical documentation for a 120-unit residential development.', category: 'technical', hasFile: false },
   { id: 2, title: 'Parametric Façade System', description: 'Algorithmic façade panel system with environmental responsiveness.', category: 'parametric', hasFile: false },
-  { id: 3, title: 'Commercial Tower — BIM Model', description: 'LOD 400 Revit model with full MEP coordination and clash detection.', category: 'bim', hasFile: false },
+  { id: 3, title: 'Leeds City College', description: 'LOD 400 Revit model with full MEP coordination and clash detection.', category: 'bim', hasFile: true, images: [leedsCityCollege1, leedsCityCollege2] },
   { id: 4, title: 'Steel Connection Details', description: 'Detailed construction drawings for custom steel-to-concrete connections.', category: 'construction', hasFile: false },
   { id: 5, title: 'Adaptive Roof Structure', description: 'Grasshopper-driven parametric roof with structural optimization.', category: 'parametric', hasFile: false },
   { id: 6, title: 'Mixed-Use Development — Stage 4', description: 'RIBA Stage 4 construction package including specifications and schedules.', category: 'technical', hasFile: false },
@@ -123,9 +126,13 @@ const Portfolio = () => {
                   }}
                 >
                   {/* Image / Placeholder */}
-                  <div className="relative aspect-video">
-                    {project.hasFile ? (
-                      <div className="w-full h-full" style={{ backgroundColor: 'hsl(0 0% 10%)' }} />
+                  <div className="relative aspect-video overflow-hidden">
+                    {project.hasFile && project.images ? (
+                      <div className="w-full h-full grid grid-cols-2">
+                        {project.images.map((img, i) => (
+                          <img key={i} src={img} alt={`${project.title} ${i + 1}`} className="w-full h-full object-cover" />
+                        ))}
+                      </div>
                     ) : (
                       <div
                         className="w-full h-full flex flex-col items-center justify-center gap-3"
@@ -175,16 +182,6 @@ const Portfolio = () => {
                         }}
                       >
                         View PDF
-                      </button>
-                      <button
-                        className="flex-1 px-4 py-2.5 rounded text-xs font-semibold tracking-wide uppercase transition-colors duration-200"
-                        style={{
-                          backgroundColor: 'hsl(0 0% 12%)',
-                          color: 'hsl(45 100% 60%)',
-                          border: '1px solid hsl(0 0% 16%)',
-                        }}
-                      >
-                        View Details
                       </button>
                     </div>
                   </div>
