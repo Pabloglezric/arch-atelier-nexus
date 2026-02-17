@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation';
 import { ExternalLink, Play } from 'lucide-react';
 import profilePhoto from '@/assets/jp-profile.jpg';
 import { Button } from '@/components/ui/button';
+import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 
 const stats = [
   { value: '12+', label: 'Projects Delivered' },
@@ -388,7 +389,7 @@ const About = () => {
                     color: 'hsl(0 0% 4%)',
                   }}
                 >
-                  <a href="https://archevolution.com" target="_blank" rel="noopener noreferrer">
+                  <a href="https://archevolution.world/" target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Visit ArchEvolution
                   </a>
@@ -453,6 +454,8 @@ const About = () => {
             </motion.div>
           </div>
         </section>
+
+        <ArchEvolutionCTA />
 
         {/* Bottom spacing */}
         <div className="h-16" />

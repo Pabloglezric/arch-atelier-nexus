@@ -2,6 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, X, Loader2 } from 'lucide-react';
 import Navigation from '@/components/Navigation';
+import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { PaperDesignBackground } from '@/components/ui/neon-dither';
 import { defaultParams, type PavilionParams } from '@/components/3d/ParametricPavilion';
 
@@ -185,6 +186,8 @@ const InteractiveModels = () => {
             ))}
           </div>
         </section>
+
+        <ArchEvolutionCTA />
       </div>
 
       {/* Expanded fullscreen 3D viewer */}

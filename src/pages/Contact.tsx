@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation';
 import { Linkedin, Mail, MapPin, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 
 type SubjectOption = 'Project Enquiry' | 'ArchEvolution' | 'General';
 
@@ -471,6 +472,8 @@ const Contact = () => {
             </motion.div>
           </div>
         </section>
+
+        <ArchEvolutionCTA />
 
         <div className="h-16" />
       </div>

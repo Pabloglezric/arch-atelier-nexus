@@ -1,10 +1,11 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/ui/animated-shader-hero';
 import SocialLinks from '@/components/SocialLinks';
+import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
       <Hero
         tagline="BIM | Parametric Design | RIBA Stages 3–4"
         headline={{
@@ -22,6 +23,8 @@ const Index = () => {
         </div>
         <SocialLinks />
       </div>
+
+      <ArchEvolutionCTA />
     </div>
   );
 };
