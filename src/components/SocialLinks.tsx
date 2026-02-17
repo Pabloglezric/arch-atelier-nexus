@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Youtube, Github, Users, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Youtube, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -14,44 +14,12 @@ const SocialLinks = () => {
       bgColor: 'hover:bg-red-50'
     },
     {
-      name: 'Skool Community',
-      description: 'Join our exclusive community for architects and design enthusiasts',
-      icon: Users,
-      href: '#',
-      color: 'hover:text-purple-500',
-      bgColor: 'hover:bg-purple-50'
-    },
-    {
-      name: 'GitHub Projects',
-      description: 'Explore open-source architectural tools and design resources',
-      icon: Github,
-      href: '#',
-      color: 'hover:text-gray-800',
-      bgColor: 'hover:bg-gray-50'
-    },
-    {
-      name: 'Instagram',
-      description: 'Daily design inspiration and behind-the-scenes content',
-      icon: Instagram,
-      href: '#',
-      color: 'hover:text-pink-500',
-      bgColor: 'hover:bg-pink-50'
-    },
-    {
       name: 'LinkedIn',
       description: 'Professional insights and architectural industry updates',
       icon: Linkedin,
       href: '#',
       color: 'hover:text-blue-600',
       bgColor: 'hover:bg-blue-50'
-    },
-    {
-      name: 'Twitter',
-      description: 'Real-time updates on projects and architectural thoughts',
-      icon: Twitter,
-      href: '#',
-      color: 'hover:text-sky-500',
-      bgColor: 'hover:bg-sky-50'
     }
   ];
 
@@ -97,7 +65,7 @@ const SocialLinks = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto"
         >
           {socialPlatforms.map((platform) => (
             <motion.div key={platform.name} variants={itemVariants}>
