@@ -2,6 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, X, Loader2 } from 'lucide-react';
 import Navigation from '@/components/Navigation';
+import SEOHead from '@/components/SEOHead';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { PaperDesignBackground } from '@/components/ui/neon-dither';
 import { defaultParams, type PavilionParams } from '@/components/3d/ParametricPavilion';
@@ -58,6 +59,12 @@ const InteractiveModels = () => {
     <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
       <PaperDesignBackground themeMode="dark" intensity={0.85} />
 
+      <SEOHead
+        title="Interactive 3D Models - Parametric Design | Juan Pablo Gonzalez Ricardez"
+        description="Explore interactive 3D BIM models and parametric design simulations directly in your browser. Rotate, section, and inspect architectural models."
+        keywords="3D BIM models, parametric design, interactive architecture, Three.js architecture, BIM viewer, parametric pavilion"
+        canonicalPath="/interactive-models"
+      />
       <div className="relative" style={{ zIndex: 1 }}>
         <Navigation />
 

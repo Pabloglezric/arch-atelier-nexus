@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from '@/components/Navigation';
+import SEOHead from '@/components/SEOHead';
 import ProjectCard, { type ProjectData } from '@/components/portfolio/ProjectCard';
 import ExpandedProjectCard from '@/components/portfolio/ExpandedProjectCard';
 import LightboxModal from '@/components/portfolio/LightboxModal';
@@ -286,6 +287,12 @@ const Portfolio = () => {
         style={{ zIndex: 0 }}
       />
 
+      <SEOHead
+        title="Portfolio - BIM Projects & Architectural Documentation | Juan Pablo Gonzalez Ricardez"
+        description="Explore BIM projects modelled to LOD400 across retail, healthcare, residential, and industrial sectors. Revit, ReCap, and Enscape deliverables at RIBA Stages 3-4."
+        keywords="BIM portfolio, Revit models, LOD400, architectural documentation, point cloud to BIM, construction details, RIBA Stage 3, RIBA Stage 4"
+        canonicalPath="/portfolio"
+      />
       <div className="relative" style={{ zIndex: 1 }}>
         <Navigation />
 
