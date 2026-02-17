@@ -85,31 +85,67 @@ const About = () => {
       time += 0.003;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Draw orbs to small canvas for pixelation
+      const pixelSize = 6;
+      const offscreen = document.createElement('canvas');
+      const smallW = Math.ceil(canvas.width / pixelSize);
+      const smallH = Math.ceil(canvas.height / pixelSize);
+      offscreen.width = smallW;
+      offscreen.height = smallH;
+      const offCtx = offscreen.getContext('2d')!;
+      offCtx.clearRect(0, 0, smallW, smallH);
+
       const orbs = [
-        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 900, color: 'hsla(45, 90%, 55%, 0.38)' },
-        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 750, color: 'hsla(35, 80%, 45%, 0.30)' },
-        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 1000, color: 'hsla(50, 70%, 50%, 0.25)' },
-        { x: Math.cos(time * 0.5 + 3) * 0.3 + 0.4, y: Math.sin(time * 0.7 + 2) * 0.3 + 0.2, r: 600, color: 'hsla(40, 85%, 50%, 0.22)' },
+        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 900 / pixelSize, color: 'hsla(45, 90%, 55%, 0.45)' },
+        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 750 / pixelSize, color: 'hsla(35, 80%, 45%, 0.35)' },
+        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 1000 / pixelSize, color: 'hsla(50, 70%, 50%, 0.30)' },
+        { x: Math.cos(time * 0.5 + 3) * 0.3 + 0.4, y: Math.sin(time * 0.7 + 2) * 0.3 + 0.2, r: 600 / pixelSize, color: 'hsla(40, 85%, 50%, 0.28)' },
       ];
 
       for (const orb of orbs) {
-        const gradient = ctx.createRadialGradient(
-          orb.x * canvas.width, orb.y * canvas.height, 0,
-          orb.x * canvas.width, orb.y * canvas.height, orb.r
+        const gradient = offCtx.createRadialGradient(
+          orb.x * smallW, orb.y * smallH, 0,
+          orb.x * smallW, orb.y * smallH, orb.r
         );
         gradient.addColorStop(0, orb.color);
         gradient.addColorStop(1, 'transparent');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        offCtx.fillStyle = gradient;
+        offCtx.fillRect(0, 0, smallW, smallH);
       }
 
-      const sweepX = (Math.sin(time * 0.2) * 0.5 + 0.5) * canvas.width;
-      const sweepGrad = ctx.createLinearGradient(sweepX - 300, 0, sweepX + 300, canvas.height);
+      const sweepX = (Math.sin(time * 0.2) * 0.5 + 0.5) * smallW;
+      const sweepGrad = offCtx.createLinearGradient(sweepX - 50, 0, sweepX + 50, smallH);
       sweepGrad.addColorStop(0, 'transparent');
-      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.18)');
+      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.22)');
       sweepGrad.addColorStop(1, 'transparent');
-      ctx.fillStyle = sweepGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      offCtx.fillStyle = sweepGrad;
+      offCtx.fillRect(0, 0, smallW, smallH);
+
+      // Bayer 4x4 dithering
+      const bayerMatrix = [
+        [0, 8, 2, 10],
+        [12, 4, 14, 6],
+        [3, 11, 1, 9],
+        [15, 7, 13, 5],
+      ];
+      const imageData = offCtx.getImageData(0, 0, smallW, smallH);
+      const data = imageData.data;
+      for (let y = 0; y < smallH; y++) {
+        for (let x = 0; x < smallW; x++) {
+          const idx = (y * smallW + x) * 4;
+          const a = data[idx + 3];
+          if (a === 0) continue;
+          const threshold = (bayerMatrix[y % 4][x % 4] / 16) * 255;
+          const brightness = (data[idx] * 0.3 + data[idx + 1] * 0.59 + data[idx + 2] * 0.11);
+          if (brightness < threshold * 0.4) {
+            data[idx + 3] = 0;
+          }
+        }
+      }
+      offCtx.putImageData(imageData, 0, 0);
+
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(offscreen, 0, 0, smallW, smallH, 0, 0, canvas.width, canvas.height);
 
       animationId = requestAnimationFrame(draw);
     };
