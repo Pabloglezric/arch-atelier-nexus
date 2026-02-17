@@ -52,7 +52,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => <Link key={item.path} to={item.path} className={`relative font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-foreground'}`}>
+            {navItems.map((item) => <Link key={item.path} to={item.path} className={`relative font-medium transition-smooth ${location.pathname === item.path ? 'text-accent' : ''}`} style={location.pathname !== item.path ? { color: 'hsla(45, 100%, 60%, 0.6)' } : undefined}>
                 {item.name}
                 {location.pathname === item.path && <motion.div layoutId="activeTab" className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent" />}
               </Link>)}
