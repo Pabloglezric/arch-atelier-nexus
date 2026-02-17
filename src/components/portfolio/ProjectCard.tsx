@@ -15,9 +15,10 @@ export interface ProjectData {
 interface ProjectCardProps {
   project: ProjectData;
   onViewGallery: (project: ProjectData, startIndex: number) => void;
+  onExpand: (project: ProjectData) => void;
 }
 
-const ProjectCard = ({ project, onViewGallery }: ProjectCardProps) => {
+const ProjectCard = ({ project, onViewGallery, onExpand }: ProjectCardProps) => {
   const [imgIndex, setImgIndex] = useState(0);
   const hasImages = project.images.length > 0;
 
@@ -37,7 +38,8 @@ const ProjectCard = ({ project, onViewGallery }: ProjectCardProps) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.35 }}
-      className="group rounded-lg overflow-hidden flex flex-col"
+      className="group rounded-lg overflow-hidden flex flex-col cursor-pointer"
+      onClick={() => onExpand(project)}
       style={{
         backgroundColor: 'hsl(0 0% 7%)',
         border: '1px solid hsl(0 0% 12%)',

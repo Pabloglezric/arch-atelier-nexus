@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import ProjectCard, { type ProjectData } from '@/components/portfolio/ProjectCard';
+import ExpandedProjectCard from '@/components/portfolio/ExpandedProjectCard';
 import LightboxModal from '@/components/portfolio/LightboxModal';
 import CapabilitiesSection from '@/components/portfolio/CapabilitiesSection';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
@@ -151,6 +152,7 @@ const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [lightboxProject, setLightboxProject] = useState<ProjectData | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [expandedProject, setExpandedProject] = useState<ProjectData | null>(null);
 
   const filtered = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
 
@@ -170,6 +172,16 @@ const Portfolio = () => {
   };
   const prevImage = () => {
     if (lightboxProject) setLightboxIndex(i => (i - 1 + lightboxProject.images.length) % lightboxProject.images.length);
+  };
+
+  const expandProject = (project: ProjectData) => {
+    setExpandedProject(project);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeExpanded = () => {
+    setExpandedProject(null);
+    document.body.style.overflow = '';
   };
 
   // Animated gradient background
@@ -338,6 +350,7 @@ const Portfolio = () => {
                     key={project.id}
                     project={project}
                     onViewGallery={openGallery}
+                    onExpand={expandProject}
                   />
                 ))}
               </AnimatePresence>
@@ -348,6 +361,17 @@ const Portfolio = () => {
         <CapabilitiesSection />
         <ArchEvolutionCTA />
       </div>
+
+      {/* Expanded Project */}
+      <AnimatePresence>
+        {expandedProject && (
+          <ExpandedProjectCard
+            project={expandedProject}
+            onClose={closeExpanded}
+            onViewGallery={openGallery}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Lightbox */}
       <AnimatePresence>
