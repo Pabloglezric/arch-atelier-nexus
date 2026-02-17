@@ -1,57 +1,9 @@
-import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Box } from 'lucide-react';
 import Navigation from '@/components/Navigation';
+import { PaperDesignBackground } from '@/components/ui/neon-dither';
 
 const InteractiveModels = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationId: number;
-    let time = 0;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const draw = () => {
-      time += 0.003;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const orbs = [
-        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 800, color: 'hsla(45, 80%, 50%, 0.18)' },
-        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 650, color: 'hsla(35, 70%, 40%, 0.14)' },
-      ];
-
-      for (const orb of orbs) {
-        const gradient = ctx.createRadialGradient(
-          orb.x * canvas.width, orb.y * canvas.height, 0,
-          orb.x * canvas.width, orb.y * canvas.height, orb.r
-        );
-        gradient.addColorStop(0, orb.color);
-        gradient.addColorStop(1, 'transparent');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      }
-
-      animationId = requestAnimationFrame(draw);
-    };
-
-    draw();
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
   const placeholders = [
     { label: 'Model Viewer 1', description: 'Primary BIM model — glTF / Three.js embed' },
     { label: 'Model Viewer 2', description: 'Section cut or MEP overlay' },
@@ -60,11 +12,7 @@ const InteractiveModels = () => {
 
   return (
     <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 0 }}
-      />
+      <PaperDesignBackground themeMode="dark" intensity={0.85} />
 
       <div className="relative" style={{ zIndex: 1 }}>
         <Navigation />
