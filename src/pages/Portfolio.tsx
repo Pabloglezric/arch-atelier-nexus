@@ -20,6 +20,9 @@ import lgiContextBuildings from '@/assets/06_LGI_Context_Buildings.png';
 import lgmhDetached from '@/assets/07_LGMH_Detached_Enfield.png';
 import hardyFisher from '@/assets/08_Hardy_Fisher_Data_Centre.png';
 import amazonWarehouse from '@/assets/09_Amazon_Warehouse_Leeds.png';
+import grosvenorHouse from '@/assets/10_Grosvenor_House_Wakefield.png';
+import metroCentre from '@/assets/11_MetroCentre_Newcastle.png';
+import northHorsham from '@/assets/12_North_Horsham_Residential.png';
 
 const categories = [
   'All',
@@ -120,7 +123,7 @@ const projects: ProjectData[] = [
     description: 'Renovation BIM model from Point Cloud Data, LOD400.',
     category: 'BIM Models',
     tools: ['ReCap', 'Revit'],
-    images: [],
+    images: [grosvenorHouse],
   },
   {
     id: 11,
@@ -129,7 +132,7 @@ const projects: ProjectData[] = [
     description: 'Renovation works support including floor finish scheduling to 10mm precision.',
     category: 'BIM Models',
     tools: ['ReCap', 'Revit'],
-    images: [],
+    images: [metroCentre],
   },
   {
     id: 12,
@@ -138,7 +141,7 @@ const projects: ProjectData[] = [
     description: 'Apartment building redesign achieving £50K cost saving per unit without reducing habitable space.',
     category: 'Residential',
     tools: ['Revit', 'Enscape'],
-    images: [],
+    images: [northHorsham],
   },
 ];
 
