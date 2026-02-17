@@ -3,11 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import ProjectCard, { type ProjectData } from '@/components/portfolio/ProjectCard';
 import LightboxModal from '@/components/portfolio/LightboxModal';
-import leedsCityCollege1 from '@/assets/leeds-city-college-1.png';
-import leedsCityCollege2 from '@/assets/leeds-city-college-2.png';
+
+// Project images
+import sportsDirectStoreFront from '@/assets/01_Sports_Direct_StoreFront.png';
+import jlrMunich from '@/assets/02_JLR_Statement_Munich.png';
 import jlrMunich1 from '@/assets/jlr-munich-1.jpg';
 import jlrMunich2 from '@/assets/jlr-munich-2.jpg';
 import jlrMunich3 from '@/assets/jlr-munich-3.jpg';
+import leedsCityCollege from '@/assets/03_Leeds_City_College.png';
+import leedsCityCollege1 from '@/assets/leeds-city-college-1.png';
+import leedsCityCollege2 from '@/assets/leeds-city-college-2.png';
+import constructionDetails1 from '@/assets/04_Construction_Details_Redesign.png';
+import constructionDetails2 from '@/assets/04_Construction_Details_Redesign_2.png';
+import leedsGeneralInfirmary from '@/assets/05_Leeds_General_Infirmary.png';
+import lgiContextBuildings from '@/assets/06_LGI_Context_Buildings.png';
+import lgmhDetached from '@/assets/07_LGMH_Detached_Enfield.png';
+import hardyFisher from '@/assets/08_Hardy_Fisher_Data_Centre.png';
+import amazonWarehouse from '@/assets/09_Amazon_Warehouse_Leeds.png';
 
 const categories = [
   'All',
@@ -27,7 +39,7 @@ const projects: ProjectData[] = [
     description: 'Store front design and zoning plan proposal modelled to LOD400.',
     category: 'Retail',
     tools: ['Revit', 'Enscape'],
-    images: [],
+    images: [sportsDirectStoreFront],
   },
   {
     id: 2,
@@ -36,7 +48,7 @@ const projects: ProjectData[] = [
     description: 'Ground floor and first floor car dealership proposal, Munich Germany.',
     category: 'BIM Models',
     tools: ['Revit', 'Enscape', 'Photoshop'],
-    images: [jlrMunich1, jlrMunich2, jlrMunich3],
+    images: [jlrMunich, jlrMunich1, jlrMunich2, jlrMunich3],
   },
   {
     id: 3,
@@ -45,7 +57,7 @@ const projects: ProjectData[] = [
     description: 'Modelled from Point Cloud Data and topographical survey for college renovation, LOD400.',
     category: 'BIM Models',
     tools: ['ReCap', 'Revit', 'Enscape'],
-    images: [leedsCityCollege1, leedsCityCollege2],
+    images: [leedsCityCollege, leedsCityCollege1, leedsCityCollege2],
   },
   {
     id: 4,
@@ -54,7 +66,7 @@ const projects: ProjectData[] = [
     description: 'Over 60 redesigned construction details using smart BIM keynotes linked to Excel, enabling NHBC approval.',
     category: 'Construction Details',
     tools: ['Inventor', 'Revit'],
-    images: [],
+    images: [constructionDetails1, constructionDetails2],
   },
   {
     id: 5,
@@ -63,7 +75,7 @@ const projects: ProjectData[] = [
     description: 'Full hospital BIM model from Point Cloud Data for renovation project, LOD400.',
     category: 'Healthcare',
     tools: ['ReCap', 'Revit', 'Enscape'],
-    images: [],
+    images: [leedsGeneralInfirmary],
   },
   {
     id: 6,
@@ -72,7 +84,7 @@ const projects: ProjectData[] = [
     description: 'Context model for LGI Jubilee Wing renovation — LOD100 to LOD200.',
     category: 'BIM Models',
     tools: ['ReCap', 'Revit', 'Enscape'],
-    images: [],
+    images: [lgiContextBuildings],
   },
   {
     id: 7,
@@ -81,7 +93,7 @@ const projects: ProjectData[] = [
     description: 'Proposed detached house type compliant with NHBC regulations for higher-tier finishes catalogue.',
     category: 'Residential',
     tools: ['Revit'],
-    images: [],
+    images: [lgmhDetached],
   },
   {
     id: 8,
@@ -90,7 +102,7 @@ const projects: ProjectData[] = [
     description: 'MEP and structural BIM model from Point Cloud Data, LOD400.',
     category: 'Data & Industrial',
     tools: ['ReCap', 'Revit', 'Enscape'],
-    images: [],
+    images: [hardyFisher],
   },
   {
     id: 9,
@@ -99,7 +111,7 @@ const projects: ProjectData[] = [
     description: 'Building control survey model after construction modifications, LOD400.',
     category: 'Data & Industrial',
     tools: ['ReCap', 'Revit', 'Enscape'],
-    images: [],
+    images: [amazonWarehouse],
   },
   {
     id: 10,
