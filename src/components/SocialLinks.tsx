@@ -69,8 +69,8 @@ const SocialLinks = () => {
         >
           {socialPlatforms.map((platform) => (
             <motion.div key={platform.name} variants={itemVariants}>
-              <Card className="group hover:shadow-elegant transition-smooth cursor-pointer h-full">
-                <a href={platform.href} target="_blank" rel="noopener noreferrer">
+              <a href={platform.href} target="_blank" rel="noopener noreferrer" className="block h-full">
+                <Card className="group hover:shadow-elegant transition-smooth cursor-pointer h-full">
                     <CardHeader className="flex flex-col items-center text-center pb-4">
                      <div className={`inline-flex items-center justify-center p-4 rounded-full bg-muted mb-4 group-hover:scale-110 transition-bounce ${platform.bgColor}`}>
                        <platform.icon className={`h-8 w-8 text-primary transition-smooth ${platform.color}`} />
@@ -83,45 +83,13 @@ const SocialLinks = () => {
                     <CardDescription className="text-base leading-relaxed">
                       {platform.description}
                     </CardDescription>
-                    <Button 
-                      variant="ghost" 
-                      className="mt-4 group-hover:bg-accent group-hover:text-accent-foreground transition-smooth"
-                    >
-                      Follow
-                    </Button>
                   </CardContent>
-                </a>
-              </Card>
+                </Card>
+              </a>
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <div className="glass-effect rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="font-display text-2xl font-semibold mb-4 text-primary">
-              Join Our Newsletter
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Get weekly updates on new projects, architectural insights, and exclusive content delivered to your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-accent transition-smooth"
-              />
-              <Button size="lg" className="bg-accent hover:bg-accent-glow text-accent-foreground">
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
