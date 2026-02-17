@@ -1,10 +1,29 @@
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
-const params = {
+export interface PavilionParams {
+  brickCountX: number;
+  brickCountY: number;
+  spacing: number;
+  brickWidth: number;
+  brickHeight: number;
+  brickDepth: number;
+  brickThickness: number;
+  cavityWidth: number;
+  voidSpread: number;
+  voidTaper: number;
+  voidOffset: number;
+  timeOfDay: number;
+  season: number;
+  weather: number;
+  animate: boolean;
+  speed: number;
+}
+
+export const defaultParams: PavilionParams = {
   brickCountX: 60,
   brickCountY: 35,
   spacing: 0.02,
@@ -16,129 +35,114 @@ const params = {
   voidSpread: 8.0,
   voidTaper: 2.5,
   voidOffset: 0.0,
+  timeOfDay: 14.0,
+  season: 0.5,
+  weather: 0.0,
+  animate: true,
+  speed: 1,
 };
 
-function createHollowBrickGeometry(width: number, height: number, depth: number, thickness: number) {
-  const geometries: THREE.BoxGeometry[] = [];
-
-  const top = new THREE.BoxGeometry(width, thickness, depth);
-  top.translate(0, height / 2 - thickness / 2, 0);
-  geometries.push(top);
-
-  const bottom = new THREE.BoxGeometry(width, thickness, depth);
-  bottom.translate(0, -height / 2 + thickness / 2, 0);
-  geometries.push(bottom);
-
-  const left = new THREE.BoxGeometry(thickness, height - 2 * thickness, depth);
-  left.translate(-width / 2 + thickness / 2, 0, 0);
-  geometries.push(left);
-
-  const right = new THREE.BoxGeometry(thickness, height - 2 * thickness, depth);
-  right.translate(width / 2 - thickness / 2, 0, 0);
-  geometries.push(right);
-
-  return mergeGeometries(geometries);
+function createHollowBrickGeometry(w: number, h: number, d: number, t: number) {
+  const geos: THREE.BoxGeometry[] = [];
+  const top = new THREE.BoxGeometry(w, t, d); top.translate(0, h / 2 - t / 2, 0); geos.push(top);
+  const bot = new THREE.BoxGeometry(w, t, d); bot.translate(0, -h / 2 + t / 2, 0); geos.push(bot);
+  const lft = new THREE.BoxGeometry(t, h - 2 * t, d); lft.translate(-w / 2 + t / 2, 0, 0); geos.push(lft);
+  const rgt = new THREE.BoxGeometry(t, h - 2 * t, d); rgt.translate(w / 2 - t / 2, 0, 0); geos.push(rgt);
+  return mergeGeometries(geos);
 }
 
-function Pavilion() {
+function Pavilion({ params }: { params: PavilionParams }) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const sunRef = useRef<THREE.DirectionalLight>(null);
-  const timeRef = useRef(14.0);
+  const ambientRef = useRef<THREE.HemisphereLight>(null);
+  const timeRef = useRef(params.timeOfDay);
+  const { scene } = useThree();
 
   const { brickGeometry, totalInstances } = useMemo(() => {
-    const geo = createHollowBrickGeometry(
-      params.brickWidth,
-      params.brickHeight,
-      params.brickDepth,
-      params.brickThickness
-    );
-    const total = params.brickCountX * params.brickCountY * 2;
-    return { brickGeometry: geo, totalInstances: total };
-  }, []);
+    const geo = createHollowBrickGeometry(params.brickWidth, params.brickHeight, params.brickDepth, params.brickThickness);
+    return { brickGeometry: geo, totalInstances: params.brickCountX * params.brickCountY * 2 };
+  }, [params.brickWidth, params.brickHeight, params.brickDepth, params.brickThickness, params.brickCountX, params.brickCountY]);
 
-  useEffect(() => {
+  const buildInstances = useCallback(() => {
     if (!meshRef.current) return;
     const dummy = new THREE.Object3D();
     let idx = 0;
-
     for (let y = 0; y < params.brickCountY; y++) {
       const ny = y / params.brickCountY;
-      const unzipFactor = Math.pow(Math.max(0, 1 - ny), params.voidTaper);
-
+      const unzip = Math.pow(Math.max(0, 1 - ny), params.voidTaper);
       for (let x = 0; x < params.brickCountX; x++) {
         const cx = x - params.brickCountX / 2;
         const posX = cx * (params.brickWidth + params.spacing);
-        const relativeX = posX - params.voidOffset;
-        const rowOffsetX = (y % 2) * (params.brickWidth / 2);
+        const relX = posX - params.voidOffset;
+        const rowOff = (y % 2) * (params.brickWidth / 2);
         const posY = y * (params.brickHeight + params.spacing);
-
-        const gaussian = Math.exp(-Math.pow(relativeX / params.voidSpread, 2));
-        const aperture = params.cavityWidth * unzipFactor * gaussian;
-
-        const slopeFactor = -2 * relativeX / (params.voidSpread * params.voidSpread);
-        const slope = aperture * slopeFactor * 0.5;
+        const gauss = Math.exp(-Math.pow(relX / params.voidSpread, 2));
+        const aperture = params.cavityWidth * unzip * gauss;
+        const slope = aperture * (-2 * relX / (params.voidSpread ** 2)) * 0.5;
         const angle = Math.atan(slope);
 
-        // Front
-        dummy.position.set(posX + rowOffsetX, posY, aperture / 2);
-        dummy.rotation.set(0, angle, 0);
-        dummy.scale.set(1, 1, 1);
-        dummy.updateMatrix();
-        meshRef.current.setMatrixAt(idx++, dummy.matrix);
+        dummy.position.set(posX + rowOff, posY, aperture / 2);
+        dummy.rotation.set(0, angle, 0); dummy.scale.set(1, 1, 1); dummy.updateMatrix();
+        if (idx < totalInstances) meshRef.current.setMatrixAt(idx++, dummy.matrix);
 
-        // Back
-        dummy.position.set(posX + rowOffsetX, posY, -aperture / 2);
-        dummy.rotation.set(0, -angle, 0);
-        dummy.scale.set(1, 1, 1);
-        dummy.updateMatrix();
-        meshRef.current.setMatrixAt(idx++, dummy.matrix);
+        dummy.position.set(posX + rowOff, posY, -aperture / 2);
+        dummy.rotation.set(0, -angle, 0); dummy.scale.set(1, 1, 1); dummy.updateMatrix();
+        if (idx < totalInstances) meshRef.current.setMatrixAt(idx++, dummy.matrix);
       }
     }
-
     meshRef.current.instanceMatrix.needsUpdate = true;
-  }, []);
+  }, [params, totalInstances]);
 
-  const { scene } = useThree();
+  useEffect(() => { buildInstances(); }, [buildInstances]);
 
-  useFrame(() => {
-    timeRef.current += 0.01;
-    if (timeRef.current > 20) timeRef.current = 6;
+  useEffect(() => { timeRef.current = params.timeOfDay; }, [params.timeOfDay]);
 
-    if (!sunRef.current) return;
+  useFrame((_, delta) => {
+    if (params.animate) {
+      timeRef.current += delta * params.speed * 0.5;
+      if (timeRef.current > 20) timeRef.current = 6;
+    }
 
-    const hourAngle = (timeRef.current - 12) * (Math.PI / 12);
-    const maxElevation = THREE.MathUtils.degToRad(30 + 0.5 * 45);
-    const elevation = Math.cos(hourAngle) * maxElevation;
-    const azimuth = Math.sin(hourAngle);
-    const sunDist = 80;
+    if (!sunRef.current || !ambientRef.current) return;
+    const t = timeRef.current;
+    const hourAngle = (t - 12) * (Math.PI / 12);
+    const maxElev = THREE.MathUtils.degToRad(30 + params.season * 45);
+    const elev = Math.cos(hourAngle) * maxElev;
+    const az = Math.sin(hourAngle);
+    const d = 80;
 
-    sunRef.current.position.x = Math.sin(azimuth) * Math.cos(elevation) * sunDist;
-    sunRef.current.position.y = Math.sin(elevation) * sunDist;
-    sunRef.current.position.z = Math.cos(azimuth) * Math.cos(elevation) * sunDist;
+    sunRef.current.position.set(
+      Math.sin(az) * Math.cos(elev) * d,
+      Math.sin(elev) * d,
+      Math.cos(az) * Math.cos(elev) * d
+    );
 
     if (sunRef.current.position.y < 0) {
       sunRef.current.intensity = 0;
     } else {
-      const horizonFactor = Math.max(0, Math.min(1, sunRef.current.position.y / 10));
-      sunRef.current.intensity = horizonFactor * 2.5;
-
-      const sunColor = new THREE.Color(0xfffaed);
-      const sunsetColor = new THREE.Color(0xffaa00);
-      sunRef.current.color.lerpColors(sunsetColor, sunColor, horizonFactor);
+      const hf = Math.max(0, Math.min(1, sunRef.current.position.y / 10));
+      const maxI = THREE.MathUtils.lerp(2.5, 0.5, params.weather);
+      sunRef.current.intensity = hf * maxI;
+      ambientRef.current.intensity = THREE.MathUtils.lerp(0.4, 0.9, params.weather);
+      sunRef.current.color.lerpColors(new THREE.Color(0xffaa00), new THREE.Color(0xfffaed), hf);
     }
 
     const clearSky = new THREE.Color(0x87ceeb);
+    const greySky = new THREE.Color(0xbdc3c7);
     const nightSky = new THREE.Color(0x050510);
-    const skyColor = sunRef.current.position.y < 0 ? nightSky : clearSky;
+    const skyColor = sunRef.current.position.y < 0
+      ? nightSky
+      : new THREE.Color().lerpColors(clearSky, greySky, params.weather);
     scene.background = skyColor;
     if (scene.fog instanceof THREE.FogExp2) {
       scene.fog.color = skyColor;
+      scene.fog.density = 0.01 + params.weather * 0.03;
     }
   });
 
   return (
     <>
-      <hemisphereLight args={[0xffffff, 0x444444, 0.4]} />
+      <hemisphereLight ref={ambientRef} args={[0xffffff, 0x444444, 0.4]} />
       <directionalLight
         ref={sunRef}
         args={[0xfffaed, 2.5]}
@@ -155,21 +159,9 @@ function Pavilion() {
         shadow-bias={-0.0005}
         shadow-normalBias={0.02}
       />
-
-      <instancedMesh
-        ref={meshRef}
-        args={[brickGeometry, undefined, totalInstances]}
-        castShadow
-        receiveShadow
-      >
-        <meshStandardMaterial
-          color={0xffffff}
-          roughness={0.2}
-          metalness={0.1}
-          side={THREE.DoubleSide}
-        />
+      <instancedMesh ref={meshRef} args={[brickGeometry, undefined, totalInstances]} castShadow receiveShadow>
+        <meshStandardMaterial color={0xffffff} roughness={0.2} metalness={0.1} side={THREE.DoubleSide} />
       </instancedMesh>
-
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
         <planeGeometry args={[300, 300]} />
         <meshStandardMaterial color={0x222222} roughness={0.8} metalness={0} />
@@ -178,32 +170,31 @@ function Pavilion() {
   );
 }
 
-interface ParametricPavilionProps {
+interface Props {
   className?: string;
+  params?: PavilionParams;
+  interactive?: boolean;
 }
 
-export default function ParametricPavilion({ className }: ParametricPavilionProps) {
+export default function ParametricPavilion({ className, params = defaultParams, interactive = true }: Props) {
   return (
     <div className={className} style={{ width: '100%', height: '100%' }}>
       <Canvas
         camera={{ position: [0, 5, 35], fov: 45, near: 0.1, far: 200 }}
         shadows
-        gl={{
-          antialias: true,
-          toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.0,
-        }}
+        gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.0 }}
         onCreated={({ scene }) => {
           scene.background = new THREE.Color(0x87ceeb);
           scene.fog = new THREE.FogExp2(0x87ceeb, 0.02);
         }}
       >
-        <Pavilion />
+        <Pavilion params={params} />
         <OrbitControls
           enableDamping
           dampingFactor={0.05}
           maxPolarAngle={Math.PI / 2 - 0.02}
           target={[0, 6, 0]}
+          enabled={interactive}
         />
       </Canvas>
     </div>
