@@ -9,7 +9,7 @@ const SocialLinks = () => {
       name: 'YouTube Channel',
       description: 'Watch architectural tutorials, project walkthroughs, and design insights',
       icon: Youtube,
-      href: '#',
+      href: 'https://youtube.com/@pabloglez100?si=yj1braMcZEBgK8EW',
       color: 'hover:text-red-500',
       bgColor: 'hover:bg-red-50'
     },
@@ -17,7 +17,7 @@ const SocialLinks = () => {
       name: 'LinkedIn',
       description: 'Professional insights and architectural industry updates',
       icon: Linkedin,
-      href: '#',
+      href: 'https://www.linkedin.com/in/pablo-gonzalez-a1024177/',
       color: 'hover:text-blue-600',
       bgColor: 'hover:bg-blue-50'
     }
@@ -71,14 +71,14 @@ const SocialLinks = () => {
             <motion.div key={platform.name} variants={itemVariants}>
               <Card className="group hover:shadow-elegant transition-smooth cursor-pointer h-full">
                 <a href={platform.href} target="_blank" rel="noopener noreferrer">
-                  <CardHeader className="text-center pb-4">
-                    <div className={`inline-flex p-4 rounded-full bg-muted mb-4 group-hover:scale-110 transition-bounce ${platform.bgColor}`}>
-                      <platform.icon className={`h-8 w-8 text-primary transition-smooth ${platform.color}`} />
-                    </div>
-                    <CardTitle className="text-xl font-semibold group-hover:text-accent transition-smooth">
-                      {platform.name}
-                    </CardTitle>
-                  </CardHeader>
+                    <CardHeader className="flex flex-col items-center text-center pb-4">
+                     <div className={`inline-flex items-center justify-center p-4 rounded-full bg-muted mb-4 group-hover:scale-110 transition-bounce ${platform.bgColor}`}>
+                       <platform.icon className={`h-8 w-8 text-primary transition-smooth ${platform.color}`} />
+                     </div>
+                     <CardTitle className="text-xl font-semibold group-hover:text-accent transition-smooth">
+                       {platform.name}
+                     </CardTitle>
+                   </CardHeader>
                   <CardContent className="text-center">
                     <CardDescription className="text-base leading-relaxed">
                       {platform.description}
