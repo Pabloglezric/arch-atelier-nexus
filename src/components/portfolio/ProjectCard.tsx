@@ -117,9 +117,9 @@ const ProjectCard = ({ project, onViewGallery }: ProjectCardProps) => {
         {/* Category tag */}
         <span
           className="absolute top-3 left-3 px-3 py-1 rounded text-[10px] font-semibold tracking-wider uppercase"
-          style={{
-            backgroundColor: 'hsl(45 100% 60% / 0.15)',
-            color: 'hsl(45 100% 60%)',
+        style={{
+            backgroundColor: 'hsl(45 100% 60% / 0.85)',
+            color: 'hsl(0 0% 4%)',
             backdropFilter: 'blur(8px)',
           }}
         >
