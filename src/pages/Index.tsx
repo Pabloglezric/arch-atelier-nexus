@@ -22,9 +22,13 @@ const Index = () => {
           <Navigation />
         </div>
         <SocialLinks />
-      </div>
 
-      <ArchEvolutionCTA />
+        {/* Bottom section with solid bg to cover the fixed hero */}
+        <div style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+          <ArchEvolutionCTA />
+          <div className="h-8" />
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 // Types for component props
 interface SocialLink {
@@ -338,7 +338,14 @@ const Hero: React.FC<HeroProps> = ({
   className = ""
 }) => {
   const canvasRef = useShaderBackground();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [scrollY, setScrollY] = useState(0);
 
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   return (
     <div className={`fixed inset-0 w-full h-full overflow-hidden bg-black z-0 ${className}`}>
       <style dangerouslySetInnerHTML={{
@@ -410,7 +417,15 @@ const Hero: React.FC<HeroProps> = ({
       />
       
       {/* Hero Content Overlay */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white">
+      <div
+        ref={contentRef}
+        className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white"
+        style={{
+          transform: `translateY(${scrollY * 0.35}px)`,
+          opacity: Math.max(0, 1 - scrollY / 600),
+          willChange: 'transform, opacity',
+        }}
+      >
         {/* Trust Badge */}
         {trustBadge && (
           <div className="mb-8 animate-fade-in-down">
