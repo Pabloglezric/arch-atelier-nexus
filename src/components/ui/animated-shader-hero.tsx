@@ -1,16 +1,25 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 // Types for component props
+interface SocialLink {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+}
+
 interface HeroProps {
   trustBadge?: {
     text: string;
     icons?: string[];
   };
+  tagline?: string;
   headline: {
     line1: string;
     line2: string;
   };
   subtitle: string;
+  manifesto?: string;
+  socialLinks?: SocialLink[];
   buttons?: {
     primary?: {
       text: string;
@@ -320,8 +329,11 @@ void main(){gl_Position=position;}`;
 // Reusable Hero Component
 const Hero: React.FC<HeroProps> = ({
   trustBadge,
+  tagline,
   headline,
   subtitle,
+  manifesto,
+  socialLinks,
   buttons,
   className = ""
 }) => {
@@ -418,6 +430,13 @@ const Hero: React.FC<HeroProps> = ({
         )}
 
         <div className="text-center space-y-6 max-w-5xl mx-auto px-4">
+          {/* Tagline */}
+          {tagline && (
+            <p className="text-xs md:text-sm tracking-[0.3em] uppercase font-light bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent animate-fade-in-up">
+              {tagline}
+            </p>
+          )}
+
           {/* Main Heading with Animation */}
           <div className="space-y-2">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
@@ -454,6 +473,33 @@ const Hero: React.FC<HeroProps> = ({
                   {buttons.secondary.text}
                 </button>
               )}
+            </div>
+          )}
+
+          {/* Manifesto Paragraph */}
+          {manifesto && (
+            <div className="max-w-[700px] mx-auto mt-8 animate-fade-in-up" style={{ animationDelay: '1s' }}>
+              <p className="text-sm md:text-base font-light text-white/85 leading-relaxed tracking-wide">
+                {manifesto}
+              </p>
+            </div>
+          )}
+
+          {/* Social Icons */}
+          {socialLinks && socialLinks.length > 0 && (
+            <div className="flex justify-center gap-4 mt-6 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
+              {socialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/70 transition-all duration-300 hover:border-amber-400/80 hover:text-amber-300 hover:scale-110"
+                >
+                  {link.icon}
+                </a>
+              ))}
             </div>
           )}
         </div>

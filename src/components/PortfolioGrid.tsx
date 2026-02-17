@@ -70,6 +70,24 @@ const focusCards = projects.map(project => ({
   src: project.image
 }));
 const PortfolioGrid = () => {
-  return;
+  return (
+    <section id="portfolio" className="py-20 px-4 bg-black/90">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent mb-4">
+          Selected Work
+        </h2>
+        <p className="text-white/60 text-lg max-w-2xl mx-auto">
+          A curated collection of architectural projects spanning residential, commercial, and conceptual design.
+        </p>
+      </motion.div>
+      <FocusCards cards={focusCards} />
+    </section>
+  );
 };
 export default PortfolioGrid;
