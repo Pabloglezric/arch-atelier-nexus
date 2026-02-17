@@ -24,7 +24,7 @@ const Index = () => {
         <SocialLinks />
 
         {/* Bottom section with solid bg to cover the fixed hero */}
-        <div style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+        <div style={{ backgroundColor: 'hsl(0 0% 0% / 0.6)' }}>
           <ArchEvolutionCTA />
           <div className="h-8" />
         </div>
