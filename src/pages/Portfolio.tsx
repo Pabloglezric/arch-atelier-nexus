@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import leedsCityCollege1 from '@/assets/leeds-city-college-1.png';
@@ -73,8 +73,79 @@ const Portfolio = () => {
     }
   };
 
+  // Animated gradient background
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationId: number;
+    let time = 0;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = document.documentElement.scrollHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const draw = () => {
+      time += 0.003;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Multiple moving gradient orbs
+      const orbs = [
+        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 600, color: 'hsla(45, 80%, 50%, 0.04)' },
+        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 500, color: 'hsla(35, 70%, 40%, 0.03)' },
+        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 700, color: 'hsla(50, 60%, 45%, 0.035)' },
+      ];
+
+      for (const orb of orbs) {
+        const gradient = ctx.createRadialGradient(
+          orb.x * canvas.width, orb.y * canvas.height, 0,
+          orb.x * canvas.width, orb.y * canvas.height, orb.r
+        );
+        gradient.addColorStop(0, orb.color);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // Diagonal glass sweep
+      const sweepX = (Math.sin(time * 0.2) * 0.5 + 0.5) * canvas.width;
+      const sweepGrad = ctx.createLinearGradient(
+        sweepX - 300, 0, sweepX + 300, canvas.height
+      );
+      sweepGrad.addColorStop(0, 'transparent');
+      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.02)');
+      sweepGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = sweepGrad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      animationId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+      {/* Animated gradient background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 0 }}
+      />
+
+      <div className="relative" style={{ zIndex: 1 }}>
       <Navigation />
 
       {/* Header */}
@@ -156,22 +227,11 @@ const Portfolio = () => {
                   {/* Image / Placeholder */}
                   <div className="relative aspect-video overflow-hidden">
                     {project.hasFile && project.images ? (
-                      <>
-                        <img
-                          src={project.images[0]}
-                          alt={project.title}
-                          className="w-full h-full object-cover"
-                        />
-                        {/* Title overlay on image */}
-                        <div className="absolute top-0 left-0 right-0 p-4">
-                          <h3
-                            className="font-display text-lg font-bold drop-shadow-lg"
-                            style={{ color: 'hsl(0 0% 0%)' }}
-                          >
-                            {project.title}
-                          </h3>
-                        </div>
-                      </>
+                      <img
+                        src={project.images[0]}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                      />
                     ) : (
                       <div
                         className="w-full h-full flex flex-col items-center justify-center gap-3"
@@ -205,12 +265,9 @@ const Portfolio = () => {
 
                   {/* Content */}
                   <div className="p-5">
-                    {/* Only show title below for placeholder cards */}
-                    {!project.hasFile && (
-                      <h3 className="font-display text-lg font-semibold mb-2" style={{ color: 'hsl(0 0% 92%)' }}>
-                        {project.title}
-                      </h3>
-                    )}
+                    <h3 className="font-display text-lg font-semibold mb-2" style={{ color: 'hsl(0 0% 92%)' }}>
+                      {project.title}
+                    </h3>
                     <p className="text-sm mb-5 leading-relaxed whitespace-pre-line" style={{ color: 'hsl(0 0% 45%)' }}>
                       {project.description}
                     </p>
@@ -337,6 +394,7 @@ const Portfolio = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </div>
   );
 };
