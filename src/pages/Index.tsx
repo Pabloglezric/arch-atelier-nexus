@@ -17,7 +17,7 @@ const Index = () => {
       />
       
       <div className="relative z-10">
-        <div className="h-screen"></div>
+        <div className="h-[140vh]"></div>
         <div className="absolute top-0 left-0 right-0 z-20">
           <Navigation />
         </div>
