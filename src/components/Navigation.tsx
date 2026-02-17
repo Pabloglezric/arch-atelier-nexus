@@ -21,6 +21,9 @@ const Navigation = () => {
     name: 'Portfolio',
     path: '/portfolio'
   }, {
+    name: 'Interactive Models',
+    path: '/interactive-models'
+  }, {
     name: 'About',
     path: '/about'
   }, {
