@@ -195,9 +195,10 @@ const Portfolio = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const orbs = [
-        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 800, color: 'hsla(45, 80%, 50%, 0.18)' },
-        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 650, color: 'hsla(35, 70%, 40%, 0.14)' },
-        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 900, color: 'hsla(50, 60%, 45%, 0.12)' },
+        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 900, color: 'hsla(45, 90%, 55%, 0.38)' },
+        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 750, color: 'hsla(35, 80%, 45%, 0.30)' },
+        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 1000, color: 'hsla(50, 70%, 50%, 0.25)' },
+        { x: Math.cos(time * 0.5 + 3) * 0.3 + 0.4, y: Math.sin(time * 0.7 + 2) * 0.3 + 0.2, r: 600, color: 'hsla(40, 85%, 50%, 0.22)' },
       ];
 
       for (const orb of orbs) {
@@ -214,7 +215,7 @@ const Portfolio = () => {
       const sweepX = (Math.sin(time * 0.2) * 0.5 + 0.5) * canvas.width;
       const sweepGrad = ctx.createLinearGradient(sweepX - 300, 0, sweepX + 300, canvas.height);
       sweepGrad.addColorStop(0, 'transparent');
-      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.08)');
+      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.18)');
       sweepGrad.addColorStop(1, 'transparent');
       ctx.fillStyle = sweepGrad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);

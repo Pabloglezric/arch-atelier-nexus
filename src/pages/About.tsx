@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import { ExternalLink, Play } from 'lucide-react';
+import profilePhoto from '@/assets/jp-profile.jpg';
 import { Button } from '@/components/ui/button';
 
 const stats = [
@@ -47,10 +48,6 @@ const tools = [
   'Autodesk Revit',
   'ReCap',
   'Enscape',
-  'Photoshop',
-  'Autodesk Inventor',
-  'Grasshopper',
-  'Dynamo',
   'Navisworks',
   'BIM 360',
   'AI Design Tools',
@@ -89,9 +86,10 @@ const About = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const orbs = [
-        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 800, color: 'hsla(45, 80%, 50%, 0.18)' },
-        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 650, color: 'hsla(35, 70%, 40%, 0.14)' },
-        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 900, color: 'hsla(50, 60%, 45%, 0.12)' },
+        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 900, color: 'hsla(45, 90%, 55%, 0.38)' },
+        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 750, color: 'hsla(35, 80%, 45%, 0.30)' },
+        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 1000, color: 'hsla(50, 70%, 50%, 0.25)' },
+        { x: Math.cos(time * 0.5 + 3) * 0.3 + 0.4, y: Math.sin(time * 0.7 + 2) * 0.3 + 0.2, r: 600, color: 'hsla(40, 85%, 50%, 0.22)' },
       ];
 
       for (const orb of orbs) {
@@ -108,7 +106,7 @@ const About = () => {
       const sweepX = (Math.sin(time * 0.2) * 0.5 + 0.5) * canvas.width;
       const sweepGrad = ctx.createLinearGradient(sweepX - 300, 0, sweepX + 300, canvas.height);
       sweepGrad.addColorStop(0, 'transparent');
-      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.08)');
+      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.18)');
       sweepGrad.addColorStop(1, 'transparent');
       ctx.fillStyle = sweepGrad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -238,23 +236,16 @@ const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="aspect-[4/5] rounded-lg flex items-center justify-center"
+              className="aspect-[4/5] rounded-lg overflow-hidden"
               style={{
-                backgroundColor: 'hsl(0 0% 7%)',
                 border: '1px solid hsl(45 100% 60% / 0.15)',
               }}
             >
-              <div className="text-center px-8">
-                <div
-                  className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
-                  style={{ backgroundColor: 'hsl(45 100% 60% / 0.1)', border: '1px solid hsl(45 100% 60% / 0.2)' }}
-                >
-                  <span className="font-display text-2xl" style={{ color: 'hsl(45 100% 60%)' }}>JP</span>
-                </div>
-                <p className="text-xs tracking-widest uppercase" style={{ color: 'hsl(0 0% 35%)' }}>
-                  Professional photo
-                </p>
-              </div>
+              <img
+                src={profilePhoto}
+                alt="Juan Pablo Gonzalez Ricardez"
+                className="w-full h-full object-cover"
+              />
             </motion.div>
           </div>
         </section>
