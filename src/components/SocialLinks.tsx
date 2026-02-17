@@ -1,18 +1,10 @@
 import { motion } from 'framer-motion';
-import { Youtube, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const SocialLinks = () => {
   const socialPlatforms = [
-    {
-      name: 'YouTube Channel',
-      description: 'Watch architectural tutorials, project walkthroughs, and design insights',
-      icon: Youtube,
-      href: 'https://youtube.com/@pabloglez100?si=yj1braMcZEBgK8EW',
-      color: 'hover:text-red-500',
-      bgColor: 'hover:bg-red-50'
-    },
     {
       name: 'LinkedIn',
       description: 'Professional insights and architectural industry updates',
@@ -65,7 +57,7 @@ const SocialLinks = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto"
+          className="flex justify-center max-w-md mx-auto"
         >
           {socialPlatforms.map((platform) => (
             <motion.div key={platform.name} variants={itemVariants}>
