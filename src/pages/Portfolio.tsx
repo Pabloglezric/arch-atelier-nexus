@@ -98,9 +98,9 @@ const Portfolio = () => {
 
       // Multiple moving gradient orbs
       const orbs = [
-        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 600, color: 'hsla(45, 80%, 50%, 0.04)' },
-        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 500, color: 'hsla(35, 70%, 40%, 0.03)' },
-        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 700, color: 'hsla(50, 60%, 45%, 0.035)' },
+        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 800, color: 'hsla(45, 80%, 50%, 0.18)' },
+        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 650, color: 'hsla(35, 70%, 40%, 0.14)' },
+        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 900, color: 'hsla(50, 60%, 45%, 0.12)' },
       ];
 
       for (const orb of orbs) {
@@ -120,7 +120,7 @@ const Portfolio = () => {
         sweepX - 300, 0, sweepX + 300, canvas.height
       );
       sweepGrad.addColorStop(0, 'transparent');
-      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.02)');
+      sweepGrad.addColorStop(0.5, 'hsla(45, 100%, 60%, 0.08)');
       sweepGrad.addColorStop(1, 'transparent');
       ctx.fillStyle = sweepGrad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
