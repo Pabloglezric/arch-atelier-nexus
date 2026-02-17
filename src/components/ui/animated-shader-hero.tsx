@@ -416,13 +416,22 @@ const Hero: React.FC<HeroProps> = ({
         style={{ background: 'black' }}
       />
       
+      {/* Semi-transparent backdrop for readability */}
+      <div
+        className="absolute inset-0 z-[5] pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, hsl(0 0% 0% / 0.35) 0%, transparent 70%)',
+          backdropFilter: 'blur(1.5px)',
+        }}
+      />
+
       {/* Hero Content Overlay */}
       <div
         ref={contentRef}
         className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white"
         style={{
-          transform: `translateY(${scrollY * 0.35}px)`,
-          opacity: Math.max(0, 1 - scrollY / 600),
+          transform: `translateY(${scrollY * 0.3}px)`,
+          opacity: Math.max(0, 1 - scrollY / 700),
           willChange: 'transform, opacity',
         }}
       >
@@ -491,12 +500,21 @@ const Hero: React.FC<HeroProps> = ({
             </div>
           )}
 
-          {/* Manifesto Paragraph */}
+          {/* Manifesto Paragraph — emphasized */}
           {manifesto && (
-            <div className="max-w-[700px] mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: '1s' }}>
-              <p className="text-sm md:text-base font-light text-white/85 leading-relaxed tracking-wide">
-                {manifesto}
-              </p>
+            <div className="max-w-[720px] mx-auto mt-20 animate-fade-in-up" style={{ animationDelay: '1s' }}>
+              <div
+                className="px-8 py-6 rounded-xl"
+                style={{
+                  background: 'hsl(0 0% 0% / 0.3)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid hsl(45 100% 60% / 0.08)',
+                }}
+              >
+                <p className="text-sm md:text-base lg:text-lg font-light text-white/90 leading-[1.9] tracking-wide text-center">
+                  {manifesto}
+                </p>
+              </div>
             </div>
           )}
 
