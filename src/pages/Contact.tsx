@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '@/components/Navigation';
+import SEOHead from '@/components/SEOHead';
 import { Linkedin, Mail, MapPin, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -166,6 +167,12 @@ const Contact = () => {
         style={{ zIndex: 0 }}
       />
 
+      <SEOHead
+        title="Contact - Hire a BIM Specialist | Juan Pablo Gonzalez Ricardez"
+        description="Get in touch with Juan Pablo Gonzalez Ricardez, BIM Specialist and Architectural Technologist in Leeds. Available for BIM consulting, Revit modelling, and architectural documentation projects."
+        keywords="hire BIM specialist, BIM consultant contact, architectural services Leeds, Revit modelling services, BIM freelancer UK"
+        canonicalPath="/contact"
+      />
       <div className="relative" style={{ zIndex: 1 }}>
         <Navigation />
 

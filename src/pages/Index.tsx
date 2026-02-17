@@ -2,10 +2,37 @@ import Navigation from '@/components/Navigation';
 import Hero from '@/components/ui/animated-shader-hero';
 import SocialLinks from '@/components/SocialLinks';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
+import SEOHead from '@/components/SEOHead';
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Juan Pablo Gonzalez Ricardez",
+  "jobTitle": "BIM Specialist & Architectural Technologist",
+  "url": "https://3points.life",
+  "sameAs": ["https://www.linkedin.com/in/juanpablogonzalezricardez/"],
+  "worksFor": { "@type": "Organization", "name": "Niemen Blume" },
+  "address": { "@type": "PostalAddress", "addressLocality": "Leeds", "addressRegion": "West Yorkshire", "addressCountry": "GB" },
+  "knowsAbout": ["BIM", "Revit", "Parametric Design", "Architectural Technology", "LOD400", "Point Cloud to BIM"]
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Juan Pablo Gonzalez Ricardez - BIM Specialist",
+  "url": "https://3points.life"
+};
 
 const Index = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+      <SEOHead
+        title="Juan Pablo Gonzalez Ricardez - BIM Specialist & Architectural Technologist, Leeds"
+        description="BIM Specialist and Architectural Technologist in Leeds, UK. Expert in Revit, parametric design, LOD400 documentation, and RIBA Stages 3-4."
+        keywords="BIM specialist Leeds, architectural technologist, Revit BIM modelling, parametric design, LOD400, RIBA Stage 3, RIBA Stage 4, BIM consultant UK"
+        canonicalPath="/"
+        jsonLd={[personJsonLd, websiteJsonLd]}
+      />
       <Hero
         tagline="BIM | Parametric Design | RIBA Stages 3–4"
         headline={{

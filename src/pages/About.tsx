@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '@/components/Navigation';
+import SEOHead from '@/components/SEOHead';
 import { ExternalLink, Play } from 'lucide-react';
 import profilePhoto from '@/assets/jp-profile.jpg';
 import { Button } from '@/components/ui/button';
@@ -166,6 +167,12 @@ const About = () => {
         style={{ zIndex: 0 }}
       />
 
+      <SEOHead
+        title="About - Architectural Technologist & BIM Consultant | Juan Pablo Gonzalez Ricardez"
+        description="Architectural Technologist and BIM Specialist at Niemen Blume, Leeds. Specialising in Revit BIM modelling, computational design, and RIBA Stages 3-4 documentation."
+        keywords="architectural technologist UK, BIM consultant Leeds, Revit specialist, computational design, CIAT associate, BIM modelling services"
+        canonicalPath="/about"
+      />
       <div className="relative" style={{ zIndex: 1 }}>
         <Navigation />
 
