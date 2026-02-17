@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import ProjectCard, { type ProjectData } from '@/components/portfolio/ProjectCard';
 import LightboxModal from '@/components/portfolio/LightboxModal';
+import CapabilitiesSection from '@/components/portfolio/CapabilitiesSection';
 
 // Project images
 import sportsDirectStoreFront from '@/assets/01_Sports_Direct_StoreFront.png';
@@ -306,6 +307,8 @@ const Portfolio = () => {
             </motion.div>
           </div>
         </section>
+
+        <CapabilitiesSection />
       </div>
 
       {/* Lightbox */}
