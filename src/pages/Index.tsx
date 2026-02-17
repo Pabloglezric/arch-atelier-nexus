@@ -4,10 +4,6 @@ import PortfolioGrid from '@/components/PortfolioGrid';
 import SocialLinks from '@/components/SocialLinks';
 
 const Index = () => {
-  const scrollToPortfolio = () => {
-    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <div className="min-h-screen">
       <Hero
@@ -16,13 +12,7 @@ const Index = () => {
           line1: "Architectural",
           line2: "Innovation"
         }}
-        subtitle="Pushing the boundaries of design through cutting-edge architecture, innovative solutions, and immersive digital experiences"
-        buttons={{
-          primary: {
-            text: "Explore Portfolio",
-            onClick: scrollToPortfolio
-          }
-        }}
+        subtitle=""
         manifesto="Every structure begins with a single point of light — a vision that cuts through the noise with precision and purpose. What you see here is not decoration. It is intention. The same clarity that guides these trajectories across space is what drives every parametric model, every construction detail, every BIM workflow I deliver. Fast. Deliberate. Leaving nothing to chance."
       />
       
