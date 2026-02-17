@@ -478,7 +478,7 @@ const Hero: React.FC<HeroProps> = ({
 
           {/* Manifesto Paragraph */}
           {manifesto && (
-            <div className="max-w-[700px] mx-auto mt-8 animate-fade-in-up" style={{ animationDelay: '1s' }}>
+            <div className="max-w-[700px] mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: '1s' }}>
               <p className="text-sm md:text-base font-light text-white/85 leading-relaxed tracking-wide">
                 {manifesto}
               </p>
