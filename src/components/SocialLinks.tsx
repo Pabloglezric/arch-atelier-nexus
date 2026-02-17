@@ -1,87 +1,81 @@
 import { motion } from 'framer-motion';
 import { Linkedin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const SocialLinks = () => {
-  const socialPlatforms = [
-    {
-      name: 'LinkedIn',
-      description: 'Professional insights and architectural industry updates',
-      icon: Linkedin,
-      href: 'https://www.linkedin.com/in/pablo-gonzalez-a1024177/',
-      color: 'hover:text-blue-600',
-      bgColor: 'hover:bg-blue-50'
-    }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 }
-    }
-  };
-
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-6">
+    <section
+      className="py-24 px-6"
+      style={{ backgroundColor: 'hsl(0 0% 0% / 0.6)' }}
+    >
+      <div className="container mx-auto max-w-md">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="font-display text-5xl md:text-6xl font-bold mb-6 text-primary">
+          <h2
+            className="font-display text-3xl md:text-4xl font-bold mb-4"
+            style={{ color: 'hsl(0 0% 92%)' }}
+          >
             Connect & Follow
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Stay connected with our growing community and never miss the latest architectural innovations and insights
+          <p className="text-sm" style={{ color: 'hsl(0 0% 50%)' }}>
+            Stay connected with the latest architectural innovations and insights
           </p>
         </motion.div>
 
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex justify-center max-w-md mx-auto"
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="flex justify-center"
         >
-          {socialPlatforms.map((platform) => (
-            <motion.div key={platform.name} variants={itemVariants}>
-              <a href={platform.href} target="_blank" rel="noopener noreferrer" className="block h-full">
-                <Card className="group hover:shadow-elegant transition-smooth cursor-pointer h-full">
-                    <CardHeader className="flex flex-col items-center text-center pb-4">
-                     <div className={`inline-flex items-center justify-center p-4 rounded-full bg-muted mb-4 group-hover:scale-110 transition-bounce ${platform.bgColor}`}>
-                       <platform.icon className={`h-8 w-8 text-primary transition-smooth ${platform.color}`} />
-                     </div>
-                     <CardTitle className="text-xl font-semibold group-hover:text-accent transition-smooth">
-                       {platform.name}
-                     </CardTitle>
-                   </CardHeader>
-                  <CardContent className="text-center">
-                    <CardDescription className="text-base leading-relaxed">
-                      {platform.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </a>
-            </motion.div>
-          ))}
+          <a
+            href="https://www.linkedin.com/in/pablo-gonzalez-a1024177/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center gap-4 p-8 rounded-xl transition-all duration-300 group"
+            style={{
+              backgroundColor: 'hsl(0 0% 6% / 0.6)',
+              border: '1px solid hsl(0 0% 14%)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'hsl(45, 100%, 60%, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'hsl(0, 0%, 14%)';
+            }}
+          >
+            <div
+              className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+              style={{
+                border: '1px solid hsl(0 0% 18%)',
+                color: 'hsl(0 0% 50%)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'hsl(45, 100%, 60%, 0.5)';
+                e.currentTarget.style.color = 'hsl(45, 100%, 60%)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'hsl(0, 0%, 18%)';
+                e.currentTarget.style.color = 'hsl(0, 0%, 50%)';
+              }}
+            >
+              <Linkedin className="h-6 w-6" />
+            </div>
+            <div className="text-center">
+              <p className="font-semibold text-base mb-1" style={{ color: 'hsl(0 0% 88%)' }}>
+                LinkedIn
+              </p>
+              <p className="text-xs" style={{ color: 'hsl(0 0% 45%)' }}>
+                Professional insights and architectural industry updates
+              </p>
+            </div>
+          </a>
         </motion.div>
-
       </div>
     </section>
   );
