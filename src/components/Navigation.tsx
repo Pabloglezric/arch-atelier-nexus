@@ -64,9 +64,9 @@ const Navigation = () => {
           {/* Social Links */}
           <div className="hidden md:flex items-center space-x-4">
             {socialLinks.map((social, index) => <Button key={index} variant="ghost" size="sm" asChild>
-                <a href={social.href} aria-label={social.label}>
-                  
-                </a>
+                
+
+
               </Button>)}
           </div>
 
