@@ -52,7 +52,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map(item => <Link key={item.path} to={item.path} className={`relative font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-foreground'}`}>
+            {navItems.map((item) => <Link key={item.path} to={item.path} className={`relative font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-foreground'}`}>
                 {item.name}
                 {location.pathname === item.path && <motion.div layoutId="activeTab" className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent" />}
               </Link>)}
@@ -62,7 +62,7 @@ const Navigation = () => {
           <div className="hidden md:flex items-center space-x-4">
             {socialLinks.map((social, index) => <Button key={index} variant="ghost" size="sm" asChild>
                 <a href={social.href} aria-label={social.label}>
-                  <social.icon className="h-4 w-4" />
+                  
                 </a>
               </Button>)}
           </div>
@@ -86,7 +86,7 @@ const Navigation = () => {
           height: 0
         }} className="md:hidden mt-4 pb-4">
               <div className="flex flex-col space-y-4">
-                {navItems.map(item => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-foreground'}`}>
+                {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-foreground'}`}>
                     {item.name}
                   </Link>)}
                 <div className="flex space-x-4 pt-4 border-t border-border">
