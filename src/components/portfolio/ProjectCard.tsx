@@ -64,6 +64,9 @@ const ProjectCard = ({ project, onViewGallery }: ProjectCardProps) => {
               src={project.images[imgIndex]}
               alt={`${project.title} ${imgIndex + 1}`}
               className="w-full h-full object-cover transition-opacity duration-300"
+              loading="lazy"
+              decoding="async"
+              style={{ imageRendering: 'auto' }}
             />
             {project.images.length > 1 && (
               <>

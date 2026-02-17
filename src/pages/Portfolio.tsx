@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation';
 import ProjectCard, { type ProjectData } from '@/components/portfolio/ProjectCard';
 import LightboxModal from '@/components/portfolio/LightboxModal';
 import CapabilitiesSection from '@/components/portfolio/CapabilitiesSection';
+import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 
 // Project images
 import sportsDirectStoreFront from '@/assets/01_Sports_Direct_StoreFront.png';
@@ -345,6 +346,7 @@ const Portfolio = () => {
         </section>
 
         <CapabilitiesSection />
+        <ArchEvolutionCTA />
       </div>
 
       {/* Lightbox */}
