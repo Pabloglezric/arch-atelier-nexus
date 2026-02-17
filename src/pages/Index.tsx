@@ -1,6 +1,5 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/ui/animated-shader-hero';
-import PortfolioGrid from '@/components/PortfolioGrid';
 import SocialLinks from '@/components/SocialLinks';
 
 const Index = () => {
@@ -21,7 +20,6 @@ const Index = () => {
         <div className="absolute top-0 left-0 right-0 z-20">
           <Navigation />
         </div>
-        <PortfolioGrid />
         <SocialLinks />
       </div>
     </div>
