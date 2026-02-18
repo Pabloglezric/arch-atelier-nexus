@@ -43,11 +43,7 @@ const Navigation = () => {
     href: '#',
     label: 'Skool Community'
   }];
-  return <motion.nav initial={{
-    y: -100
-  }} animate={{
-    y: 0
-  }} className={`fixed top-0 left-0 right-0 z-50 transition-smooth ${isScrolled ? 'glass-effect shadow-elegant' : 'bg-black/30 backdrop-blur-md'}`}>
+  return <nav className={`fixed top-0 left-0 right-0 z-50 transition-smooth ${isScrolled ? 'glass-effect shadow-elegant' : 'bg-black/30 backdrop-blur-md'}`}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -103,6 +99,6 @@ const Navigation = () => {
             </motion.div>}
         </AnimatePresence>
       </div>
-    </motion.nav>;
+    </nav>;
 };
 export default Navigation;
