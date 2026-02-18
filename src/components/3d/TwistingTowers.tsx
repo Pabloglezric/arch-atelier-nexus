@@ -32,6 +32,8 @@ export interface TowerParams {
   showGround: boolean;
   autoRotate: boolean;
   rotSpeed: number;
+  envLight: number;
+  fogDensity: number;
   baseColor: string;
   topColor: string;
   slabColor: string;
@@ -68,6 +70,8 @@ export const defaultTowerParams: TowerParams = {
   showGround: true,
   autoRotate: true,
   rotSpeed: 5,
+  envLight: 0.5,
+  fogDensity: 0,
   baseColor: '#ff6b35',
   topColor: '#4ecdc4',
   slabColor: '#303040',
@@ -303,10 +307,15 @@ function TowerScene({ params }: { params: TowerParams }) {
   const baseColorInt = useMemo(() => hexToInt(params.baseColor), [params.baseColor]);
   const topColorInt = useMemo(() => hexToInt(params.topColor), [params.topColor]);
 
-  // Set background
+  // Set background & fog
   useEffect(() => {
     scene.background = new THREE.Color(hexToInt(params.bgColor));
-  }, [params.bgColor, scene]);
+    if (params.fogDensity > 0) {
+      scene.fog = new THREE.FogExp2(hexToInt(params.bgColor), params.fogDensity * 0.00002);
+    } else {
+      scene.fog = null;
+    }
+  }, [params.bgColor, params.fogDensity, scene]);
 
   // Build all tower meshes
   const towerData = useMemo(() => {
@@ -339,7 +348,7 @@ function TowerScene({ params }: { params: TowerParams }) {
 
   return (
     <>
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={params.envLight} />
       <directionalLight
         position={[-300, 500, 300]}
         intensity={1.4}
