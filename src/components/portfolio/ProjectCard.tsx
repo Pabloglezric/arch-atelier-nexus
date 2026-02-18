@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Upload, Maximize2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Upload } from 'lucide-react';
 
 export interface ProjectData {
   id: number;
@@ -161,34 +161,6 @@ const ProjectCard = ({ project, onViewGallery, onExpand }: ProjectCardProps) => 
           ))}
         </div>
 
-        {/* Buttons */}
-        <div className="flex gap-3 mt-auto">
-          <button
-            className="flex-1 px-4 py-2.5 rounded text-xs font-semibold tracking-wide uppercase transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
-            style={{
-              backgroundColor: 'hsl(0 0% 12%)',
-              color: 'hsl(45 100% 60%)',
-              border: '1px solid hsl(0 0% 16%)',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            View PDF
-          </button>
-          {hasImages && (
-            <button
-              onClick={(e) => { e.stopPropagation(); onViewGallery(project, imgIndex); }}
-              className="flex items-center justify-center gap-1.5 flex-1 px-4 py-2.5 rounded text-xs font-semibold tracking-wide uppercase transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
-              style={{
-                backgroundColor: 'hsl(45 100% 60% / 0.1)',
-                color: 'hsl(45 100% 60%)',
-                border: '1px solid hsl(45 100% 60% / 0.3)',
-              }}
-            >
-              <Maximize2 size={12} />
-              Gallery
-            </button>
-          )}
-        </div>
       </div>
     </motion.div>
   );
