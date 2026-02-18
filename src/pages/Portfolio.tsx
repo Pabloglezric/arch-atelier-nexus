@@ -38,6 +38,16 @@ import ext06Finished from '@/assets/13_Extension_06_Finished.jpg';
 import ext07Finished from '@/assets/13_Extension_07_Finished.jpg';
 import ext08Finished from '@/assets/13_Extension_08_Finished.jpg';
 
+// Nissan images
+import nissan01 from '@/assets/14_Nissan_01.jpg';
+import nissan02 from '@/assets/14_Nissan_02.jpg';
+import nissan03 from '@/assets/14_Nissan_03.jpg';
+import nissan04 from '@/assets/14_Nissan_04.jpg';
+import nissan05 from '@/assets/14_Nissan_05.jpg';
+import nissan06 from '@/assets/14_Nissan_06.jpg';
+import nissan07 from '@/assets/14_Nissan_07.jpg';
+import nissan08 from '@/assets/14_Nissan_08.jpg';
+
 const categories = [
   'All',
   'Extensions',
@@ -59,6 +69,16 @@ const projects: ProjectData[] = [
     tools: ['Design', 'Project Management'],
     images: [ext01Original, ext02NewWorktop, ext03NewWorktop, ext04Extension, ext05Finished, ext06Finished, ext07Finished, ext08Finished],
     date: 'May 2025',
+  },
+  {
+    id: 14,
+    title: 'Nissan Car Dealership',
+    client: 'Nissan',
+    description: 'Architectural Project and Construction of Car Dealership with Japanese Brand Guidelines.',
+    category: 'Retail',
+    tools: ['Design', 'Project Management'],
+    images: [nissan01, nissan02, nissan03, nissan04, nissan05, nissan06, nissan07, nissan08],
+    date: 'August 2017',
   },
   {
     id: 1,
