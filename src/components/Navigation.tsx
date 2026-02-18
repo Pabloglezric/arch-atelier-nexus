@@ -67,8 +67,8 @@ const Navigation = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <Button variant="ghost" size="sm" className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
           </Button>
         </div>
 
@@ -85,7 +85,7 @@ const Navigation = () => {
           height: 0
         }} className="md:hidden mt-4 pb-4">
               <div className="flex flex-col space-y-4">
-                {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-foreground'}`}>
+                {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-white'}`}>
                     {item.name}
                   </Link>)}
               </div>
