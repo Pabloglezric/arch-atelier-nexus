@@ -45,10 +45,7 @@ const Navigation = () => {
   }];
   return <nav className={`fixed top-0 left-0 right-0 z-50 transition-smooth ${isScrolled ? 'glass-effect shadow-elegant' : 'bg-black/30 backdrop-blur-md'}`}>
       <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          
-
+        <div className="flex items-center justify-center relative">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => <Link key={item.path} to={item.path} className={`relative font-medium transition-smooth ${location.pathname === item.path ? 'text-accent' : ''}`} style={location.pathname !== item.path ? { color: 'hsla(45, 100%, 60%, 0.6)' } : undefined}>
