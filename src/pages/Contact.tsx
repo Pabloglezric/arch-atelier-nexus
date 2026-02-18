@@ -442,12 +442,12 @@ const Contact = () => {
               className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-0"
             >
               <a
-                href="mailto:juanpabloric@hotmail.com"
+                href="mailto:admin@archevolution.world"
                 className="flex items-center gap-2 text-sm transition-colors duration-300 hover:opacity-80"
                 style={{ color: 'hsl(0 0% 55%)' }}
               >
                 <Mail className="h-4 w-4" style={{ color: 'hsl(45 100% 60%)' }} />
-                juanpabloric@hotmail.com
+                admin@archevolution.world
               </a>
 
               <div className="hidden sm:block w-px h-5 mx-8" style={{ backgroundColor: 'hsl(45 100% 60% / 0.3)' }} />
