@@ -88,13 +88,6 @@ const Navigation = () => {
                 {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-foreground'}`}>
                     {item.name}
                   </Link>)}
-                <div className="flex space-x-4 pt-4 border-t border-border">
-                  {socialLinks.map((social, index) => <Button key={index} variant="ghost" size="sm" asChild>
-                      <a href={social.href} aria-label={social.label}>
-                        <social.icon className="h-4 w-4" />
-                      </a>
-                    </Button>)}
-                </div>
               </div>
             </motion.div>}
         </AnimatePresence>
