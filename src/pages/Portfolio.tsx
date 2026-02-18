@@ -29,6 +29,7 @@ import metroCentre from '@/assets/11_MetroCentre_Newcastle.png';
 import northHorsham from '@/assets/12_North_Horsham_Residential.png';
 
 // Extension images
+import ext00Before from '@/assets/13_Extension_00_Before.jpg';
 import ext01Original from '@/assets/13_Extension_01_Original.jpg';
 import ext02NewWorktop from '@/assets/13_Extension_02_New_Worktop.jpg';
 import ext03NewWorktop from '@/assets/13_Extension_03_New_Worktop.jpg';
@@ -67,7 +68,7 @@ const projects: ProjectData[] = [
     description: 'Complete kitchen redesign and living room extension featuring a dynamic entertainment centre with 180 degrees of view. The project transformed the original layout into an open-plan living space with premium finishes, quartz worktops, and full-height glazing connecting interior and exterior.',
     category: 'Extensions',
     tools: ['Design', 'Project Management'],
-    images: [ext01Original, ext02NewWorktop, ext03NewWorktop, ext04Extension, ext05Finished, ext06Finished, ext07Finished, ext08Finished],
+    images: [ext00Before, ext01Original, ext02NewWorktop, ext03NewWorktop, ext04Extension, ext05Finished, ext06Finished, ext07Finished, ext08Finished],
     date: 'May 2025',
   },
   {
