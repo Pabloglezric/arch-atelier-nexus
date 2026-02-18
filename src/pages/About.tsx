@@ -8,60 +8,60 @@ import { Button } from '@/components/ui/button';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 
 const stats = [
-  { value: '12+', label: 'Projects Delivered' },
-  { value: 'LOD400', label: 'Standard' },
-  { value: '5+', label: 'Industries' },
-];
+{ value: '12+', label: 'Projects Delivered' },
+{ value: 'LOD400', label: 'Standard' },
+{ value: '5+', label: 'Industries' }];
+
 
 const services = [
-  {
-    title: 'BIM Modelling & Documentation',
-    description:
-      'Revit models to LOD400 across residential, commercial, healthcare, and industrial sectors. Full RIBA Stage 3 & 4 packages.',
-  },
-  {
-    title: 'Point Cloud to BIM',
-    description:
-      'From ReCap scan data to fully coordinated Revit models. Topographical surveys, renovation projects, and building control documentation.',
-  },
-  {
-    title: 'Parametric & Computational Design',
-    description:
-      'Custom Revit families, smart BIM keynotes linked to Excel schedules, and prefabricated module systems that streamline production across 60+ details.',
-  },
-  {
-    title: 'Visualisation',
-    description:
-      'Photorealistic renders and walkthroughs using Enscape and Photoshop. Proposal-ready visuals for client approval stages.',
-  },
-  {
-    title: 'AI-Powered Design Tools',
-    description:
-      'Founder of ArchEvolution, a platform teaching AEC professionals how to integrate AI into their design workflows.',
-  },
-  {
-    title: 'Cost & Design Optimisation',
-    description:
-      'Proven track record: redesign of North Horsham residential block achieved £50K savings per apartment without reducing habitable area.',
-  },
-];
+{
+  title: 'BIM Modelling & Documentation',
+  description:
+  'Revit models to LOD400 across residential, commercial, healthcare, and industrial sectors. Full RIBA Stage 3 & 4 packages.'
+},
+{
+  title: 'Point Cloud to BIM',
+  description:
+  'From ReCap scan data to fully coordinated Revit models. Topographical surveys, renovation projects, and building control documentation.'
+},
+{
+  title: 'Parametric & Computational Design',
+  description:
+  'Custom Revit families, smart BIM keynotes linked to Excel schedules, and prefabricated module systems that streamline production across 60+ details.'
+},
+{
+  title: 'Visualisation',
+  description:
+  'Photorealistic renders and walkthroughs using Enscape and Photoshop. Proposal-ready visuals for client approval stages.'
+},
+{
+  title: 'AI-Powered Design Tools',
+  description:
+  'Founder of ArchEvolution, a platform teaching AEC professionals how to integrate AI into their design workflows.'
+},
+{
+  title: 'Cost & Design Optimisation',
+  description:
+  'Proven track record: redesign of North Horsham residential block achieved £50K savings per apartment without reducing habitable area.'
+}];
+
 
 const tools = [
-  'Autodesk Revit',
-  'ReCap',
-  'Enscape',
-  'Navisworks',
-  'BIM 360',
-  'AI Design Tools',
-];
+'Autodesk Revit',
+'ReCap',
+'Enscape',
+'Navisworks',
+'BIM 360',
+'AI Design Tools'];
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
+    transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }
+  })
 };
 
 const About = () => {
@@ -98,11 +98,11 @@ const About = () => {
       offCtx.clearRect(0, 0, smallW, smallH);
 
       const orbs = [
-        { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 900 / pixelSize, color: 'hsla(45, 90%, 55%, 0.45)' },
-        { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 750 / pixelSize, color: 'hsla(35, 80%, 45%, 0.35)' },
-        { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 1000 / pixelSize, color: 'hsla(50, 70%, 50%, 0.30)' },
-        { x: Math.cos(time * 0.5 + 3) * 0.3 + 0.4, y: Math.sin(time * 0.7 + 2) * 0.3 + 0.2, r: 600 / pixelSize, color: 'hsla(40, 85%, 50%, 0.28)' },
-      ];
+      { x: Math.sin(time * 0.7) * 0.3 + 0.2, y: Math.cos(time * 0.5) * 0.3 + 0.3, r: 900 / pixelSize, color: 'hsla(45, 90%, 55%, 0.45)' },
+      { x: Math.cos(time * 0.4) * 0.3 + 0.7, y: Math.sin(time * 0.6) * 0.3 + 0.5, r: 750 / pixelSize, color: 'hsla(35, 80%, 45%, 0.35)' },
+      { x: Math.sin(time * 0.8 + 2) * 0.4 + 0.5, y: Math.cos(time * 0.3 + 1) * 0.4 + 0.7, r: 1000 / pixelSize, color: 'hsla(50, 70%, 50%, 0.30)' },
+      { x: Math.cos(time * 0.5 + 3) * 0.3 + 0.4, y: Math.sin(time * 0.7 + 2) * 0.3 + 0.2, r: 600 / pixelSize, color: 'hsla(40, 85%, 50%, 0.28)' }];
+
 
       for (const orb of orbs) {
         const gradient = offCtx.createRadialGradient(
@@ -125,11 +125,11 @@ const About = () => {
 
       // Bayer 4x4 dithering
       const bayerMatrix = [
-        [0, 8, 2, 10],
-        [12, 4, 14, 6],
-        [3, 11, 1, 9],
-        [15, 7, 13, 5],
-      ];
+      [0, 8, 2, 10],
+      [12, 4, 14, 6],
+      [3, 11, 1, 9],
+      [15, 7, 13, 5]];
+
       const imageData = offCtx.getImageData(0, 0, smallW, smallH);
       const data = imageData.data;
       for (let y = 0; y < smallH; y++) {
@@ -137,8 +137,8 @@ const About = () => {
           const idx = (y * smallW + x) * 4;
           const a = data[idx + 3];
           if (a === 0) continue;
-          const threshold = (bayerMatrix[y % 4][x % 4] / 16) * 255;
-          const brightness = (data[idx] * 0.3 + data[idx + 1] * 0.59 + data[idx + 2] * 0.11);
+          const threshold = bayerMatrix[y % 4][x % 4] / 16 * 255;
+          const brightness = data[idx] * 0.3 + data[idx + 1] * 0.59 + data[idx + 2] * 0.11;
           if (brightness < threshold * 0.4) {
             data[idx + 3] = 0;
           }
@@ -164,15 +164,15 @@ const About = () => {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 0 }}
-      />
+        style={{ zIndex: 0 }} />
+
 
       <SEOHead
         title="About - Architectural Technologist & BIM Consultant | Juan Pablo Gonzalez Ricardez"
         description="Architectural Technologist and BIM Specialist at Niemen Blume, Leeds. Specialising in Revit BIM modelling, computational design, and RIBA Stages 3-4 documentation."
         keywords="architectural technologist UK, BIM consultant Leeds, Revit specialist, computational design, CIAT associate, BIM modelling services"
-        canonicalPath="/about"
-      />
+        canonicalPath="/about" />
+
       <div className="relative" style={{ zIndex: 1 }}>
         <Navigation />
 
@@ -184,8 +184,8 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              style={{ color: 'hsl(0 0% 92%)' }}
-            >
+              style={{ color: 'hsl(0 0% 92%)' }}>
+
               I don't just model buildings.
               <br />
               <span style={{ color: 'hsl(45 100% 60%)' }}>I engineer certainty.</span>
@@ -196,37 +196,37 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
               className="text-base md:text-lg tracking-wide mb-16"
-              style={{ color: 'hsl(0 0% 50%)' }}
-            >
+              style={{ color: 'hsl(0 0% 50%)' }}>
+
               Architectural Technologist &nbsp;|&nbsp; BIM Specialist &nbsp;|&nbsp; Associate CIAT &nbsp;|&nbsp; Leeds, UK
             </motion.p>
 
             {/* Stat cards */}
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              {stats.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  custom={i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  animate="visible"
-                  className="flex-1 max-w-[220px] mx-auto sm:mx-0 py-6 px-8 rounded-lg"
-                  style={{
-                    backgroundColor: 'hsl(45 100% 60% / 0.08)',
-                    border: '1px solid hsl(45 100% 60% / 0.2)',
-                  }}
-                >
+              {stats.map((s, i) =>
+              <motion.div
+                key={s.label}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                className="flex-1 max-w-[220px] mx-auto sm:mx-0 py-6 px-8 rounded-lg"
+                style={{
+                  backgroundColor: 'hsl(45 100% 60% / 0.08)',
+                  border: '1px solid hsl(45 100% 60% / 0.2)'
+                }}>
+
                   <p
-                    className="font-display text-3xl md:text-4xl font-bold mb-1"
-                    style={{ color: 'hsl(45 100% 60%)' }}
-                  >
+                  className="font-display text-3xl md:text-4xl font-bold mb-1"
+                  style={{ color: 'hsl(45 100% 60%)' }}>
+
                     {s.value}
                   </p>
                   <p className="text-xs tracking-widest uppercase" style={{ color: 'hsl(0 0% 50%)' }}>
                     {s.label}
                   </p>
                 </motion.div>
-              ))}
+              )}
             </div>
           </div>
         </section>
@@ -244,12 +244,12 @@ const About = () => {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
+              transition={{ duration: 0.7 }}>
+
               <h2
                 className="font-display text-3xl md:text-4xl font-bold mb-8 leading-tight"
-                style={{ color: 'hsl(0 0% 92%)' }}
-              >
+                style={{ color: 'hsl(0 0% 92%)' }}>
+
                 Built on precision.
                 <br />
                 <span style={{ color: 'hsl(45 100% 60%)' }}>Driven by innovation.</span>
@@ -260,10 +260,10 @@ const About = () => {
                   specialising in Revit BIM modelling, computational design, and technical documentation across
                   RIBA Stages 3 and 4.
                 </p>
-                <p>
-                  My work spans retail fit-outs for global brands, healthcare infrastructure, residential
-                  developments, and industrial-scale buildings — always modelled to LOD400 and always delivered
-                  with precision.
+                <p>I began my architectural career in Mexico, where resource constraints force a different kind of precision — you get one shot at the detail, and there's no contractor standing by to interpret an ambiguous drawing. That discipline came with me to the UK, where I've worked under British Standards, NHBC requirements, NHS technical memoranda, and Building Regulations — not as a student, but as the person responsible for the deliverable."
+
+My work spans retail fit-outs for global brands, healthcare infrastructure, residential developments, and industrial-scale buildings — always modelled to LOD400 and always delivered with precision.
+
                 </p>
                 <p>
                   What sets me apart is not just technical fluency. It's the ability to see the whole picture —
@@ -282,14 +282,14 @@ const About = () => {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="aspect-[4/5] rounded-lg overflow-hidden"
               style={{
-                border: '1px solid hsl(45 100% 60% / 0.15)',
-              }}
-            >
+                border: '1px solid hsl(45 100% 60% / 0.15)'
+              }}>
+
               <img
                 src={profilePhoto}
                 alt="Juan Pablo Gonzalez Ricardez"
-                className="w-full h-full object-cover"
-              />
+                className="w-full h-full object-cover" />
+
             </motion.div>
           </div>
         </section>
@@ -307,12 +307,12 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
-              className="mb-16"
-            >
+              className="mb-16">
+
               <h2
                 className="font-display text-3xl md:text-4xl font-bold mb-4"
-                style={{ color: 'hsl(0 0% 92%)' }}
-              >
+                style={{ color: 'hsl(0 0% 92%)' }}>
+
                 What I Do
               </h2>
               <p className="text-base" style={{ color: 'hsl(0 0% 45%)' }}>
@@ -321,34 +321,34 @@ const About = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((svc, i) => (
-                <motion.div
-                  key={svc.title}
-                  custom={i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="group p-8 rounded-lg transition-colors duration-500"
-                  style={{
-                    backgroundColor: 'hsl(0 0% 6%)',
-                    borderTop: '2px solid hsl(45 100% 60% / 0.4)',
-                    border: '1px solid hsl(0 0% 12%)',
-                    borderTopColor: 'hsl(45 100% 60% / 0.5)',
-                    borderTopWidth: '2px',
-                  }}
-                >
+              {services.map((svc, i) =>
+              <motion.div
+                key={svc.title}
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="group p-8 rounded-lg transition-colors duration-500"
+                style={{
+                  backgroundColor: 'hsl(0 0% 6%)',
+                  borderTop: '2px solid hsl(45 100% 60% / 0.4)',
+                  border: '1px solid hsl(0 0% 12%)',
+                  borderTopColor: 'hsl(45 100% 60% / 0.5)',
+                  borderTopWidth: '2px'
+                }}>
+
                   <h3
-                    className="font-display text-lg font-semibold mb-3"
-                    style={{ color: 'hsl(0 0% 88%)' }}
-                  >
+                  className="font-display text-lg font-semibold mb-3"
+                  style={{ color: 'hsl(0 0% 88%)' }}>
+
                     {svc.title}
                   </h3>
                   <p className="text-sm leading-relaxed" style={{ color: 'hsl(0 0% 42%)' }}>
                     {svc.description}
                   </p>
                 </motion.div>
-              ))}
+              )}
             </div>
           </div>
         </section>
@@ -370,19 +370,19 @@ const About = () => {
               style={{
                 backgroundColor: 'hsl(0 0% 5%)',
                 border: '1px solid hsl(45 100% 60% / 0.15)',
-                boxShadow: '0 0 80px hsl(45 100% 60% / 0.06)',
-              }}
-            >
+                boxShadow: '0 0 80px hsl(45 100% 60% / 0.06)'
+              }}>
+
               <h2
                 className="font-display text-3xl md:text-4xl font-bold mb-6"
-                style={{ color: 'hsl(0 0% 92%)' }}
-              >
+                style={{ color: 'hsl(0 0% 92%)' }}>
+
                 Beyond the office.
               </h2>
               <p
                 className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto mb-10"
-                style={{ color: 'hsl(0 0% 50%)' }}
-              >
+                style={{ color: 'hsl(0 0% 50%)' }}>
+
                 I'm the founder of ArchEvolution — a growing platform helping architects and designers across
                 Latin America and the UK harness AI-powered tools for real-world workflows. YouTube tutorials,
                 community resources, and courses designed to future-proof your practice.
@@ -393,9 +393,9 @@ const About = () => {
                   className="rounded-full px-8 py-3 text-sm font-semibold"
                   style={{
                     backgroundColor: 'hsl(45 100% 60%)',
-                    color: 'hsl(0 0% 4%)',
-                  }}
-                >
+                    color: 'hsl(0 0% 4%)'
+                  }}>
+
                   <a href="https://archevolution.world/" target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Visit ArchEvolution
@@ -408,9 +408,9 @@ const About = () => {
                   style={{
                     backgroundColor: 'transparent',
                     color: 'hsl(45 100% 60%)',
-                    border: '1px solid hsl(45 100% 60% / 0.4)',
-                  }}
-                >
+                    border: '1px solid hsl(45 100% 60% / 0.4)'
+                  }}>
+
                   <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
                     <Play className="h-4 w-4 mr-2" />
                     Watch on YouTube
@@ -434,8 +434,8 @@ const About = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               className="text-center text-[10px] font-semibold tracking-[0.3em] uppercase mb-10"
-              style={{ color: 'hsl(45 100% 60% / 0.5)' }}
-            >
+              style={{ color: 'hsl(45 100% 60% / 0.5)' }}>
+
               Tools & Technologies
             </motion.p>
             <motion.div
@@ -443,21 +443,21 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex flex-wrap justify-center gap-3"
-            >
-              {tools.map((tool) => (
-                <span
-                  key={tool}
-                  className="px-5 py-2.5 rounded-full text-xs font-medium tracking-wide"
-                  style={{
-                    backgroundColor: 'hsl(0 0% 8%)',
-                    color: 'hsl(0 0% 55%)',
-                    border: '1px solid hsl(0 0% 14%)',
-                  }}
-                >
+              className="flex flex-wrap justify-center gap-3">
+
+              {tools.map((tool) =>
+              <span
+                key={tool}
+                className="px-5 py-2.5 rounded-full text-xs font-medium tracking-wide"
+                style={{
+                  backgroundColor: 'hsl(0 0% 8%)',
+                  color: 'hsl(0 0% 55%)',
+                  border: '1px solid hsl(0 0% 14%)'
+                }}>
+
                   {tool}
                 </span>
-              ))}
+              )}
             </motion.div>
           </div>
         </section>
@@ -467,8 +467,8 @@ const About = () => {
         {/* Bottom spacing */}
         <div className="h-16" />
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default About;
