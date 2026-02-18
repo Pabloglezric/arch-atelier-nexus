@@ -27,8 +27,7 @@ const sliders: SliderDef[] = [
   { key: 'voidOffset', label: 'Center Offset', min: -20, max: 20, step: 0.1, folder: 'Void Shape' },
   // Atmosphere
   { key: 'timeOfDay', label: 'Time of Day', min: 6, max: 20, step: 0.1, folder: 'Atmosphere' },
-  { key: 'season', label: 'Season', min: 0, max: 1, step: 0.1, folder: 'Atmosphere' },
-  { key: 'weather', label: 'Weather', min: 0, max: 1, step: 0.01, folder: 'Atmosphere' },
+  { key: 'ambientLight', label: 'Ambient Light', min: 0, max: 2, step: 0.05, folder: 'Atmosphere' },
   // Animation
   { key: 'speed', label: 'Cycle Speed', min: 0.1, max: 5, step: 0.1, folder: 'Animation' },
 ];
@@ -46,6 +45,10 @@ export default function PavilionControls({ params, onChange }: PavilionControlsP
     'Atmosphere': true,
     'Animation': true,
   });
+
+  const updateColor = (key: keyof PavilionParams, value: string) => {
+    onChange({ ...params, [key]: value });
+  };
 
   const toggleFolder = (name: string) => {
     setOpenFolders(prev => ({ ...prev, [name]: !prev[name] }));
@@ -111,6 +114,19 @@ export default function PavilionControls({ params, onChange }: PavilionControlsP
                   />
                 </div>
               ))}
+
+              {folder === 'Atmosphere' && (
+                <div className="flex items-center justify-between">
+                  <label className="text-[10px]" style={{ color: 'hsl(0 0% 50%)' }}>Background</label>
+                  <input
+                    type="color"
+                    value={params.bgColor}
+                    onChange={e => updateColor('bgColor', e.target.value)}
+                    className="w-6 h-6 rounded cursor-pointer border-0 p-0"
+                    style={{ background: 'transparent' }}
+                  />
+                </div>
+              )}
 
               {folder === 'Animation' && (
                 <div className="flex items-center justify-between">

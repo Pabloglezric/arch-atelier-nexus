@@ -17,8 +17,8 @@ export interface PavilionParams {
   voidTaper: number;
   voidOffset: number;
   timeOfDay: number;
-  season: number;
-  weather: number;
+  ambientLight: number;
+  bgColor: string;
   animate: boolean;
   speed: number;
 }
@@ -36,8 +36,8 @@ export const defaultParams: PavilionParams = {
   voidTaper: 2.5,
   voidOffset: 0.0,
   timeOfDay: 14.0,
-  season: 0.5,
-  weather: 0.0,
+  ambientLight: 0.4,
+  bgColor: '#87ceeb',
   animate: true,
   speed: 1,
 };
@@ -106,7 +106,7 @@ function Pavilion({ params }: { params: PavilionParams }) {
     if (!sunRef.current || !ambientRef.current) return;
     const t = timeRef.current;
     const hourAngle = (t - 12) * (Math.PI / 12);
-    const maxElev = THREE.MathUtils.degToRad(30 + params.season * 45);
+    const maxElev = THREE.MathUtils.degToRad(52);
     const elev = Math.cos(hourAngle) * maxElev;
     const az = Math.sin(hourAngle);
     const d = 80;
@@ -121,22 +121,16 @@ function Pavilion({ params }: { params: PavilionParams }) {
       sunRef.current.intensity = 0;
     } else {
       const hf = Math.max(0, Math.min(1, sunRef.current.position.y / 10));
-      const maxI = THREE.MathUtils.lerp(2.5, 0.5, params.weather);
-      sunRef.current.intensity = hf * maxI;
-      ambientRef.current.intensity = THREE.MathUtils.lerp(0.4, 0.9, params.weather);
+      sunRef.current.intensity = hf * 2.5;
+      ambientRef.current.intensity = params.ambientLight;
       sunRef.current.color.lerpColors(new THREE.Color(0xffaa00), new THREE.Color(0xfffaed), hf);
     }
 
-    const clearSky = new THREE.Color(0x87ceeb);
-    const greySky = new THREE.Color(0xbdc3c7);
-    const nightSky = new THREE.Color(0x050510);
-    const skyColor = sunRef.current.position.y < 0
-      ? nightSky
-      : new THREE.Color().lerpColors(clearSky, greySky, params.weather);
-    scene.background = skyColor;
+    const bgColor = new THREE.Color(params.bgColor);
+    scene.background = bgColor;
     if (scene.fog instanceof THREE.FogExp2) {
-      scene.fog.color = skyColor;
-      scene.fog.density = 0.01 + params.weather * 0.03;
+      scene.fog.color = bgColor;
+      scene.fog.density = 0.02;
     }
   });
 
