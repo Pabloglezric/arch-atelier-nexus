@@ -141,9 +141,11 @@ export default function TowerControls({ params, onChange }: Props) {
         <Toggle label="Ground" checked={params.showGround} onChange={v => set({ showGround: v })} />
       </Section>
 
-      <Section title="Camera">
+      <Section title="Camera & Scene">
         <Toggle label="Auto Rotate" checked={params.autoRotate} onChange={v => set({ autoRotate: v })} />
-        <Slider label="Speed" value={params.rotSpeed} min={0} max={30} onChange={v => set({ rotSpeed: v })} />
+        <Slider label="Rotate Speed" value={params.rotSpeed} min={0} max={30} onChange={v => set({ rotSpeed: v })} />
+        <Slider label="Env. Lighting %" value={Math.round(params.envLight * 100)} min={0} max={100} onChange={v => set({ envLight: v / 100 })} />
+        <Slider label="Fog Density" value={params.fogDensity} min={0} max={50} onChange={v => set({ fogDensity: Math.round(v) })} />
       </Section>
 
       <Section title="Presets">
