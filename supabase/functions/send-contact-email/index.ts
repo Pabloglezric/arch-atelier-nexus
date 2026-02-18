@@ -56,7 +56,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "ArchEvolution <onboarding@resend.dev>",
+        from: "ArchEvolution <admin@archevolution.world>",
         to: ["admin@archevolution.world"],
         subject: `[${subject}] New message from ${name}`,
         reply_to: email,
