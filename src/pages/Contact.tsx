@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import SEOHead from '@/components/SEOHead';
-import { Linkedin, Mail, MapPin, Send } from 'lucide-react';
+import { Linkedin, Mail, MapPin, Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
+import { supabase } from '@/integrations/supabase/client';
 
 type SubjectOption = 'Project Enquiry' | 'ArchEvolution' | 'General';
 
@@ -112,6 +113,7 @@ const Contact = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -148,15 +150,26 @@ const Contact = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) {
       toast({ title: 'Please fill in all fields.', variant: 'destructive' });
       return;
     }
-    const mailtoLink = `mailto:juanpabloric@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
-    window.open(mailtoLink, '_blank');
-    setSubmitted(true);
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: { name: name.trim(), email: email.trim(), subject, message: message.trim() },
+      });
+      if (error) throw error;
+      setSubmitted(true);
+      toast({ title: 'Message sent successfully!' });
+    } catch (err) {
+      console.error('Send error:', err);
+      toast({ title: 'Failed to send message. Please try again.', variant: 'destructive' });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -392,14 +405,20 @@ const Contact = () => {
                   {/* Submit */}
                   <Button
                     type="submit"
+                    disabled={sending}
                     className="w-full rounded-full py-3 text-sm font-semibold tracking-wide"
                     style={{
                       backgroundColor: 'hsl(45 100% 60%)',
                       color: 'hsl(0 0% 4%)',
+                      opacity: sending ? 0.7 : 1,
                     }}
                   >
-                    <Send className="h-4 w-4 mr-2" />
-                    Send Message
+                    {sending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4 mr-2" />
+                    )}
+                    {sending ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               )}
