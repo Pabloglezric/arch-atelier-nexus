@@ -17,32 +17,32 @@ const services = [
 {
   title: 'BIM Modelling & Documentation',
   description:
-  'Revit models to LOD400 across residential, commercial, healthcare, and industrial sectors. Full RIBA Stage 3 & 4 packages.'
+  'Revit models to LOD400 across healthcare, retail, industrial, and residential sectors. Every model coordinated, clash-checked, and delivered to a standard contractors can build from without asking questions. Full RIBA Stage 3 & 4 packages.'
 },
 {
   title: 'Point Cloud to BIM',
   description:
-  'From ReCap scan data to fully coordinated Revit models. Topographical surveys, renovation projects, and building control documentation.'
+  'Existing buildings don\'t come with clean drawings. Using ReCap Pro and Revit, I convert raw scan data into precision models renovation teams can use from day one — eliminating the survey-rework loop that kills project timelines.'
 },
 {
   title: 'Parametric & Computational Design',
   description:
-  'Custom Revit families, smart BIM keynotes linked to Excel schedules, and prefabricated module systems that streamline production across 60+ details.'
+  'Custom Revit families, Dynamo scripts, and Grasshopper workflows that automate the repetitive and accelerate the complex. If your team is doing it manually, there\'s a faster way. 60+ smart BIM keynotes built for Legal & General — linked to the model, not typed by hand.'
 },
 {
   title: 'Visualisation',
   description:
-  'Photorealistic renders and walkthroughs using Enscape and Photoshop. Proposal-ready visuals for client approval stages.'
+  'Photorealistic renders and walkthroughs using Enscape and Photoshop. Not decoration — decision-making tools. Proposal-ready visuals that give clients confidence before a single drawing is issued for construction.'
 },
 {
   title: 'AI-Powered Design Tools',
   description:
-  'Founder of ArchEvolution, a platform teaching AEC professionals how to integrate AI into their design workflows.'
+  'Founder of ArchEvolution — a platform teaching AEC professionals how to integrate AI into their design workflows. I don\'t just use these tools. I build them, teach them, and deploy them in production environments.'
 },
 {
   title: 'Cost & Design Optimisation',
   description:
-  'Proven track record: redesign of North Horsham residential block achieved £50K savings per apartment without reducing habitable area.'
+  'Proven track record: redesign of a residential block at North Horsham identified £50,000 in savings per unit through early BIM coordination — before groundworks began. Good models don\'t just document buildings. They prevent expensive mistakes.'
 }];
 
 
