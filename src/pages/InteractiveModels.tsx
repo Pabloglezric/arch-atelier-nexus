@@ -6,9 +6,12 @@ import SEOHead from '@/components/SEOHead';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { PaperDesignBackground } from '@/components/ui/neon-dither';
 import { defaultParams, type PavilionParams } from '@/components/3d/ParametricPavilion';
+import { defaultTowerParams, previewTowerParams, type TowerParams } from '@/components/3d/TwistingTowers';
 
 const ParametricPavilion = lazy(() => import('@/components/3d/ParametricPavilion'));
 const PavilionControls = lazy(() => import('@/components/3d/PavilionControls'));
+const TwistingTowers = lazy(() => import('@/components/3d/TwistingTowers'));
+const TowerControls = lazy(() => import('@/components/3d/TowerControls'));
 
 interface ModelSlot {
   label: string;
@@ -18,7 +21,7 @@ interface ModelSlot {
 
 const modelSlots: ModelSlot[] = [
   { label: 'Parametric Pavilion Simulation', description: 'Interactive parametric brick wall with dynamic sun cycle', hasModel: true },
-  { label: 'Model Viewer 2', description: 'Section cut or MEP overlay — glTF / Three.js embed', hasModel: false },
+  { label: 'Twisting Towers Studio', description: 'Interactive parametric twisting towers with customisable geometry', hasModel: true },
   { label: 'Model Viewer 3', description: 'Context model or site plan — glTF / Three.js embed', hasModel: false },
 ];
 
@@ -34,7 +37,7 @@ const previewParams: PavilionParams = {
 const InteractiveModels = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [pavilionParams, setPavilionParams] = useState<PavilionParams>({ ...defaultParams });
-
+  const [towerParams, setTowerParams] = useState<TowerParams>({ ...defaultTowerParams });
   const openModel = (index: number) => {
     if (modelSlots[index].hasModel) {
       setExpandedIndex(index);
@@ -128,6 +131,34 @@ const InteractiveModels = () => {
                       <ParametricPavilion params={previewParams} interactive={false} />
                     </div>
                     {/* Hover overlay */}
+                    <div
+                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ backgroundColor: 'hsl(0 0% 0% / 0.5)' }}
+                    >
+                      <div className="flex flex-col items-center gap-3">
+                        <div
+                          className="w-14 h-14 rounded-full flex items-center justify-center"
+                          style={{ backgroundColor: 'hsl(45 100% 60% / 0.2)', border: '1px solid hsl(45 100% 60% / 0.4)' }}
+                        >
+                          <Box size={24} strokeWidth={1.5} style={{ color: 'hsl(45 100% 60%)' }} />
+                        </div>
+                        <span className="text-sm font-semibold tracking-wider uppercase" style={{ color: 'hsl(45 100% 60%)' }}>
+                          Click to interact
+                        </span>
+                      </div>
+                    </div>
+                  </Suspense>
+                ) : item.hasModel && idx === 1 ? (
+                  <Suspense
+                    fallback={
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Loader2 size={24} className="animate-spin" style={{ color: 'hsl(45 100% 60% / 0.5)' }} />
+                      </div>
+                    }
+                  >
+                    <div className="absolute inset-0 pointer-events-none">
+                      <TwistingTowers params={previewTowerParams} interactive={false} />
+                    </div>
                     <div
                       className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{ backgroundColor: 'hsl(0 0% 0% / 0.5)' }}
@@ -240,7 +271,12 @@ const InteractiveModels = () => {
             {/* Controls panel */}
             <div className="absolute top-16 right-5 z-50">
               <Suspense fallback={null}>
-                <PavilionControls params={pavilionParams} onChange={setPavilionParams} />
+                {expandedIndex === 0 && (
+                  <PavilionControls params={pavilionParams} onChange={setPavilionParams} />
+                )}
+                {expandedIndex === 1 && (
+                  <TowerControls params={towerParams} onChange={setTowerParams} />
+                )}
               </Suspense>
             </div>
 
@@ -255,7 +291,12 @@ const InteractiveModels = () => {
                 </div>
               }
             >
-              <ParametricPavilion className="w-full h-full" params={pavilionParams} interactive={true} />
+              {expandedIndex === 0 && (
+                <ParametricPavilion className="w-full h-full" params={pavilionParams} interactive={true} />
+              )}
+              {expandedIndex === 1 && (
+                <TwistingTowers className="w-full h-full" params={towerParams} interactive={true} />
+              )}
             </Suspense>
           </motion.div>
         )}
