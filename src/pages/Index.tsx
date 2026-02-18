@@ -3,6 +3,7 @@ import Hero from '@/components/ui/animated-shader-hero';
 import SocialLinks from '@/components/SocialLinks';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import SEOHead from '@/components/SEOHead';
+import ThreePointsSection from '@/components/ThreePointsSection';
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -52,6 +53,9 @@ const Index = () => {
 
         {/* Bottom section with solid bg to cover the fixed hero */}
         <div style={{ backgroundColor: 'hsl(0 0% 0% / 0.6)' }}>
+          {/* ─── Three Points Philosophy ─── */}
+          <ThreePointsSection />
+
           <ArchEvolutionCTA />
           <div className="h-8" />
         </div>
