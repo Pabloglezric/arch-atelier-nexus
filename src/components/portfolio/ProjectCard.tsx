@@ -10,15 +10,17 @@ export interface ProjectData {
   category: string;
   tools: string[];
   images: string[];
+  date?: string;
 }
 
 interface ProjectCardProps {
   project: ProjectData;
   onViewGallery: (project: ProjectData, startIndex: number) => void;
   onExpand: (project: ProjectData) => void;
+  isLargeCard?: boolean;
 }
 
-const ProjectCard = ({ project, onViewGallery, onExpand }: ProjectCardProps) => {
+const ProjectCard = ({ project, onViewGallery, onExpand, isLargeCard }: ProjectCardProps) => {
   const [imgIndex, setImgIndex] = useState(0);
   const hasImages = project.images.length > 0;
 
@@ -145,7 +147,7 @@ const ProjectCard = ({ project, onViewGallery, onExpand }: ProjectCardProps) => 
         </p>
 
         {/* Tools */}
-        <div className="flex flex-wrap gap-1.5 mb-5">
+        <div className="flex flex-wrap gap-1.5 mb-4">
           {project.tools.map(tool => (
             <span
               key={tool}
@@ -161,6 +163,11 @@ const ProjectCard = ({ project, onViewGallery, onExpand }: ProjectCardProps) => 
           ))}
         </div>
 
+        {project.date && (
+          <p className="text-xs font-medium mt-auto" style={{ color: 'hsl(0 0% 40%)' }}>
+            {project.date}
+          </p>
+        )}
       </div>
     </motion.div>
   );

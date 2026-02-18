@@ -28,8 +28,19 @@ import grosvenorHouse from '@/assets/10_Grosvenor_House_Wakefield.png';
 import metroCentre from '@/assets/11_MetroCentre_Newcastle.png';
 import northHorsham from '@/assets/12_North_Horsham_Residential.png';
 
+// Extension images
+import ext01Original from '@/assets/13_Extension_01_Original.jpg';
+import ext02NewWorktop from '@/assets/13_Extension_02_New_Worktop.jpg';
+import ext03NewWorktop from '@/assets/13_Extension_03_New_Worktop.jpg';
+import ext04Extension from '@/assets/13_Extension_04_Extension.jpg';
+import ext05Finished from '@/assets/13_Extension_05_Finished.jpg';
+import ext06Finished from '@/assets/13_Extension_06_Finished.jpg';
+import ext07Finished from '@/assets/13_Extension_07_Finished.jpg';
+import ext08Finished from '@/assets/13_Extension_08_Finished.jpg';
+
 const categories = [
   'All',
+  'Extensions',
   'BIM Models',
   'Construction Details',
   'Retail',
@@ -39,6 +50,16 @@ const categories = [
 ];
 
 const projects: ProjectData[] = [
+  {
+    id: 13,
+    title: 'Kitchen & Living Room Extension',
+    client: 'Private Client',
+    description: 'Complete kitchen redesign and living room extension featuring a dynamic entertainment centre with 180 degrees of view. The project transformed the original layout into an open-plan living space with premium finishes, quartz worktops, and full-height glazing connecting interior and exterior.',
+    category: 'Extensions',
+    tools: ['Design', 'Project Management'],
+    images: [ext01Original, ext02NewWorktop, ext03NewWorktop, ext04Extension, ext05Finished, ext06Finished, ext07Finished, ext08Finished],
+    date: 'May 2025',
+  },
   {
     id: 1,
     title: 'Sports Direct',
@@ -350,7 +371,11 @@ const Portfolio = () => {
         {/* Project Grid */}
         <section className="px-6 pb-24">
           <div className="container mx-auto max-w-6xl">
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div layout className={`grid gap-6 ${
+              activeFilter === 'Extensions' 
+                ? 'grid-cols-1 md:grid-cols-2' 
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+            }`}>
               <AnimatePresence mode="popLayout">
                 {filtered.map(project => (
                   <ProjectCard
@@ -358,6 +383,7 @@ const Portfolio = () => {
                     project={project}
                     onViewGallery={openGallery}
                     onExpand={expandProject}
+                    isLargeCard={activeFilter === 'Extensions'}
                   />
                 ))}
               </AnimatePresence>
