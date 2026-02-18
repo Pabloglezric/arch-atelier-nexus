@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { type ProjectData } from './ProjectCard';
 
 interface ExpandedProjectCardProps {
@@ -178,33 +178,6 @@ const ExpandedProjectCard = ({ project, onClose, onViewGallery }: ExpandedProjec
                 </div>
               </div>
 
-              {/* Actions */}
-              <div className="space-y-3">
-                <button
-                  className="w-full px-4 py-3 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors duration-200"
-                  style={{
-                    backgroundColor: 'hsl(0 0% 10%)',
-                    color: 'hsl(45 100% 60%)',
-                    border: '1px solid hsl(0 0% 16%)',
-                  }}
-                >
-                  View PDF
-                </button>
-                {project.images.length > 0 && (
-                  <button
-                    onClick={() => onViewGallery(project, imgIndex)}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-semibold tracking-wide uppercase transition-colors duration-200"
-                    style={{
-                      backgroundColor: 'hsl(45 100% 60% / 0.1)',
-                      color: 'hsl(45 100% 60%)',
-                      border: '1px solid hsl(45 100% 60% / 0.3)',
-                    }}
-                  >
-                    <Maximize2 size={14} />
-                    Full Gallery
-                  </button>
-                )}
-              </div>
             </div>
           </div>
         </div>
