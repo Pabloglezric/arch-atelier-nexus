@@ -7,11 +7,14 @@ import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { PaperDesignBackground } from '@/components/ui/neon-dither';
 import { defaultParams, type PavilionParams } from '@/components/3d/ParametricPavilion';
 import { defaultTowerParams, previewTowerParams, type TowerParams } from '@/components/3d/TwistingTowers';
+import { defaultOceanParams, previewOceanParams, type OceanParams } from '@/components/3d/HolographicOcean';
 
 const ParametricPavilion = lazy(() => import('@/components/3d/ParametricPavilion'));
 const PavilionControls = lazy(() => import('@/components/3d/PavilionControls'));
 const TwistingTowers = lazy(() => import('@/components/3d/TwistingTowers'));
 const TowerControls = lazy(() => import('@/components/3d/TowerControls'));
+const HolographicOcean = lazy(() => import('@/components/3d/HolographicOcean'));
+const OceanControls = lazy(() => import('@/components/3d/OceanControls'));
 
 interface ModelSlot {
   label: string;
@@ -20,9 +23,10 @@ interface ModelSlot {
 }
 
 const modelSlots: ModelSlot[] = [
+  { label: 'Holographic Ocean Simulation', description: 'Interactive particle-based fluid dynamics with bloom post-processing', hasModel: true },
   { label: 'Parametric Pavilion Simulation', description: 'Interactive parametric brick wall with dynamic sun cycle', hasModel: true },
   { label: 'Twisting Towers Studio', description: 'Interactive parametric twisting towers with customisable geometry', hasModel: true },
-  { label: 'Model Viewer 3', description: 'Context model or site plan — glTF / Three.js embed', hasModel: false },
+  { label: 'Model Viewer 4', description: 'Context model or site plan — glTF / Three.js embed', hasModel: false },
 ];
 
 // Reduced params for card preview (smaller grid = better perf)
@@ -36,6 +40,7 @@ const previewParams: PavilionParams = {
 
 const InteractiveModels = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [oceanParams, setOceanParams] = useState<OceanParams>({ ...defaultOceanParams });
   const [pavilionParams, setPavilionParams] = useState<PavilionParams>({ ...defaultParams });
   const [towerParams, setTowerParams] = useState<TowerParams>({ ...defaultTowerParams });
   const openModel = (index: number) => {
@@ -119,7 +124,7 @@ const InteractiveModels = () => {
                 }}
               >
                 {/* Live 3D preview for models that have one */}
-                {item.hasModel && idx === 0 ? (
+                {item.hasModel ? (
                   <Suspense
                     fallback={
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -128,37 +133,11 @@ const InteractiveModels = () => {
                     }
                   >
                     <div className="absolute inset-0 pointer-events-none">
-                      <ParametricPavilion params={previewParams} interactive={false} />
+                      {idx === 0 && <HolographicOcean params={previewOceanParams} interactive={false} />}
+                      {idx === 1 && <ParametricPavilion params={previewParams} interactive={false} />}
+                      {idx === 2 && <TwistingTowers params={previewTowerParams} interactive={false} />}
                     </div>
                     {/* Hover overlay */}
-                    <div
-                      className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ backgroundColor: 'hsl(0 0% 0% / 0.5)' }}
-                    >
-                      <div className="flex flex-col items-center gap-3">
-                        <div
-                          className="w-14 h-14 rounded-full flex items-center justify-center"
-                          style={{ backgroundColor: 'hsl(45 100% 60% / 0.2)', border: '1px solid hsl(45 100% 60% / 0.4)' }}
-                        >
-                          <Box size={24} strokeWidth={1.5} style={{ color: 'hsl(45 100% 60%)' }} />
-                        </div>
-                        <span className="text-sm font-semibold tracking-wider uppercase" style={{ color: 'hsl(45 100% 60%)' }}>
-                          Click to interact
-                        </span>
-                      </div>
-                    </div>
-                  </Suspense>
-                ) : item.hasModel && idx === 1 ? (
-                  <Suspense
-                    fallback={
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Loader2 size={24} className="animate-spin" style={{ color: 'hsl(45 100% 60% / 0.5)' }} />
-                      </div>
-                    }
-                  >
-                    <div className="absolute inset-0 pointer-events-none">
-                      <TwistingTowers params={previewTowerParams} interactive={false} />
-                    </div>
                     <div
                       className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{ backgroundColor: 'hsl(0 0% 0% / 0.5)' }}
@@ -272,9 +251,12 @@ const InteractiveModels = () => {
             <div className="absolute top-16 right-5 z-50">
               <Suspense fallback={null}>
                 {expandedIndex === 0 && (
-                  <PavilionControls params={pavilionParams} onChange={setPavilionParams} />
+                  <OceanControls params={oceanParams} onChange={setOceanParams} />
                 )}
                 {expandedIndex === 1 && (
+                  <PavilionControls params={pavilionParams} onChange={setPavilionParams} />
+                )}
+                {expandedIndex === 2 && (
                   <TowerControls params={towerParams} onChange={setTowerParams} />
                 )}
               </Suspense>
@@ -292,9 +274,12 @@ const InteractiveModels = () => {
               }
             >
               {expandedIndex === 0 && (
-                <ParametricPavilion className="w-full h-full" params={pavilionParams} interactive={true} />
+                <HolographicOcean className="w-full h-full" params={oceanParams} interactive={true} />
               )}
               {expandedIndex === 1 && (
+                <ParametricPavilion className="w-full h-full" params={pavilionParams} interactive={true} />
+              )}
+              {expandedIndex === 2 && (
                 <TwistingTowers className="w-full h-full" params={towerParams} interactive={true} />
               )}
             </Suspense>
