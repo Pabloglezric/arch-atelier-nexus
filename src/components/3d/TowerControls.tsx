@@ -144,8 +144,13 @@ export default function TowerControls({ params, onChange }: Props) {
       <Section title="Camera & Scene">
         <Toggle label="Auto Rotate" checked={params.autoRotate} onChange={v => set({ autoRotate: v })} />
         <Slider label="Rotate Speed" value={params.rotSpeed} min={0} max={30} onChange={v => set({ rotSpeed: v })} />
-        <Slider label="Env. Lighting %" value={Math.round(params.envLight * 100)} min={0} max={100} onChange={v => set({ envLight: v / 100 })} />
+        <Slider label="Ambient Light %" value={Math.round(params.envLight * 100)} min={0} max={100} onChange={v => set({ envLight: v / 100 })} />
         <Slider label="Fog Density" value={params.fogDensity} min={0} max={50} onChange={v => set({ fogDensity: Math.round(v) })} />
+        <div className="flex items-center justify-between">
+          <span className="text-[11px]" style={{ color: 'hsl(0 0% 75%)' }}>Background</span>
+          <input type="color" value={params.bgColor} onChange={e => set({ bgColor: e.target.value })}
+            className="w-6 h-6 rounded cursor-pointer border-0 p-0" style={{ background: 'transparent' }} />
+        </div>
       </Section>
 
       <Section title="Presets">
