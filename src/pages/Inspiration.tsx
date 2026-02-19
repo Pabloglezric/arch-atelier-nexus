@@ -3,10 +3,7 @@ import { motion } from 'framer-motion';
 import Navigation from '@/components/Navigation';
 import SEOHead from '@/components/SEOHead';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
-import { Heart, Send, Loader2, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import { Heart } from 'lucide-react';
 
 const categories = ['All', 'Architecture', 'BIM & Digital', 'Parametric', 'Materials', 'Urbanism', 'AI & Tech', 'Renders'];
 
@@ -105,10 +102,7 @@ const Inspiration = () => {
   const [sortByLoved, setSortByLoved] = useState(false);
   const [votes, setVotes] = useState<Record<string, number>>(getVotes);
   const [liked, setLiked] = useState<string[]>(getLiked);
-  const [url, setUrl] = useState('');
-  const [note, setNote] = useState('');
-  const [sending, setSending] = useState(false);
-  const { toast } = useToast();
+  
 
   // Canvas animation
   useEffect(() => {
@@ -144,22 +138,6 @@ const Inspiration = () => {
     setVotes(newVotes);
     localStorage.setItem('inspiration-liked', JSON.stringify(newLiked));
     localStorage.setItem('inspiration-votes', JSON.stringify(newVotes));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!url.trim()) { toast({ title: 'Please enter a URL', variant: 'destructive' }); return; }
-    setSending(true);
-    try {
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: { name: 'Inspiration Submission', email: 'noreply@archevolution.world', subject: 'Inspiration Submission', message: `URL: ${url.trim()}\n\nNote: ${note.trim() || '(none)'}` },
-      });
-      if (error) throw error;
-      toast({ title: 'Submitted!', description: 'Thanks for sharing your inspiration.' });
-      setUrl(''); setNote('');
-    } catch {
-      toast({ title: 'Error sending submission', variant: 'destructive' });
-    } finally { setSending(false); }
   };
 
   return (
@@ -245,46 +223,6 @@ const Inspiration = () => {
                 </motion.div>
               );
             })}
-          </motion.div>
-
-          {/* Submit Section */}
-          <motion.div className="mt-24 max-w-2xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
-            <div className="rounded-2xl border border-accent/30 p-8 md:p-12" style={{ background: 'rgba(10,10,10,0.6)', backdropFilter: 'blur(10px)' }}>
-              <h2 className="font-playfair text-3xl font-bold text-accent mb-3">Submit an Inspiration</h2>
-              <p className="mb-8" style={{ color: 'hsl(45, 10%, 55%)' }}>Spotted something worth archiving? Share the reference.</p>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-accent/80 mb-2">URL *</label>
-                  <div className="relative">
-                    <ExternalLink className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                    <input
-                      type="url"
-                      value={url}
-                      onChange={e => setUrl(e.target.value)}
-                      placeholder="https://..."
-                      required
-                      maxLength={500}
-                      className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-accent/50 transition-colors"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-accent/80 mb-2">Note (optional)</label>
-                  <textarea
-                    value={note}
-                    onChange={e => setNote(e.target.value)}
-                    placeholder="Why is this inspiring?"
-                    maxLength={500}
-                    rows={3}
-                    className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-accent/50 transition-colors resize-none"
-                  />
-                </div>
-                <Button type="submit" disabled={sending} className="bg-accent text-black hover:bg-accent/90 font-semibold px-8">
-                  {sending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Send className="w-4 h-4 mr-2" />}
-                  {sending ? 'Sending...' : 'Submit'}
-                </Button>
-              </form>
-            </div>
           </motion.div>
         </div>
 
