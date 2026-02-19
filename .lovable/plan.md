@@ -1,112 +1,64 @@
 
 
-# Fix Custom Domain SSL + Full SEO/GEO Optimization
+# Inspiration Page
 
-## Part 1: Custom Domain (3points.life) SSL Fix
+## Overview
+A new "Inspiration" page with a Pinterest-style masonry grid, category filters, a localStorage-based voting system, and a submission form that emails references to admin@archevolution.world.
 
-The error you're seeing ("ERR_SSL_VERSION_OR_CIPHER_MISMATCH") means the SSL certificate hasn't been provisioned for your domain yet. This is a DNS/hosting configuration issue, not a code issue.
+## Navigation Update
+- Add "Inspiration" link between "Interactive Models" and "About" in `src/components/Navigation.tsx`
+- Add route `/inspiration` in `src/App.tsx`
 
-**What you need to do (outside of Lovable):**
+## New Page: `src/pages/Inspiration.tsx`
+Matches the existing dark aesthetic (black background with dithered gold orb canvas animation, same fonts and styling patterns as Portfolio/Contact pages).
 
-1. Go to your Lovable project **Settings > Domains**
-2. Click **Connect Domain** and enter `3points.life`
-3. At your domain registrar (wherever you bought 3points.life), set these DNS records:
-   - **A Record**: Name: `@` -> Value: `185.158.133.1`
-   - **A Record**: Name: `www` -> Value: `185.158.133.1`
-   - **TXT Record**: Name: `_lovable` -> Value: (Lovable will provide this during setup)
-4. Wait for DNS propagation (up to 72 hours) -- Lovable will automatically provision the SSL certificate
-5. Add both `3points.life` and `www.3points.life` in Lovable, set one as Primary
+### Sections
 
-If you already set this up, check with a tool like [DNSChecker.org](https://dnschecker.org) that your A records point to `185.158.133.1` and there are no conflicting records.
+**1. Page Header**
+- Headline: "Inspiration" (gold, Playfair Display)
+- Subheadline as specified (grey body text)
 
----
+**2. Category Filter Bar**
+- Pill-style buttons matching Portfolio filter bar
+- Categories: All, Architecture, BIM & Digital, Parametric, Materials, Urbanism, AI & Tech, Renders
+- "Sort by: Most Loved" toggle button next to filters
 
-## Part 2: Comprehensive SEO/GEO Optimization
+**3. Masonry Image Grid**
+- CSS columns-based masonry layout: 3 columns desktop, 2 tablet, 1 mobile
+- 6 placeholder cards using picsum.photos at varied aspect ratios
+- Each card: full-bleed image with hover overlay showing category tag (gold pill), title (white), and heart button with counter
+- Heart toggles gold on click; vote count stored in localStorage per image ID
+- Most-voted images get a subtle gold border glow
+- Framer Motion fade-in animations
 
-I will implement the following across every page of the site:
-
-### A. Create an SEO Head Component
-A reusable `<SEOHead>` component using `react-helmet-async` that dynamically sets per-page:
-- `<title>` with targeted keywords
-- `<meta name="description">` unique per page
-- `<meta name="keywords">` relevant to each page
-- Open Graph tags (og:title, og:description, og:url, og:image, og:type)
-- Twitter Card tags
-- Canonical URL (`<link rel="canonical">`)
-- `<meta name="robots" content="index, follow">`
-- Schema.org structured data (JSON-LD) for Person, Organization, and WebPage
-
-### B. Page-Specific SEO Metadata
-
-| Page | Title | Focus Keywords |
-|------|-------|----------------|
-| Home `/` | Juan Pablo Gonzalez Ricardez - BIM Specialist & Architectural Technologist, Leeds | BIM specialist Leeds, architectural technologist |
-| Portfolio `/portfolio` | Portfolio - BIM Projects & Architectural Documentation | BIM portfolio, Revit models, LOD400 |
-| About `/about` | About - Architectural Technologist & BIM Consultant | architectural technologist UK, BIM consultant |
-| Contact `/contact` | Contact - Hire a BIM Specialist | hire BIM specialist, architectural services |
-| Interactive Models `/interactive-models` | Interactive 3D Models - Parametric Design | 3D BIM models, parametric design |
-
-### C. Structured Data (JSON-LD)
-Add Schema.org markup for:
-- **Person** schema (name, jobTitle, url, sameAs for LinkedIn)
-- **ProfessionalService** schema (services offered, location)
-- **WebSite** schema with search action potential
-
-### D. Update robots.txt
-Add a sitemap reference and explicit ChatGPT/AI bot permissions:
-
-```text
-User-agent: *
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: CCBot
-Allow: /
-
-Sitemap: https://3points.life/sitemap.xml
-```
-
-### E. Create sitemap.xml
-A static `public/sitemap.xml` listing all pages with priorities and change frequencies.
-
-### F. Update index.html
-- Fix the `og:image` and `twitter:image` to use proper site branding
-- Add `<meta name="robots">` tag
-- Update author meta to "Juan Pablo Gonzalez Ricardez"
-- Add geo meta tags (geo.region, geo.placename)
-
-### G. Semantic HTML Improvements
-- Ensure proper heading hierarchy (h1 > h2 > h3) on every page
-- Add `alt` text to all images with descriptive, keyword-rich content
-- Add `aria-label` attributes for accessibility and crawlability
-
----
+**4. Submit an Inspiration (bottom section)**
+- Dark card with gold border
+- Headline + body text as specified
+- Form: URL field + optional Note field + Submit button
+- Submits via the existing `send-contact-email` edge function with subject "Inspiration Submission"
 
 ## Technical Details
 
-### New files:
-- `src/components/SEOHead.tsx` - Reusable SEO component with react-helmet-async
-- `public/sitemap.xml` - XML sitemap for all pages
+### Files to create
+- `src/pages/Inspiration.tsx` -- full page component
 
-### Modified files:
-- `index.html` - Updated meta tags, geo tags, author
-- `public/robots.txt` - AI bot permissions + sitemap reference
-- `src/main.tsx` - Wrap app with HelmetProvider
-- `src/pages/Index.tsx` - Add SEOHead + JSON-LD
-- `src/pages/Portfolio.tsx` - Add SEOHead + JSON-LD
-- `src/pages/About.tsx` - Add SEOHead + JSON-LD
-- `src/pages/Contact.tsx` - Add SEOHead + JSON-LD
-- `src/pages/InteractiveModels.tsx` - Add SEOHead + JSON-LD
-- `src/pages/NotFound.tsx` - Add noindex meta
+### Files to modify
+- `src/App.tsx` -- add `/inspiration` route
+- `src/components/Navigation.tsx` -- add "Inspiration" nav item between "Interactive Models" and "About"
 
-### New dependency:
-- `react-helmet-async` - for dynamic document head management
+### Voting Implementation
+- localStorage key: `inspiration-votes` storing `Record<string, number>` for vote counts
+- localStorage key: `inspiration-liked` storing `string[]` of liked image IDs
+- Toggle behavior: click heart to like (increment +1, turn gold), click again to unlike (decrement -1, revert)
+- "Sort by: Most Loved" re-orders grid descending by vote count
+
+### Masonry Layout
+Using CSS `columns` property for a true Pinterest-style variable-height grid without additional dependencies:
+```text
+columns-1 md:columns-2 lg:columns-3
+```
+Each card uses `break-inside: avoid` to prevent splitting across columns.
+
+### Form Submission
+Reuses the existing `send-contact-email` edge function with subject set to "Inspiration Submission" and the URL + note as the message body. Same validation patterns as the Contact page.
 
