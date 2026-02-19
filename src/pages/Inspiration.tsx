@@ -5,23 +5,29 @@ import SEOHead from '@/components/SEOHead';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { Heart } from 'lucide-react';
 
-const categories = ['All', 'Architecture', 'BIM & Digital', 'Parametric', 'Materials', 'Urbanism', 'AI & Tech', 'Renders'];
+import inspGallery1 from '@/assets/insp-gallery-1.png';
+import inspGallery2 from '@/assets/insp-gallery-2.png';
+import inspShellPavilion from '@/assets/insp-shell-pavilion.png';
+import inspTowerBalconies from '@/assets/insp-tower-balconies.png';
+import inspTimberComplex from '@/assets/insp-timber-complex.png';
+import inspOrganicSpa from '@/assets/insp-organic-spa.png';
+import inspWarmInterior from '@/assets/insp-warm-interior.png';
 
 interface InspirationItem {
   id: string;
   title: string;
-  category: string;
   image: string;
-  height: number; // aspect ratio hint
+  height: number;
 }
 
 const placeholderItems: InspirationItem[] = [
-  { id: 'insp-1', title: 'Brutalist Concrete Tower', category: 'Architecture', image: 'https://picsum.photos/seed/arch1/600/800', height: 800 },
-  { id: 'insp-2', title: 'Parametric Facade Study', category: 'Parametric', image: 'https://picsum.photos/seed/param1/600/450', height: 450 },
-  { id: 'insp-3', title: 'Digital Twin Workflow', category: 'BIM & Digital', image: 'https://picsum.photos/seed/bim1/600/700', height: 700 },
-  { id: 'insp-4', title: 'Reclaimed Timber Detail', category: 'Materials', image: 'https://picsum.photos/seed/mat1/600/500', height: 500 },
-  { id: 'insp-5', title: 'AI-Generated Masterplan', category: 'AI & Tech', image: 'https://picsum.photos/seed/ai1/600/650', height: 650 },
-  { id: 'insp-6', title: 'Urban Waterfront Render', category: 'Renders', image: 'https://picsum.photos/seed/render1/600/550', height: 550 },
+  { id: 'insp-1', title: 'Waterfront Gallery Pavilion', image: inspGallery1, height: 800 },
+  { id: 'insp-2', title: 'Shell Form Meditation Chapel', image: inspShellPavilion, height: 900 },
+  { id: 'insp-3', title: 'Harbour Museum Hall', image: inspGallery2, height: 700 },
+  { id: 'insp-4', title: 'Tensile Canopy Tower', image: inspTowerBalconies, height: 800 },
+  { id: 'insp-5', title: 'Organic Timber Community Centre', image: inspTimberComplex, height: 750 },
+  { id: 'insp-6', title: 'Biomorphic Spa Interior', image: inspOrganicSpa, height: 800 },
+  { id: 'insp-7', title: 'Warm Minimalist Living', image: inspWarmInterior, height: 750 },
 ];
 
 const getVotes = (): Record<string, number> => {
@@ -98,13 +104,10 @@ const fadeUp = {
 
 const Inspiration = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [activeCategory, setActiveCategory] = useState('All');
   const [sortByLoved, setSortByLoved] = useState(false);
   const [votes, setVotes] = useState<Record<string, number>>(getVotes);
   const [liked, setLiked] = useState<string[]>(getLiked);
-  
 
-  // Canvas animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -124,10 +127,10 @@ const Inspiration = () => {
   const maxVotes = useMemo(() => Math.max(0, ...Object.values(votes)), [votes]);
 
   const filteredItems = useMemo(() => {
-    let items = activeCategory === 'All' ? [...placeholderItems] : placeholderItems.filter(i => i.category === activeCategory);
+    const items = [...placeholderItems];
     if (sortByLoved) items.sort((a, b) => (votes[b.id] || 0) - (votes[a.id] || 0));
     return items;
-  }, [activeCategory, sortByLoved, votes]);
+  }, [sortByLoved, votes]);
 
   const toggleLike = (id: string) => {
     const isLiked = liked.includes(id);
@@ -156,22 +159,8 @@ const Inspiration = () => {
             </p>
           </motion.div>
 
-          {/* Filter Bar */}
-          <motion.div className="flex flex-wrap items-center justify-center gap-3 mb-12" initial="hidden" animate="visible" variants={fadeUp} custom={1}>
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
-                  activeCategory === cat
-                    ? 'bg-accent text-black border-accent'
-                    : 'bg-transparent border-white/20 hover:border-accent/50'
-                }`}
-                style={activeCategory !== cat ? { color: 'hsl(45, 10%, 55%)' } : undefined}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Sort Toggle */}
+          <motion.div className="flex justify-center mb-12" initial="hidden" animate="visible" variants={fadeUp} custom={1}>
             <button
               onClick={() => setSortByLoved(!sortByLoved)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border flex items-center gap-2 ${
@@ -202,13 +191,11 @@ const Inspiration = () => {
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full block"
-                    style={{ aspectRatio: `600 / ${item.height}` }}
+                    className="w-full block object-cover"
                     loading="lazy"
                   />
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex flex-col justify-between p-4 opacity-0 group-hover:opacity-100">
-                    <span className="self-start px-3 py-1 rounded-full text-xs font-semibold bg-accent text-black">{item.category}</span>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100">
                     <div className="flex items-end justify-between">
                       <span className="text-white font-semibold text-lg leading-tight">{item.title}</span>
                       <button
@@ -226,7 +213,6 @@ const Inspiration = () => {
           </motion.div>
         </div>
 
-        {/* CTA */}
         <div className="mt-20">
           <ArchEvolutionCTA />
         </div>
