@@ -7,6 +7,29 @@ All colors MUST be HSL.
 */
 
 @layer base {
+  /* Theme-scoped custom properties */
+  [data-theme="disruptive"] {
+    --bg-primary: 0 0% 0%;
+    --bg-secondary: 220 18% 8%;
+    --text-primary: 0 0% 100%;
+    --text-accent: 45 100% 60%;
+    --border-color: 45 100% 60%;
+    --font-headline: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  [data-theme="classic"] {
+    --bg-primary: 38 33% 93%;
+    --bg-secondary: 38 28% 89%;
+    --text-primary: 30 15% 9%;
+    --text-accent: 0 68% 32%;
+    --border-color: 30 15% 9%;
+    --font-headline: 'Playfair Display', Georgia, serif;
+    --font-body: 'Libre Baskerville', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
   :root {
     /* Modern Architectural Color Palette */
     --background: 0 0% 100%;
