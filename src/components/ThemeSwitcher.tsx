@@ -5,7 +5,7 @@ const ThemeSwitcher = () => {
     if (typeof window !== 'undefined') {
       return (localStorage.getItem('site-theme') as 'disruptive' | 'classic') || 'classic';
     }
-    return 'disruptive';
+    return 'classic';
   });
 
   useEffect(() => {
