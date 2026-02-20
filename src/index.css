@@ -501,8 +501,13 @@ input[type="range"]::-moz-range-thumb {
   border-color: #1a1612 !important;
 }
 
-/* ── Index page background ── */
-[data-theme="classic"] .min-h-screen[style*="backgroundColor: hsl(0 0% 4%)"] {
+/* ── All page backgrounds ── */
+[data-theme="classic"] .min-h-screen[style*="background-color"] {
+  background-color: #f5f0e8 !important;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E") !important;
+}
+
+[data-theme="classic"] .relative.min-h-screen {
   background-color: #f5f0e8 !important;
 }
 
@@ -545,9 +550,10 @@ input[type="range"]::-moz-range-thumb {
    CLASSIC MODE — Portfolio Page
    ═══════════════════════════════════════════════ */
 
-/* Page background */
-[data-theme="classic"] .min-h-screen[style*="backgroundColor: hsl(0 0% 4%)"] canvas,
-[data-theme="classic"] .min-h-screen.bg-black canvas {
+/* Page background — hide canvas on all pages */
+[data-theme="classic"] .relative.min-h-screen canvas,
+[data-theme="classic"] .min-h-screen.bg-black canvas,
+[data-theme="classic"] canvas.fixed {
   display: none !important;
 }
 
@@ -565,18 +571,8 @@ input[type="range"]::-moz-range-thumb {
   font-style: italic !important;
 }
 
-/* Filter pills */
-[data-theme="classic"] button[style*="backgroundColor: hsl(45 100% 60%)"][style*="color: hsl(0 0% 4%)"] {
-  background-color: #1a1612 !important;
-  color: #f5f0e8 !important;
-  border-color: #1a1612 !important;
-  border-radius: 0 !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.08em !important;
-}
-
-[data-theme="classic"] button[style*="border: 1px solid hsl(0 0% 18%)"] {
+/* Filter pills — all filter buttons */
+[data-theme="classic"] .flex.flex-wrap.justify-center.gap-3 button {
   border: 1px solid #1a1612 !important;
   background: transparent !important;
   color: #1a1612 !important;
@@ -586,22 +582,21 @@ input[type="range"]::-moz-range-thumb {
   letter-spacing: 0.08em !important;
 }
 
-/* Filter pills — rounded-full override */
-[data-theme="classic"] .flex.flex-wrap.justify-center.gap-3 button.rounded-full {
-  border-radius: 0 !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.08em !important;
+/* Active filter pill */
+[data-theme="classic"] .flex.flex-wrap.justify-center.gap-3 button[style*="background-color: hsl(45"] {
+  background-color: #1a1612 !important;
+  color: #f5f0e8 !important;
+  border-color: #1a1612 !important;
 }
 
-/* Project cards */
-[data-theme="classic"] .group.rounded-lg[style*="backgroundColor: hsl(0 0% 7%)"] {
+/* Project cards — target by structure since inline style selectors are unreliable */
+[data-theme="classic"] .group.rounded-lg.overflow-hidden {
   background-color: #ffffff !important;
   border: 1px solid #1a1612 !important;
   border-radius: 0 !important;
 }
 
-[data-theme="classic"] .group.rounded-lg[style*="backgroundColor: hsl(0 0% 7%)"]:hover {
+[data-theme="classic"] .group.rounded-lg.overflow-hidden:hover {
   border-color: #1a1612 !important;
   transform: translateY(-2px);
   box-shadow: 3px 3px 0px #1a1612 !important;
@@ -631,7 +626,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Tool tags on cards */
-[data-theme="classic"] .group span[style*="backgroundColor: hsl(0 0% 12%)"] {
+[data-theme="classic"] .group .flex-wrap span.rounded-full {
   background-color: #ede8dc !important;
   border: 1px solid #9a8f82 !important;
   color: #6b6054 !important;
@@ -640,7 +635,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Category tag on card images */
-[data-theme="classic"] span[style*="backgroundColor: hsl(45 100% 60% / 0.85)"] {
+[data-theme="classic"] .absolute.top-3.left-3 {
   background-color: #8B1A1A !important;
   color: #f5f0e8 !important;
   border-radius: 0 !important;
@@ -676,19 +671,19 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Stat cards */
-[data-theme="classic"] .rounded-lg[style*="backgroundColor: hsl(45 100% 60% / 0.08)"] {
+[data-theme="classic"] .flex-1.max-w-\[220px\].rounded-lg {
   background-color: #1a1612 !important;
   border-color: #1a1612 !important;
   border-radius: 0 !important;
 }
 
-[data-theme="classic"] .rounded-lg[style*="backgroundColor: hsl(45 100% 60% / 0.08)"] p.font-display {
+[data-theme="classic"] .flex-1.max-w-\[220px\] p.font-display {
   color: #f5f0e8 !important;
   font-family: 'Playfair Display', serif !important;
   font-weight: 700 !important;
 }
 
-[data-theme="classic"] .rounded-lg[style*="backgroundColor: hsl(45 100% 60% / 0.08)"] p.tracking-widest {
+[data-theme="classic"] .flex-1.max-w-\[220px\] p.tracking-widest {
   color: rgba(245, 240, 232, 0.6) !important;
 }
 
@@ -717,7 +712,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* "What I Do" service cards */
-[data-theme="classic"] .group.rounded-lg[style*="backgroundColor: hsl(0 0% 6%)"] {
+[data-theme="classic"] .group.rounded-lg.transition-colors {
   background-color: #ffffff !important;
   border: 1px solid #1a1612 !important;
   border-left: 3px solid #8B1A1A !important;
@@ -728,7 +723,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Tools pills */
-[data-theme="classic"] span.rounded-full[style*="backgroundColor: hsl(0 0% 8%)"] {
+[data-theme="classic"] span.rounded-full.tracking-wide {
   background-color: #ede8dc !important;
   border: 1px solid #9a8f82 !important;
   color: #6b6054 !important;
@@ -748,15 +743,15 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* About CTA dark block */
-[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"][style*="border: 1px solid hsl(45 100% 60% / 0.15)"] {
+[data-theme="classic"] .text-center.rounded-xl {
   background-color: #1a1612 !important;
   border: 1px solid #1a1612 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
 }
 
-/* CTA buttons on About */
-[data-theme="classic"] .rounded-full[style*="backgroundColor: hsl(45 100% 60%)"][style*="color: hsl(0 0% 4%)"] {
+/* CTA buttons */
+[data-theme="classic"] a.rounded-full[style*="background-color"] {
   background-color: #8B1A1A !important;
   color: #f5f0e8 !important;
   border-radius: 0 !important;
@@ -764,7 +759,7 @@ input[type="range"]::-moz-range-thumb {
   text-transform: uppercase !important;
 }
 
-[data-theme="classic"] .rounded-full[style*="border: 1px solid hsl(45 100% 60% / 0.4)"] {
+[data-theme="classic"] a.rounded-full[style*="border"] {
   border: 2px solid #f5f0e8 !important;
   color: #f5f0e8 !important;
   border-radius: 0 !important;
@@ -871,22 +866,17 @@ input[type="range"]::-moz-range-thumb {
    ═══════════════════════════════════════════════ */
 
 /* Model viewer container */
-[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"][style*="border: 1px solid hsl(0 0% 12%)"] {
+[data-theme="classic"] .rounded-xl.overflow-hidden.group {
   border: 2px solid #1a1612 !important;
   border-radius: 0 !important;
   background-color: #ede8dc !important;
 }
 
-/* Model label text */
-[data-theme="classic"] span[style*="color: hsl(45 100% 60%)"] {
-  color: #8B1A1A !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
-}
+/* Model label text — already handled by span[style*="color: hsl(45 100% 60%)"] above */
 
 /* Corner accents in classic */
-[data-theme="classic"] div[style*="backgroundColor: hsl(45 100% 60% / 0.2)"] {
+[data-theme="classic"] .absolute .w-6 .h-px,
+[data-theme="classic"] .absolute .w-6 .w-px {
   background-color: rgba(26, 22, 18, 0.3) !important;
 }
 
@@ -919,12 +909,22 @@ input[type="range"]::-moz-range-thumb {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
-/* ArchEvolution CTA in classic context (non-dark wrapper) */
-[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] h2,
-[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] h3 {
+/* ArchEvolution CTA in classic context */
+[data-theme="classic"] .text-center.rounded-xl h2,
+[data-theme="classic"] .text-center.rounded-xl h3 {
   color: #f5f0e8 !important;
 }
 
-[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] p {
+[data-theme="classic"] .text-center.rounded-xl p {
   color: rgba(245, 240, 232, 0.7) !important;
+}
+
+/* PaperDesignBackground hide in classic */
+[data-theme="classic"] .pointer-events-none canvas {
+  display: none !important;
+}
+
+/* Neon dither background — hide in classic */
+[data-theme="classic"] [style*="background"] canvas {
+  display: none !important;
 }
