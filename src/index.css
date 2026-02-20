@@ -221,3 +221,322 @@ input[type="range"]::-moz-range-thumb {
   border: 2px solid hsl(0 0% 0%);
   box-shadow: 0 0 6px hsl(45 100% 60% / 0.4);
 }
+
+/* ═══════════════════════════════════════════════
+   CLASSIC MODE — Full Override Layer
+   ═══════════════════════════════════════════════ */
+
+[data-theme="classic"] body {
+  background-color: #f5f0e8;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  color: #1a1612;
+  font-family: 'Libre Baskerville', Georgia, serif;
+}
+
+/* ── Navigation ── */
+[data-theme="classic"] nav {
+  background: #f5f0e8 !important;
+  backdrop-filter: none !important;
+  border-bottom: 2px solid #1a1612 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="classic"] nav a {
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  font-size: 0.7rem !important;
+  color: #1a1612 !important;
+  opacity: 1 !important;
+}
+
+[data-theme="classic"] nav a[class*="text-accent"],
+[data-theme="classic"] nav a .absolute {
+  color: #8B1A1A !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px !important;
+}
+
+[data-theme="classic"] nav a .absolute.h-0\.5 {
+  background: #8B1A1A !important;
+}
+
+[data-theme="classic"] nav button svg {
+  color: #1a1612 !important;
+}
+
+/* ── Hero — static background ── */
+[data-theme="classic"] .fixed.inset-0.w-full.h-full.overflow-hidden {
+  background: #f5f0e8 !important;
+}
+
+[data-theme="classic"] .fixed.inset-0 canvas {
+  display: none !important;
+}
+
+[data-theme="classic"] .fixed.inset-0 > div:first-of-type {
+  background: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-theme="classic"] .fixed.inset-0::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 0;
+}
+
+[data-theme="classic"] .fixed.inset-0::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 240, 232, 0.55);
+  z-index: 1;
+}
+
+/* Hero text styling */
+[data-theme="classic"] .fixed.inset-0 .text-center h1 {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 900 !important;
+  color: #1a1612 !important;
+  font-size: clamp(2.5rem, 6vw, 5rem) !important;
+  letter-spacing: -0.02em !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #1a1612 !important;
+  background-clip: unset !important;
+}
+
+[data-theme="classic"] .fixed.inset-0 .text-center .tracking-\[0\.3em\] {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.25em !important;
+  color: #6b6054 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #6b6054 !important;
+  background-clip: unset !important;
+}
+
+/* Hero manifesto card */
+[data-theme="classic"] .fixed.inset-0 .rounded-xl {
+  background: rgba(245, 240, 232, 0.92) !important;
+  backdrop-filter: none !important;
+  border: 1px solid #1a1612 !important;
+  border-left: 4px solid #8B1A1A !important;
+  box-shadow: none !important;
+}
+
+[data-theme="classic"] .fixed.inset-0 .rounded-xl p {
+  color: #1a1612 !important;
+  font-family: 'Libre Baskerville', serif !important;
+  font-style: italic !important;
+  -webkit-text-fill-color: #1a1612 !important;
+}
+
+/* Hero content container text color */
+[data-theme="classic"] .fixed.inset-0 .flex.flex-col.items-center.justify-center {
+  z-index: 10;
+}
+
+/* ── Social proof / Connect section ── */
+[data-theme="classic"] section[style*="background-color: hsl(0 0% 0%"] {
+  background-color: #1a1612 !important;
+}
+
+/* ── Bottom wrapper ── */
+[data-theme="classic"] div[style*="background-color: hsl(0 0% 0% / 0.6)"] {
+  background-color: #f5f0e8 !important;
+}
+
+/* ── Three Points Section ── */
+[data-theme="classic"] .font-display[style*="color: hsl(0 0% 92%)"] {
+  color: #1a1612 !important;
+}
+
+[data-theme="classic"] span[style*="color: hsl(45 100% 60%)"] {
+  color: #8B1A1A !important;
+}
+
+[data-theme="classic"] p[style*="color: hsl(0 0% 50%)"],
+[data-theme="classic"] p[style*="color: hsl(0 0% 45%)"] {
+  color: #1a1612 !important;
+}
+
+/* Three Points principle cards */
+[data-theme="classic"] .grid .rounded-lg[style*="backgroundColor: hsl(0 0% 6%)"] {
+  background-color: #f5f0e8 !important;
+  border: 1px solid #1a1612 !important;
+  border-top: 2px solid #8B1A1A !important;
+}
+
+[data-theme="classic"] .grid .rounded-lg h3[style*="color: hsl(45 100% 60%)"] {
+  color: #8B1A1A !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+[data-theme="classic"] .grid .rounded-lg p[style*="color: hsl(0 0% 45%)"] {
+  color: #1a1612 !important;
+  font-family: 'Libre Baskerville', serif !important;
+}
+
+/* ── ArchEvolution CTA block ── */
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] {
+  background-color: #1a1612 !important;
+  border: 1px solid #1a1612 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] p[style*="color: hsl(45 100% 60%"] {
+  color: #f5f0e8 !important;
+}
+
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] h3[style*="color: hsl(0 0% 92%)"] {
+  color: #f5f0e8 !important;
+  font-family: 'Libre Baskerville', serif !important;
+}
+
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] p[style*="color: hsl(0 0% 45%)"] {
+  color: rgba(245, 240, 232, 0.7) !important;
+  font-family: 'Libre Baskerville', serif !important;
+}
+
+[data-theme="classic"] a[style*="backgroundColor: hsl(45 100% 60%)"] {
+  background-color: #8B1A1A !important;
+  color: #f5f0e8 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Capabilities section ── */
+[data-theme="classic"] .grid[style*="backgroundColor: hsl(45 100% 60%"] {
+  background-color: transparent !important;
+  gap: 1px;
+}
+
+[data-theme="classic"] .group[style*="backgroundColor: hsl(0 0% 4%)"] {
+  background-color: #ffffff !important;
+  border: 1px solid #1a1612 !important;
+  border-left: 3px solid #8B1A1A !important;
+  box-shadow: 2px 2px 0px #1a1612 !important;
+}
+
+[data-theme="classic"] .group div[style*="backgroundColor: hsl(45 100% 60%"] {
+  background-color: rgba(139, 26, 26, 0.08) !important;
+  border-color: rgba(139, 26, 26, 0.25) !important;
+}
+
+[data-theme="classic"] .group div[style*="backgroundColor: hsl(45 100% 60%"] svg,
+[data-theme="classic"] .group svg[style*="color: hsl(45 100% 60%)"] {
+  color: #8B1A1A !important;
+}
+
+[data-theme="classic"] h3[style*="color: hsl(0 0% 88%)"] {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="classic"] p[style*="color: hsl(0 0% 42%)"] {
+  color: #1a1612 !important;
+  font-family: 'Libre Baskerville', serif !important;
+  font-size: 0.9rem !important;
+}
+
+/* Capabilities heading */
+[data-theme="classic"] h2[style*="color: hsl(0 0% 92%)"] {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+}
+
+/* Capabilities section label */
+[data-theme="classic"] span[style*="color: hsl(45 100% 60% / 0.6)"] {
+  color: #8B1A1A !important;
+}
+
+/* Capabilities section divider lines */
+[data-theme="classic"] div[style*="linear-gradient(90deg, transparent, hsl(45 100% 60%"] {
+  background: linear-gradient(90deg, transparent, #1a1612, transparent) !important;
+}
+
+/* ── Social Links section ── */
+[data-theme="classic"] section[style*="backgroundColor: hsl(0 0% 0% / 0.6)"] {
+  background-color: #1a1612 !important;
+}
+
+[data-theme="classic"] section[style*="background-color: hsl(0 0% 0% / 0.6)"] {
+  background-color: #1a1612 !important;
+}
+
+[data-theme="classic"] .container a[style*="backgroundColor: hsl(0 0% 6%"] {
+  background-color: rgba(245, 240, 232, 0.08) !important;
+  border-color: rgba(245, 240, 232, 0.2) !important;
+}
+
+[data-theme="classic"] .container a[style*="backgroundColor: hsl(0 0% 6%"] p[style*="color: hsl(0 0% 88%)"] {
+  color: #f5f0e8 !important;
+}
+
+/* ── Buttons — global overrides ── */
+[data-theme="classic"] .bg-primary {
+  background-color: #1a1612 !important;
+  color: #f5f0e8 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+}
+
+[data-theme="classic"] .bg-primary:hover {
+  background-color: #8B1A1A !important;
+}
+
+[data-theme="classic"] .border-input {
+  border-color: #1a1612 !important;
+}
+
+/* ── Index page background ── */
+[data-theme="classic"] .min-h-screen[style*="backgroundColor: hsl(0 0% 4%)"] {
+  background-color: #f5f0e8 !important;
+}
+
+/* ── Stats-like number styling ── */
+[data-theme="classic"] .font-display.font-bold {
+  font-family: 'Playfair Display', serif !important;
+}
+
+/* ── Generic text resets for classic ── */
+[data-theme="classic"] .text-gradient {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #8B1A1A !important;
+  background-clip: unset !important;
+  color: #8B1A1A !important;
+}
+
+/* ── Divider line override ── */
+[data-theme="classic"] .h-px[style*="linear-gradient"] {
+  background: linear-gradient(90deg, transparent, #1a1612, transparent) !important;
+}
+
+/* ── Theme switcher position fix ── */
+[data-theme="classic"] .fixed.top-4.right-4 {
+  border-color: #1a1612 !important;
+}
+
+
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: hsl(45 100% 60%);
+  cursor: pointer;
+  border: 2px solid hsl(0 0% 0%);
+  box-shadow: 0 0 6px hsl(45 100% 60% / 0.4);
+}
