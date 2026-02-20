@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Upload } from 'lucide-react';
 
@@ -20,7 +20,7 @@ interface ProjectCardProps {
   isLargeCard?: boolean;
 }
 
-const ProjectCard = ({ project, onViewGallery, onExpand, isLargeCard }: ProjectCardProps) => {
+const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, onViewGallery, onExpand, isLargeCard }, ref) => {
   const [imgIndex, setImgIndex] = useState(0);
   const hasImages = project.images.length > 0;
 
@@ -171,6 +171,8 @@ const ProjectCard = ({ project, onViewGallery, onExpand, isLargeCard }: ProjectC
       </div>
     </motion.div>
   );
-};
+});
+
+ProjectCard.displayName = 'ProjectCard';
 
 export default ProjectCard;

@@ -1,4 +1,4 @@
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Float, Text3D, Center } from '@react-three/drei';
 import * as THREE from 'three';
@@ -64,9 +64,9 @@ const Particles = () => {
 };
 
 const Scene3DContent = () => {
-  const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const cylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 8);
-  const torusGeometry = new THREE.TorusGeometry(0.6, 0.2, 8, 16);
+  const boxGeometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
+  const cylinderGeometry = useMemo(() => new THREE.CylinderGeometry(0.5, 0.5, 1, 8), []);
+  const torusGeometry = useMemo(() => new THREE.TorusGeometry(0.6, 0.2, 8, 16), []);
 
   return (
     <>

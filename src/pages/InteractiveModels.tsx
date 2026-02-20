@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, X, Loader2 } from 'lucide-react';
 import Navigation from '@/components/Navigation';
@@ -43,6 +43,35 @@ const InteractiveModels = () => {
   const [oceanParams, setOceanParams] = useState<OceanParams>({ ...defaultOceanParams });
   const [pavilionParams, setPavilionParams] = useState<PavilionParams>({ ...defaultParams });
   const [towerParams, setTowerParams] = useState<TowerParams>({ ...defaultTowerParams });
+  const [visibleSlots, setVisibleSlots] = useState<Set<number>>(new Set());
+  const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const setSlotRef = useCallback((el: HTMLDivElement | null, idx: number) => {
+    slotRefs.current[idx] = el;
+  }, []);
+
+  // Only render 3D previews for slots visible in the viewport
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    slotRefs.current.forEach((el, idx) => {
+      if (!el || !modelSlots[idx].hasModel) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          setVisibleSlots(prev => {
+            const next = new Set(prev);
+            if (entry.isIntersecting) next.add(idx);
+            else next.delete(idx);
+            return next;
+          });
+        },
+        { rootMargin: '100px' }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
+
   const openModel = (index: number) => {
     if (modelSlots[index].hasModel) {
       setExpandedIndex(index);
@@ -106,6 +135,7 @@ const InteractiveModels = () => {
             {modelSlots.map((item, idx) => (
               <motion.div
                 key={idx}
+                ref={(el: HTMLDivElement | null) => setSlotRef(el, idx)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
@@ -123,8 +153,8 @@ const InteractiveModels = () => {
                   (e.currentTarget as HTMLElement).style.borderColor = 'hsl(0, 0%, 12%)';
                 }}
               >
-                {/* Live 3D preview for models that have one */}
-                {item.hasModel ? (
+                {/* Live 3D preview — only mount when slot is in viewport */}
+                {item.hasModel && visibleSlots.has(idx) ? (
                   <Suspense
                     fallback={
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -155,6 +185,11 @@ const InteractiveModels = () => {
                       </div>
                     </div>
                   </Suspense>
+                ) : item.hasModel ? (
+                  /* Model slot not yet in viewport — show loading placeholder */
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Loader2 size={24} className="animate-spin" style={{ color: 'hsl(45 100% 60% / 0.3)' }} />
+                  </div>
                 ) : (
                   <>
                     {/* Grid pattern for empty slots */}
