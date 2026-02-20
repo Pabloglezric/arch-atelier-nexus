@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 const ThemeSwitcher = () => {
   const [theme, setTheme] = useState<'disruptive' | 'classic'>(() => {
     if (typeof window !== 'undefined') {
-      return (localStorage.getItem('site-theme') as 'disruptive' | 'classic') || 'disruptive';
+      return (localStorage.getItem('site-theme') as 'disruptive' | 'classic') || 'classic';
     }
     return 'disruptive';
   });

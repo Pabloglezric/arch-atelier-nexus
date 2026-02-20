@@ -68,9 +68,24 @@ const Navigation = () => {
               </Button>)}
           </div>
 
-          {/* Mobile Menu Button */}
-          <Button variant="ghost" size="sm" className="md:hidden" style={{ color: isClassic ? '#1a1612' : 'white' }} onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X className="h-6 w-6" style={{ color: isClassic ? '#1a1612' : 'white' }} /> : <Menu className="h-6 w-6" style={{ color: isClassic ? '#1a1612' : 'white' }} />}
+          {/* Mobile Menu Button — pinned left */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden absolute left-0"
+            style={{ color: isClassic ? '#1a1612' : 'white' }}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? (
+              <X className="h-6 w-6" style={{ color: isClassic ? '#1a1612' : 'white' }} />
+            ) : (
+              <motion.div
+                animate={{ scale: [1, 1.18, 1] }}
+                transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 3 }}
+              >
+                <Menu className="h-6 w-6" style={{ color: isClassic ? '#1a1612' : 'white' }} />
+              </motion.div>
+            )}
           </Button>
         </div>
 
