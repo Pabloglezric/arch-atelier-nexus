@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-const getTheme = () => document.documentElement.getAttribute('data-theme') || 'disruptive';
+const getTheme = () => document.documentElement.getAttribute('data-theme') || 'classic';
 
 const subscribe = (callback: () => void) => {
   const observer = new MutationObserver(() => callback());
@@ -9,6 +9,6 @@ const subscribe = (callback: () => void) => {
 };
 
 export const useTheme = () => {
-  const theme = useSyncExternalStore(subscribe, getTheme, () => 'disruptive');
+  const theme = useSyncExternalStore(subscribe, getTheme, () => 'classic');
   return { theme, isClassic: theme === 'classic' };
 };
