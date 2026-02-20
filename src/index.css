@@ -870,9 +870,9 @@ input[type="range"]::-moz-range-thumb {
   background-color: #f5f0e8 !important;
 }
 
-/* Hide PaperDesignBackground canvas in classic */
-[data-theme="classic"] .interactive-models-page canvas {
-  display: none !important;
+/* Ensure 3D canvases remain visible in classic mode fullscreen viewer */
+[data-theme="classic"] .fullscreen-3d-viewer canvas {
+  display: block !important;
 }
 
 /* Headline */
