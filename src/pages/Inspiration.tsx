@@ -216,6 +216,51 @@ const Inspiration = () => {
         <div className="mt-20">
           <ArchEvolutionCTA />
         </div>
+
+        {/* SEO Text Section */}
+        <section className="mt-24 border-t border-white/10 pt-16 pb-8">
+          <div className="container mx-auto px-6 max-w-4xl">
+            <p className="text-[11px] tracking-[0.3em] uppercase font-semibold text-accent mb-8">
+              BIM Consultant · Leeds UK · Latin America · AEC Design
+            </p>
+
+            <div className="space-y-5 text-[13px] leading-relaxed" style={{ color: 'hsl(45, 8%, 45%)' }}>
+              <p>
+                Juan Pablo González is a BIM specialist and architectural technologist based in Leeds, UK, delivering LOD400 Revit models, construction documentation, and digital design strategy across healthcare, retail, industrial, and residential sectors. This inspiration archive reflects the visual and technical references that inform every project — from parametric façade systems and computational design experiments to precision construction details and AI-generated spatial concepts.
+              </p>
+              <p>
+                If you are searching for a BIM consultant in the UK, a Revit specialist for RIBA Stage 3 and 4 documentation, or an architectural technologist experienced in NHS, Amazon, JLR, and Legal &amp; General project environments — this portfolio represents the standard of work you can expect.
+              </p>
+              <p>
+                3Points Consulting provides BIM implementation, digital transformation strategy, and university-level BIM training programmes for architecture schools across Latin America and Spain. For construction firms, property developers, and AEC companies entering the UK market, 3Points bridges the gap between international design ambition and British construction delivery.
+              </p>
+              <p>
+                ArchEvolution is the AI-powered tools platform built on the same foundation — designed for architects and designers in Mexico, Spain, Colombia, Argentina, and the broader Spanish-speaking AEC community who want to integrate computational workflows and AI-assisted design without sacrificing technical precision. The intersection of traditional architectural rigour and emerging technology is not a future ambition. It is the present standard.
+              </p>
+              <p>
+                For project enquiries, BIM consulting, university programme proposals, or ArchEvolution partnerships — contact juanpabloric@hotmail.com or visit the Contact page.
+              </p>
+            </div>
+
+            {/* Keyword Tags */}
+            <div className="flex flex-wrap gap-2 mt-10">
+              {[
+                'BIM Consultant Leeds', 'Revit Specialist UK', 'LOD400 BIM',
+                'Architectural Technologist', 'Point Cloud to BIM', 'RIBA Stage 3 4',
+                'BIM for Healthcare', 'BIM for Retail', 'NHS BIM Consultant',
+                'Parametric Design UK', 'ArchEvolution', '3Points Consulting',
+                'AI Architecture Tools', 'BIM Latin America', 'Consultor BIM England',
+              ].map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[11px] px-3 py-1 rounded-full border border-accent/30 text-accent/60"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
