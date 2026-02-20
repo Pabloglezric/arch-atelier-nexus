@@ -17,7 +17,7 @@ const ThemeSwitcher = () => {
 
   return (
     <div
-      className="fixed top-16 md:top-4 right-4 z-[9999] flex overflow-hidden shadow-lg"
+      className="fixed top-3 right-14 md:top-4 md:right-4 z-[9999] flex overflow-hidden shadow-lg scale-75 md:scale-100 origin-top-right"
       style={{
         borderRadius: isDisruptive ? '9999px' : '0',
         border: isDisruptive ? '1px solid rgba(255,255,255,0.2)' : '2px solid #1a1612',
