@@ -11,12 +11,14 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Inspiration from "./pages/Inspiration";
 import NotFound from "./pages/NotFound";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <ThemeSwitcher />
       <Toaster />
       <Sonner />
       <BrowserRouter>
