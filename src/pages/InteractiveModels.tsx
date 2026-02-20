@@ -253,13 +253,13 @@ const InteractiveModels = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50"
+            className="fixed inset-0 z-[9998] fullscreen-3d-viewer"
             style={{ backgroundColor: 'hsl(0 0% 0%)' }}
           >
             {/* Close button — offset right to avoid ThemeSwitcher */}
             <button
               onClick={closeModel}
-              className="absolute top-5 right-24 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-200"
+              className="absolute top-14 right-5 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-200"
               style={{
                 backgroundColor: 'hsl(0 0% 0% / 0.6)',
                 color: 'hsl(0 0% 100%)',
@@ -286,7 +286,7 @@ const InteractiveModels = () => {
             </div>
 
             {/* Controls panel */}
-            <div className="absolute top-16 right-5 z-50">
+            <div className="absolute top-24 right-5 z-50">
               <Suspense fallback={null}>
                 {expandedIndex === 0 && (
                   <OceanControls params={oceanParams} onChange={setOceanParams} />
