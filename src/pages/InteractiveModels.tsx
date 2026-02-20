@@ -5,6 +5,8 @@ import Navigation from '@/components/Navigation';
 import SEOHead from '@/components/SEOHead';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { PaperDesignBackground } from '@/components/ui/neon-dither';
+import ClassicArchBackground from '@/components/ClassicArchBackground';
+import { useTheme } from '@/hooks/useTheme';
 import { defaultParams, type PavilionParams } from '@/components/3d/ParametricPavilion';
 import { defaultTowerParams, previewTowerParams, type TowerParams } from '@/components/3d/TwistingTowers';
 import { defaultOceanParams, previewOceanParams, type OceanParams } from '@/components/3d/HolographicOcean';
@@ -39,6 +41,7 @@ const previewParams: PavilionParams = {
 };
 
 const InteractiveModels = () => {
+  const { isClassic } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [oceanParams, setOceanParams] = useState<OceanParams>({ ...defaultOceanParams });
   const [pavilionParams, setPavilionParams] = useState<PavilionParams>({ ...defaultParams });
@@ -93,8 +96,8 @@ const InteractiveModels = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
-      <PaperDesignBackground themeMode="dark" intensity={0.85} />
+    <div className="relative min-h-screen interactive-models-page" style={{ backgroundColor: isClassic ? '#f5f0e8' : 'hsl(0 0% 4%)' }}>
+      {isClassic ? <ClassicArchBackground /> : <PaperDesignBackground themeMode="dark" intensity={0.85} />}
 
       <SEOHead
         title="Interactive 3D Models - Parametric Design | Juan Pablo Gonzalez Ricardez"
@@ -139,7 +142,7 @@ const InteractiveModels = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
-                className={`relative aspect-[16/9] rounded-xl overflow-hidden ${item.hasModel ? 'cursor-pointer group' : ''}`}
+                className={`relative aspect-[16/9] rounded-xl overflow-hidden model-slot-card ${item.hasModel ? 'cursor-pointer group' : ''}`}
                 style={{
                   backgroundColor: 'hsl(0 0% 5%)',
                   border: '1px solid hsl(0 0% 12%)',
@@ -253,10 +256,10 @@ const InteractiveModels = () => {
             className="fixed inset-0 z-50"
             style={{ backgroundColor: 'hsl(0 0% 0%)' }}
           >
-            {/* Close button */}
+            {/* Close button — offset right to avoid ThemeSwitcher */}
             <button
               onClick={closeModel}
-              className="absolute top-5 right-5 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-200"
+              className="absolute top-5 right-24 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full transition-all duration-200"
               style={{
                 backgroundColor: 'hsl(0 0% 0% / 0.6)',
                 color: 'hsl(0 0% 100%)',
