@@ -865,19 +865,70 @@ input[type="range"]::-moz-range-thumb {
    CLASSIC MODE — Interactive Models Page
    ═══════════════════════════════════════════════ */
 
-/* Model viewer container */
-[data-theme="classic"] .rounded-xl.overflow-hidden.group {
+/* Page root background */
+[data-theme="classic"] .interactive-models-page {
+  background-color: #f5f0e8 !important;
+}
+
+/* Hide PaperDesignBackground canvas in classic */
+[data-theme="classic"] .interactive-models-page canvas {
+  display: none !important;
+}
+
+/* Headline */
+[data-theme="classic"] .interactive-models-page h1 {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+}
+
+/* Subheadline */
+[data-theme="classic"] .interactive-models-page h1 + p {
+  color: #6b6054 !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-style: italic !important;
+}
+
+/* Model slot cards */
+[data-theme="classic"] .interactive-models-page .model-slot-card {
   border: 2px solid #1a1612 !important;
   border-radius: 0 !important;
   background-color: #ede8dc !important;
 }
 
-/* Model label text — already handled by span[style*="color: hsl(45 100% 60%)"] above */
+/* Model label text */
+[data-theme="classic"] .interactive-models-page .model-slot-card span {
+  color: #8B1A1A !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
 
-/* Corner accents in classic */
-[data-theme="classic"] .absolute .w-6 .h-px,
-[data-theme="classic"] .absolute .w-6 .w-px {
+/* Corner accents — ink colour */
+[data-theme="classic"] .interactive-models-page .model-slot-card .w-6 div {
   background-color: rgba(26, 22, 18, 0.3) !important;
+}
+
+/* 8-bit floating animation */
+@keyframes classicArchFloat {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(12px, -18px) rotate(3deg);
+  }
+  50% {
+    transform: translate(-8px, -30px) rotate(-2deg);
+  }
+  75% {
+    transform: translate(15px, -12px) rotate(4deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.classic-arch-float {
+  animation-name: classicArchFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
 /* ═══════════════════════════════════════════════
