@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Github, Youtube, Users } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useTheme } from '@/hooks/useTheme';
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { isClassic } = useTheme();
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -67,8 +69,8 @@ const Navigation = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <Button variant="ghost" size="sm" className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
+          <Button variant="ghost" size="sm" className="md:hidden" style={{ color: isClassic ? '#1a1612' : 'white' }} onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X className="h-6 w-6" style={{ color: isClassic ? '#1a1612' : 'white' }} /> : <Menu className="h-6 w-6" style={{ color: isClassic ? '#1a1612' : 'white' }} />}
           </Button>
         </div>
 
@@ -85,7 +87,7 @@ const Navigation = () => {
           height: 0
         }} className="md:hidden mt-4 pb-4">
               <div className="flex flex-col space-y-4">
-                {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth hover:text-accent ${location.pathname === item.path ? 'text-accent' : 'text-white'}`}>
+                {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth ${location.pathname === item.path ? '' : ''}`} style={{ color: location.pathname === item.path ? '#8B1A1A' : (isClassic ? '#1a1612' : 'white') }}>
                     {item.name}
                   </Link>)}
               </div>
