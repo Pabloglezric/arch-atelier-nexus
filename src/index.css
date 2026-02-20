@@ -540,3 +540,391 @@ input[type="range"]::-moz-range-thumb {
   border: 2px solid hsl(0 0% 0%);
   box-shadow: 0 0 6px hsl(45 100% 60% / 0.4);
 }
+
+/* ═══════════════════════════════════════════════
+   CLASSIC MODE — Portfolio Page
+   ═══════════════════════════════════════════════ */
+
+/* Page background */
+[data-theme="classic"] .min-h-screen[style*="backgroundColor: hsl(0 0% 4%)"] canvas,
+[data-theme="classic"] .min-h-screen.bg-black canvas {
+  display: none !important;
+}
+
+/* Portfolio page headline */
+[data-theme="classic"] .font-display[style*="color: hsl(45 100% 60%)"] {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 900 !important;
+}
+
+/* Portfolio / About / Interactive subheadlines */
+[data-theme="classic"] p[style*="color: hsl(0 0% 55%)"] {
+  color: #6b6054 !important;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-style: italic !important;
+}
+
+/* Filter pills */
+[data-theme="classic"] button[style*="backgroundColor: hsl(45 100% 60%)"][style*="color: hsl(0 0% 4%)"] {
+  background-color: #1a1612 !important;
+  color: #f5f0e8 !important;
+  border-color: #1a1612 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+[data-theme="classic"] button[style*="border: 1px solid hsl(0 0% 18%)"] {
+  border: 1px solid #1a1612 !important;
+  background: transparent !important;
+  color: #1a1612 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Filter pills — rounded-full override */
+[data-theme="classic"] .flex.flex-wrap.justify-center.gap-3 button.rounded-full {
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Project cards */
+[data-theme="classic"] .group.rounded-lg[style*="backgroundColor: hsl(0 0% 7%)"] {
+  background-color: #ffffff !important;
+  border: 1px solid #1a1612 !important;
+  border-radius: 0 !important;
+}
+
+[data-theme="classic"] .group.rounded-lg[style*="backgroundColor: hsl(0 0% 7%)"]:hover {
+  border-color: #1a1612 !important;
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px #1a1612 !important;
+}
+
+/* Card title */
+[data-theme="classic"] .group h3.font-display[style*="color: hsl(0 0% 92%)"] {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 700 !important;
+}
+
+/* Card client name */
+[data-theme="classic"] .group p[style*="color: hsl(45 100% 60%)"] {
+  color: #8B1A1A !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Card description */
+[data-theme="classic"] .group p.line-clamp-2[style*="color: hsl(0 0% 45%)"] {
+  color: #1a1612 !important;
+  font-family: 'Libre Baskerville', serif !important;
+  font-size: 0.875rem !important;
+}
+
+/* Tool tags on cards */
+[data-theme="classic"] .group span[style*="backgroundColor: hsl(0 0% 12%)"] {
+  background-color: #ede8dc !important;
+  border: 1px solid #9a8f82 !important;
+  color: #6b6054 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Category tag on card images */
+[data-theme="classic"] span[style*="backgroundColor: hsl(45 100% 60% / 0.85)"] {
+  background-color: #8B1A1A !important;
+  color: #f5f0e8 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Card date */
+[data-theme="classic"] .group p[style*="color: hsl(0 0% 40%)"] {
+  color: #6b6054 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ═══════════════════════════════════════════════
+   CLASSIC MODE — About Page
+   ═══════════════════════════════════════════════ */
+
+/* Hero headline first line */
+[data-theme="classic"] h1.font-display[style*="color: hsl(0 0% 92%)"] {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 900 !important;
+}
+
+/* "I engineer certainty" accent span */
+[data-theme="classic"] h1 span[style*="color: hsl(45 100% 60%)"] {
+  color: #8B1A1A !important;
+  font-style: italic !important;
+}
+
+/* About tagline */
+[data-theme="classic"] p[style*="color: hsl(0 0% 50%)"] {
+  color: #6b6054 !important;
+}
+
+/* Stat cards */
+[data-theme="classic"] .rounded-lg[style*="backgroundColor: hsl(45 100% 60% / 0.08)"] {
+  background-color: #1a1612 !important;
+  border-color: #1a1612 !important;
+  border-radius: 0 !important;
+}
+
+[data-theme="classic"] .rounded-lg[style*="backgroundColor: hsl(45 100% 60% / 0.08)"] p.font-display {
+  color: #f5f0e8 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="classic"] .rounded-lg[style*="backgroundColor: hsl(45 100% 60% / 0.08)"] p.tracking-widest {
+  color: rgba(245, 240, 232, 0.6) !important;
+}
+
+/* "Built on precision" sub-headline */
+[data-theme="classic"] h2.font-display[style*="color: hsl(0 0% 92%)"] {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 700 !important;
+}
+
+/* "Driven by innovation" accent */
+[data-theme="classic"] h2 span[style*="color: hsl(45 100% 60%)"] {
+  color: #8B1A1A !important;
+}
+
+/* About body text */
+[data-theme="classic"] .space-y-5[style*="color: hsl(0 0% 50%)"] {
+  color: #1a1612 !important;
+  font-family: 'Libre Baskerville', serif !important;
+}
+
+/* Photo border */
+[data-theme="classic"] .aspect-\[4\/5\] {
+  border: 2px solid #1a1612 !important;
+  border-radius: 0 !important;
+}
+
+/* "What I Do" service cards */
+[data-theme="classic"] .group.rounded-lg[style*="backgroundColor: hsl(0 0% 6%)"] {
+  background-color: #ffffff !important;
+  border: 1px solid #1a1612 !important;
+  border-left: 3px solid #8B1A1A !important;
+  border-top-color: #1a1612 !important;
+  border-top-width: 1px !important;
+  border-radius: 0 !important;
+  box-shadow: 2px 2px 0px #1a1612 !important;
+}
+
+/* Tools pills */
+[data-theme="classic"] span.rounded-full[style*="backgroundColor: hsl(0 0% 8%)"] {
+  background-color: #ede8dc !important;
+  border: 1px solid #9a8f82 !important;
+  color: #6b6054 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Tools label */
+[data-theme="classic"] p[style*="color: hsl(45 100% 60% / 0.5)"] {
+  color: #8B1A1A !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* About dividers */
+[data-theme="classic"] .h-px[style*="linear-gradient(90deg, transparent, hsl(45 100% 60% / 0.25)"] {
+  background: linear-gradient(90deg, transparent, #1a1612, transparent) !important;
+}
+
+/* About CTA dark block */
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"][style*="border: 1px solid hsl(45 100% 60% / 0.15)"] {
+  background-color: #1a1612 !important;
+  border: 1px solid #1a1612 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* CTA buttons on About */
+[data-theme="classic"] .rounded-full[style*="backgroundColor: hsl(45 100% 60%)"][style*="color: hsl(0 0% 4%)"] {
+  background-color: #8B1A1A !important;
+  color: #f5f0e8 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+}
+
+[data-theme="classic"] .rounded-full[style*="border: 1px solid hsl(45 100% 60% / 0.4)"] {
+  border: 2px solid #f5f0e8 !important;
+  color: #f5f0e8 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+}
+
+/* ═══════════════════════════════════════════════
+   CLASSIC MODE — Inspiration Page
+   ═══════════════════════════════════════════════ */
+
+[data-theme="classic"] .min-h-screen.bg-black {
+  background-color: #f5f0e8 !important;
+  color: #1a1612 !important;
+}
+
+/* Inspiration headline */
+[data-theme="classic"] h1.font-playfair {
+  color: #1a1612 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 900 !important;
+}
+
+/* Inspiration subheadline */
+[data-theme="classic"] h1.font-playfair + p {
+  color: #6b6054 !important;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-style: italic !important;
+}
+
+/* Sort toggle button */
+[data-theme="classic"] button.rounded-full.border.bg-transparent {
+  border: 1px solid #1a1612 !important;
+  color: #1a1612 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+[data-theme="classic"] button.rounded-full.bg-accent {
+  background-color: #1a1612 !important;
+  color: #f5f0e8 !important;
+  border-color: #1a1612 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Inspiration image cards */
+[data-theme="classic"] .break-inside-avoid.rounded-xl {
+  border: 1px solid #1a1612 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="classic"] .break-inside-avoid.rounded-xl.ring-2 {
+  ring-color: #8B1A1A !important;
+  box-shadow: 0 0 15px -5px rgba(139, 26, 26, 0.3) !important;
+}
+
+/* Hover overlay on inspiration cards */
+[data-theme="classic"] .break-inside-avoid .group-hover\:bg-black\/60 {
+  background-color: rgba(26, 22, 18, 0.85) !important;
+}
+
+/* Heart button liked state */
+[data-theme="classic"] .fill-accent.text-accent {
+  color: #8B1A1A !important;
+  fill: #8B1A1A !important;
+}
+
+[data-theme="classic"] .text-accent {
+  color: #8B1A1A !important;
+}
+
+/* SEO text block */
+[data-theme="classic"] section.border-t.border-white\/10 {
+  background-color: #1a1612 !important;
+  border-color: #1a1612 !important;
+}
+
+[data-theme="classic"] section.border-t .text-accent {
+  color: #8B1A1A !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+}
+
+/* SEO body text */
+[data-theme="classic"] section.border-t .space-y-5 p {
+  color: rgba(245, 240, 232, 0.7) !important;
+  font-family: 'Libre Baskerville', serif !important;
+}
+
+/* Keyword tags */
+[data-theme="classic"] .border-accent\/30 {
+  border-color: #6b6054 !important;
+  background: transparent !important;
+  color: #6b6054 !important;
+  border-radius: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ═══════════════════════════════════════════════
+   CLASSIC MODE — Interactive Models Page
+   ═══════════════════════════════════════════════ */
+
+/* Model viewer container */
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"][style*="border: 1px solid hsl(0 0% 12%)"] {
+  border: 2px solid #1a1612 !important;
+  border-radius: 0 !important;
+  background-color: #ede8dc !important;
+}
+
+/* Model label text */
+[data-theme="classic"] span[style*="color: hsl(45 100% 60%)"] {
+  color: #8B1A1A !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Corner accents in classic */
+[data-theme="classic"] div[style*="backgroundColor: hsl(45 100% 60% / 0.2)"] {
+  background-color: rgba(26, 22, 18, 0.3) !important;
+}
+
+/* ═══════════════════════════════════════════════
+   CLASSIC MODE — Global Fine Details
+   ═══════════════════════════════════════════════ */
+
+/* Scrollbar */
+[data-theme="classic"] ::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-theme="classic"] ::-webkit-scrollbar-track {
+  background: #ede8dc;
+}
+
+[data-theme="classic"] ::-webkit-scrollbar-thumb {
+  background: #1a1612;
+  border-radius: 0;
+}
+
+/* Smooth theme transitions */
+[data-theme="classic"] body,
+[data-theme="disruptive"] body {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+[data-theme="classic"] nav,
+[data-theme="disruptive"] nav {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+/* ArchEvolution CTA in classic context (non-dark wrapper) */
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] h2,
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] h3 {
+  color: #f5f0e8 !important;
+}
+
+[data-theme="classic"] .rounded-xl[style*="backgroundColor: hsl(0 0% 5%)"] p {
+  color: rgba(245, 240, 232, 0.7) !important;
+}
