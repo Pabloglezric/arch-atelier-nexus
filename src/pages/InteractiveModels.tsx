@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, X, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import SEOHead from '@/components/SEOHead';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
@@ -42,6 +43,13 @@ const previewParams: PavilionParams = {
 
 const InteractiveModels = () => {
   const { isClassic } = useTheme();
+  const navigate = useNavigate();
+
+  // Redirect to home if in classic mode
+  useEffect(() => {
+    if (isClassic) navigate('/', { replace: true });
+  }, [isClassic, navigate]);
+
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [oceanParams, setOceanParams] = useState<OceanParams>({ ...defaultOceanParams });
   const [pavilionParams, setPavilionParams] = useState<PavilionParams>({ ...defaultParams });

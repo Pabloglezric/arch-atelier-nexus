@@ -16,7 +16,7 @@ const Navigation = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  const navItems = [{
+  const allNavItems = [{
     name: 'Home',
     path: '/'
   }, {
@@ -24,7 +24,8 @@ const Navigation = () => {
     path: '/portfolio'
   }, {
     name: 'Interactive Models',
-    path: '/interactive-models'
+    path: '/interactive-models',
+    disruptiveOnly: true
   }, {
     name: 'Inspiration',
     path: '/inspiration'
@@ -35,6 +36,7 @@ const Navigation = () => {
     name: 'Contact',
     path: '/contact'
   }];
+  const navItems = allNavItems.filter(item => !item.disruptiveOnly || !isClassic);
   const socialLinks = [{
     icon: Github,
     href: '#',
