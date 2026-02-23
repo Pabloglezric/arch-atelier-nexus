@@ -1,50 +1,68 @@
 
 
-# Fix: Make Classic Theme MeshGradient Background Visible
+# Fix: Make ClassicMeshBackground Visible Across All Pages
 
 ## Problem
 
-The `ClassicMeshBackground` (MeshGradient) renders as a `fixed` element at `z-index: 0`, but it is completely hidden because every layer on top of it uses opaque dark backgrounds:
+The `ClassicMeshBackground` component renders as a **fixed** full-screen element (z-index 5), but it is invisible on most pages because they use **opaque dark backgrounds** that completely cover it:
 
-1. **Index page wrapper** -- `backgroundColor: 'hsl(0 0% 4%)'` (near-black, fully opaque)
-2. **Hero component** -- has `bg-black` class and the WebGL canvas has `background: 'black'`
-3. **Lower sections wrapper** -- `backgroundColor: 'hsl(0 0% 0% / 0.6)'` (60% black overlay)
+| Page | Background | Classic-aware? |
+|------|-----------|----------------|
+| Index | `transparent` (Classic) / `hsl(0 0% 4%)` (Disruptive) | Yes |
+| InteractiveModels | `#f5f0e8` (Classic) / `hsl(0 0% 4%)` (Disruptive) | Yes |
+| **Portfolio** | `hsl(0 0% 4%)` always | **No -- blocks MeshGradient** |
+| **About** | `hsl(0 0% 4%)` always | **No -- blocks MeshGradient** |
+| **Contact** | `hsl(0 0% 4%)` always | **No -- blocks MeshGradient** |
+| **Inspiration** | `bg-black` always | **No -- blocks MeshGradient** |
 
-None of these backgrounds are theme-aware, so in Classic mode the parchment MeshGradient is painted but immediately covered by black.
+Each of these pages also has its own canvas-based animated background (pixelated orbs / dithered gradients) that only makes sense for the Disruptive theme.
 
 ## Solution
 
-Make the page and hero backgrounds transparent/parchment in Classic theme so the fixed MeshGradient shows through, while keeping the Disruptive theme unchanged.
+For each affected page, make the wrapper background and the canvas animation **theme-aware**:
+- In **Classic mode**: set the wrapper to `transparent` and hide the dark canvas animation, so the global `ClassicMeshBackground` shows through
+- In **Disruptive mode**: keep everything exactly as it is today
+- Adjust text colors on each page where needed so they remain readable against the parchment background in Classic mode
 
-### File Changes
+## File Changes
 
-#### 1. `src/pages/Index.tsx`
-- Change the outer `div` background from the hardcoded dark color to a theme-aware value:
-  - **Classic**: `transparent` (let the MeshGradient show through)
-  - **Disruptive**: keep `hsl(0 0% 4%)`
-- Change the lower sections wrapper background:
-  - **Classic**: use a semi-transparent parchment overlay (e.g. `hsl(38 33% 93% / 0.7)`) so the gradient subtly shows through
-  - **Disruptive**: keep `hsl(0 0% 0% / 0.6)`
-- Import and use the `useTheme` hook
+### 1. `src/pages/Portfolio.tsx`
+- Import `useTheme` hook
+- Change wrapper `backgroundColor` to `transparent` when Classic, keep `hsl(0 0% 4%)` when Disruptive
+- Conditionally hide the dark canvas animation in Classic mode
+- Adjust heading/text colors in Classic mode (dark ink instead of gold/grey)
 
-#### 2. `src/components/ui/animated-shader-hero.tsx`
-- In **Classic** mode, hide the WebGL shader canvas and dark overlays since the hero doesn't need a dark shader background
-- Change the outer container from `bg-black` to transparent in Classic mode
-- Adjust text colors in Classic mode to work on parchment (dark ink instead of white)
-- The word animations and manifesto styling remain the same, just with Classic-appropriate colors
+### 2. `src/pages/About.tsx`
+- Import `useTheme` hook
+- Change wrapper `backgroundColor` to `transparent` when Classic
+- Hide dark canvas animation in Classic mode
+- Adjust text colors for Classic readability
 
-## Technical Details
+### 3. `src/pages/Contact.tsx`
+- Import `useTheme` hook
+- Change wrapper `backgroundColor` to `transparent` when Classic
+- Hide dark canvas animation in Classic mode
+- Adjust text colors for Classic readability
+
+### 4. `src/pages/Inspiration.tsx`
+- Import `useTheme` hook
+- Change wrapper from `bg-black` to transparent when Classic
+- Hide dark canvas animation in Classic mode
+- Adjust text colors for Classic readability
+
+### 5. `src/components/ui/classic-mesh-background.tsx`
+- Increase opacity from 0.55 to 0.75 so the gradient is more clearly visible
+- This ensures the background is unmistakably present across all pages
+
+## Technical Notes
 
 ```text
-Rendering stack (Classic theme, after fix):
+Rendering stack in Classic mode (all pages, after fix):
 
-  [z-index: 0]  ClassicMeshBackground (fixed, MeshGradient) -- VISIBLE
-  [z-index: 0]  Index page wrapper (transparent bg)
-    Hero component (transparent bg, no shader canvas)
-      Title + Manifesto (dark ink text with word animations)
-    Lower sections (semi-transparent parchment overlay)
-      ThreePointsSection, Carousel, etc.
+  [fixed, z-5]  ClassicMeshBackground (MeshGradient) -- VISIBLE
+  [page layer]  Page wrapper (transparent background)
+    [hidden]    Dark canvas animation -- NOT RENDERED
+    [z-1]       Page content (dark ink text on parchment)
 ```
 
-The key principle: in Classic mode, every layer must be transparent or semi-transparent so the fixed MeshGradient behind them remains visible. The Disruptive theme is untouched.
-
+The Disruptive theme remains completely untouched -- all changes are gated behind `isClassic` checks.
