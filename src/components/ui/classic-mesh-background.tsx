@@ -15,7 +15,7 @@ const ClassicMeshBackground = () => {
   return (
     <div
       className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 0 }}
+      style={{ zIndex: 5 }}
     >
       <MeshGradient
         colors={["#d4c5a0", "#c9b896", "#e8dcc8", "#bfae8e"]}
