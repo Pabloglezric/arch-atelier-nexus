@@ -6,6 +6,7 @@ import { ExternalLink, Play } from 'lucide-react';
 import profilePhoto from '@/assets/jp-profile.jpg';
 import { Button } from '@/components/ui/button';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
+import { GlowCard } from '@/components/ui/spotlight-card';
 
 const stats = [
 { value: '12+', label: 'Projects Delivered' },
@@ -210,22 +211,25 @@ const About = () => {
                 variants={fadeUp}
                 initial="hidden"
                 animate="visible"
-                className="flex-1 max-w-[220px] mx-auto sm:mx-0 py-6 px-8 rounded-lg"
-                style={{
-                  backgroundColor: 'hsl(45 100% 60% / 0.08)',
-                  border: '1px solid hsl(45 100% 60% / 0.2)'
-                }}>
-
+              >
+                <GlowCard
+                  className="flex-1 max-w-[220px] mx-auto sm:mx-0 py-6 px-8 rounded-lg"
+                  style={{
+                    backgroundColor: 'hsl(45 100% 60% / 0.08)',
+                    border: '1px solid hsl(45 100% 60% / 0.2)'
+                  }}
+                >
                   <p
-                  className="font-display text-3xl md:text-4xl font-bold mb-1"
-                  style={{ color: 'hsl(45 100% 60%)' }}>
-
+                    className="font-display text-3xl md:text-4xl font-bold mb-1"
+                    style={{ color: 'hsl(45 100% 60%)' }}
+                  >
                     {s.value}
                   </p>
                   <p className="text-xs tracking-widest uppercase" style={{ color: 'hsl(0 0% 50%)' }}>
                     {s.label}
                   </p>
-                </motion.div>
+                </GlowCard>
+              </motion.div>
               )}
             </div>
           </div>
@@ -329,25 +333,27 @@ My work spans retail fit-outs for global brands, healthcare infrastructure, resi
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="group p-8 rounded-lg transition-colors duration-500"
-                style={{
-                  backgroundColor: 'hsl(0 0% 6%)',
-                  borderTop: '2px solid hsl(45 100% 60% / 0.4)',
-                  border: '1px solid hsl(0 0% 12%)',
-                  borderTopColor: 'hsl(45 100% 60% / 0.5)',
-                  borderTopWidth: '2px'
-                }}>
-
+              >
+                <GlowCard
+                  className="group p-8 rounded-lg h-full"
+                  style={{
+                    backgroundColor: 'hsl(0 0% 6%)',
+                    border: '1px solid hsl(0 0% 12%)',
+                    borderTopColor: 'hsl(45 100% 60% / 0.5)',
+                    borderTopWidth: '2px'
+                  }}
+                >
                   <h3
-                  className="font-display text-lg font-semibold mb-3"
-                  style={{ color: 'hsl(0 0% 88%)' }}>
-
+                    className="font-display text-lg font-semibold mb-3"
+                    style={{ color: 'hsl(0 0% 88%)' }}
+                  >
                     {svc.title}
                   </h3>
                   <p className="text-sm leading-relaxed" style={{ color: 'hsl(0 0% 42%)' }}>
                     {svc.description}
                   </p>
-                </motion.div>
+                </GlowCard>
+              </motion.div>
               )}
             </div>
           </div>

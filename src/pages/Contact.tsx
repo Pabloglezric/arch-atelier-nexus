@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { supabase } from '@/integrations/supabase/client';
+import { GlowCard } from '@/components/ui/spotlight-card';
 
 type SubjectOption = 'Project Enquiry' | 'ArchEvolution' | 'General';
 
@@ -232,34 +233,37 @@ const Contact = () => {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="p-8 rounded-lg flex flex-col"
-                  style={{
-                    backgroundColor: 'hsl(0 0% 6%)',
-                    border: '1px solid hsl(0 0% 12%)',
-                    borderTopColor: 'hsl(45 100% 60% / 0.5)',
-                    borderTopWidth: '2px',
-                  }}
                 >
-                  <h3
-                    className="font-display text-xl font-semibold mb-3"
-                    style={{ color: 'hsl(0 0% 88%)' }}
-                  >
-                    {p.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed flex-1 mb-6" style={{ color: 'hsl(0 0% 42%)' }}>
-                    {p.description}
-                  </p>
-                  <Button
-                    onClick={() => scrollToForm(p.subject)}
-                    className="w-full rounded-full text-sm font-semibold py-3"
+                  <GlowCard
+                    className="p-8 rounded-lg flex flex-col h-full"
                     style={{
-                      backgroundColor: 'transparent',
-                      color: 'hsl(45 100% 60%)',
-                      border: '1px solid hsl(45 100% 60% / 0.4)',
+                      backgroundColor: 'hsl(0 0% 6%)',
+                      border: '1px solid hsl(0 0% 12%)',
+                      borderTopColor: 'hsl(45 100% 60% / 0.5)',
+                      borderTopWidth: '2px',
                     }}
                   >
-                    {p.button}
-                  </Button>
+                    <h3
+                      className="font-display text-xl font-semibold mb-3"
+                      style={{ color: 'hsl(0 0% 88%)' }}
+                    >
+                      {p.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed flex-1 mb-6" style={{ color: 'hsl(0 0% 42%)' }}>
+                      {p.description}
+                    </p>
+                    <Button
+                      onClick={() => scrollToForm(p.subject)}
+                      className="w-full rounded-full text-sm font-semibold py-3"
+                      style={{
+                        backgroundColor: 'transparent',
+                        color: 'hsl(45 100% 60%)',
+                        border: '1px solid hsl(45 100% 60% / 0.4)',
+                      }}
+                    >
+                      {p.button}
+                    </Button>
+                  </GlowCard>
                 </motion.div>
               ))}
             </div>

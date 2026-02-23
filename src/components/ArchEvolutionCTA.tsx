@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import { GlowCard } from '@/components/ui/spotlight-card';
 
 const ArchEvolutionCTA = () => {
   return (
@@ -18,22 +19,20 @@ const ArchEvolutionCTA = () => {
           }}
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-14 rounded-xl group/cta transition-all duration-500"
-          style={{
-            backgroundColor: 'hsl(0 0% 5%)',
-            border: '1px solid hsl(45 100% 60% / 0.15)',
-            boxShadow: '0 0 60px hsl(45 100% 60% / 0.04)',
-          }}
-          whileHover={{
-            boxShadow: '0 0 80px hsl(45, 100%, 60%, 0.08)',
-            borderColor: 'hsl(45, 100%, 60%, 0.25)',
-          }}
-        >
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <GlowCard
+              className="flex flex-col md:flex-row items-center justify-between gap-8 p-10 md:p-14 rounded-xl group/cta transition-all duration-500"
+              style={{
+                backgroundColor: 'hsl(0 0% 5%)',
+                border: '1px solid hsl(45 100% 60% / 0.15)',
+                boxShadow: '0 0 60px hsl(45 100% 60% / 0.04)',
+              }}
+            >
           <div className="flex-1">
             <motion.p
               initial={{ opacity: 0, x: -10 }}
@@ -88,7 +87,8 @@ const ArchEvolutionCTA = () => {
             <ExternalLink className="h-4 w-4" />
             Visit ArchEvolution
           </motion.a>
-        </motion.div>
+            </GlowCard>
+          </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import { useState, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Upload } from 'lucide-react';
+import { GlowCard } from '@/components/ui/spotlight-card';
 
 export interface ProjectData {
   id: number;
@@ -40,26 +41,15 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, onV
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.35 }}
-      className="group rounded-lg overflow-hidden flex flex-col cursor-pointer"
       onClick={() => onExpand(project)}
-      style={{
-        backgroundColor: 'hsl(0 0% 7%)',
-        border: '1px solid hsl(0 0% 12%)',
-        transition: 'border-color 0.3s, transform 0.3s',
-      }}
-      whileHover={{
-        scale: 1.02,
-        transition: { duration: 0.25 },
-      }}
-      onHoverStart={(e) => {
-        const el = (e as any).target?.closest?.('.group') as HTMLElement;
-        if (el) el.style.borderColor = 'hsl(45 100% 60%)';
-      }}
-      onHoverEnd={(e) => {
-        const el = (e as any).target?.closest?.('.group') as HTMLElement;
-        if (el) el.style.borderColor = 'hsl(0 0% 12%)';
-      }}
     >
+      <GlowCard
+        className="group rounded-lg overflow-hidden flex flex-col cursor-pointer"
+        style={{
+          backgroundColor: 'hsl(0 0% 7%)',
+          border: '1px solid hsl(0 0% 12%)',
+        }}
+      >
       {/* Image Carousel */}
       <div className="relative aspect-video overflow-hidden">
         {hasImages ? (
@@ -169,6 +159,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(({ project, onV
           </p>
         )}
       </div>
+      </GlowCard>
     </motion.div>
   );
 });

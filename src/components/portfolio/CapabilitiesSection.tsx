@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Layers, GitBranch, FileText, Cpu, Sparkles } from 'lucide-react';
+import { GlowCard } from '@/components/ui/spotlight-card';
 
 const capabilities = [
   {
@@ -82,7 +83,7 @@ const CapabilitiesSection = () => {
         </div>
 
         {/* Capability cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px mb-24" style={{ backgroundColor: 'hsl(45 100% 60% / 0.08)' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-24">
           {capabilities.map((cap, i) => (
             <motion.div
               key={cap.title}
@@ -91,35 +92,37 @@ const CapabilitiesSection = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="group p-8 md:p-10 flex flex-col transition-colors duration-500"
-              style={{ backgroundColor: 'hsl(0 0% 4%)' }}
-              whileHover={{ backgroundColor: 'hsl(0 0% 6%)' }}
             >
-              <div
-                className="w-12 h-12 rounded-lg flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110"
-                style={{
-                  backgroundColor: 'hsl(45 100% 60% / 0.08)',
-                  border: '1px solid hsl(45 100% 60% / 0.15)',
-                }}
+              <GlowCard
+                className="p-8 md:p-10 flex flex-col rounded-lg h-full"
+                style={{ backgroundColor: 'hsl(0 0% 4%)' }}
               >
-                <cap.icon
-                  size={22}
-                  strokeWidth={1.5}
-                  style={{ color: 'hsl(45 100% 60%)' }}
-                />
-              </div>
-              <h3
-                className="font-display text-lg font-semibold mb-3"
-                style={{ color: 'hsl(0 0% 88%)' }}
-              >
-                {cap.title}
-              </h3>
-              <p
-                className="text-sm leading-relaxed"
-                style={{ color: 'hsl(0 0% 42%)' }}
-              >
-                {cap.description}
-              </p>
+                <div
+                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110"
+                  style={{
+                    backgroundColor: 'hsl(45 100% 60% / 0.08)',
+                    border: '1px solid hsl(45 100% 60% / 0.15)',
+                  }}
+                >
+                  <cap.icon
+                    size={22}
+                    strokeWidth={1.5}
+                    style={{ color: 'hsl(45 100% 60%)' }}
+                  />
+                </div>
+                <h3
+                  className="font-display text-lg font-semibold mb-3"
+                  style={{ color: 'hsl(0 0% 88%)' }}
+                >
+                  {cap.title}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'hsl(0 0% 42%)' }}
+                >
+                  {cap.description}
+                </p>
+              </GlowCard>
             </motion.div>
           ))}
         </div>
