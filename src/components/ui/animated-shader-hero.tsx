@@ -10,8 +10,12 @@ const AnimatedWords: React.FC<{ text: string; baseDelay?: number; className?: st
         <span
           key={i}
           className={`word-animate ${className}`}
-          data-delay={baseDelay + i * 80}
-          style={{ display: 'inline-block', opacity: 0, margin: '0 0.12em' }}
+          style={{
+            display: 'inline-block',
+            margin: '0 0.12em',
+            opacity: 0,
+            animation: `word-appear 0.8s ease-out ${(baseDelay + i * 80) / 1000}s both`,
+          }}
         >
           {word}
         </span>
@@ -367,19 +371,6 @@ const Hero: React.FC<HeroProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   const { isClassic } = useTheme();
-
-  // Trigger word-animate elements
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      document.querySelectorAll('.word-animate').forEach(el => {
-        const delay = parseInt(el.getAttribute('data-delay') || '0');
-        setTimeout(() => {
-          (el as HTMLElement).style.animation = 'word-appear 0.8s ease-out forwards';
-        }, delay);
-      });
-    }, 500);
-    return () => clearTimeout(timeout);
-  }, []);
 
   // Word hover glow
   useEffect(() => {
