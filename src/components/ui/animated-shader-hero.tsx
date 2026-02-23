@@ -504,11 +504,11 @@ const Hero: React.FC<HeroProps> = ({
 
           {/* Main Heading with word animation */}
           <div className="space-y-2">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent">
-              <AnimatedWords text={headline.line1} baseDelay={200} />
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold">
+              <AnimatedWords text={headline.line1} baseDelay={200} className="bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent" />
             </h1>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent">
-              <AnimatedWords text={headline.line2} baseDelay={400} />
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold">
+              <AnimatedWords text={headline.line2} baseDelay={400} className="bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent" />
             </h1>
           </div>
           
