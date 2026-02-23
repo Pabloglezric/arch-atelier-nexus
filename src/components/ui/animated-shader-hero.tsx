@@ -381,7 +381,7 @@ const Hero: React.FC<HeroProps> = ({
     return () => { els.forEach(el => { el.removeEventListener('mouseenter', handleEnter); el.removeEventListener('mouseleave', handleLeave); }); };
   }, []);
   return (
-    <div className={`fixed inset-0 w-full h-full overflow-hidden bg-black z-0 ${className}`}>
+    <div className={`fixed inset-0 w-full h-full overflow-hidden z-0 ${isClassic ? '' : 'bg-black'} ${className}`}>
       <style dangerouslySetInnerHTML={{
         __html: `
         @keyframes word-appear {
@@ -392,84 +392,50 @@ const Hero: React.FC<HeroProps> = ({
         .word-animate { display: inline-block; opacity: 0; margin: 0 0.12em; transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; cursor: default; }
         .word-animate:hover { transform: translateY(-2px); }
         @keyframes fade-in-down {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        
         @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        
-        .animate-fade-in-down {
-          animation: fade-in-down 0.8s ease-out forwards;
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-          opacity: 0;
-        }
-        
-        .animation-delay-200 {
-          animation-delay: 0.2s;
-        }
-        
-        .animation-delay-400 {
-          animation-delay: 0.4s;
-        }
-        
-        .animation-delay-600 {
-          animation-delay: 0.6s;
-        }
-        
-        .animation-delay-800 {
-          animation-delay: 0.8s;
-        }
-        
+        .animate-fade-in-down { animation: fade-in-down 0.8s ease-out forwards; }
+        .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; opacity: 0; }
+        .animation-delay-200 { animation-delay: 0.2s; }
+        .animation-delay-400 { animation-delay: 0.4s; }
+        .animation-delay-600 { animation-delay: 0.6s; }
+        .animation-delay-800 { animation-delay: 0.8s; }
         @keyframes gradient-shift {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-        
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient-shift 3s ease infinite;
-        }
+        .animate-gradient { background-size: 200% 200%; animation: gradient-shift 3s ease infinite; }
         `
       }} />
       
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full object-contain touch-none"
-        style={{ background: 'black' }}
-      />
-      
-      {/* Semi-transparent backdrop for readability */}
-      <div
-        className="absolute inset-0 z-[5] pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, hsl(0 0% 0% / 0.35) 0%, transparent 70%)',
-          backdropFilter: 'blur(1.5px)',
-        }}
-      />
+      {/* WebGL shader canvas — hidden in Classic mode */}
+      {!isClassic && (
+        <>
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full object-contain touch-none"
+            style={{ background: 'black' }}
+          />
+          <div
+            className="absolute inset-0 z-[5] pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse at center, hsl(0 0% 0% / 0.35) 0%, transparent 70%)',
+              backdropFilter: 'blur(1.5px)',
+            }}
+          />
+        </>
+      )}
 
       {/* Hero Content Overlay */}
       <div
         ref={contentRef}
-        className="absolute inset-0 z-10 flex flex-col items-center justify-center text-white"
+        className={`absolute inset-0 z-10 flex flex-col items-center justify-center ${isClassic ? 'text-[#1a1612]' : 'text-white'}`}
         style={{
           transform: `translateY(${scrollY * 0.3}px)`,
           opacity: Math.max(0, 1 - scrollY / 700),
@@ -497,7 +463,7 @@ const Hero: React.FC<HeroProps> = ({
         <div className="text-center space-y-6 max-w-5xl mx-auto px-4">
           {/* Tagline */}
           {tagline && (
-            <p className="text-xs md:text-sm tracking-[0.3em] uppercase font-light bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent animate-fade-in-up">
+            <p className={`text-xs md:text-sm tracking-[0.3em] uppercase font-light animate-fade-in-up ${isClassic ? 'text-[#8B1A1A]' : 'bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent'}`}>
               {tagline}
             </p>
           )}
@@ -505,16 +471,16 @@ const Hero: React.FC<HeroProps> = ({
           {/* Main Heading with word animation */}
           <div className="space-y-2">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold">
-              <AnimatedWords text={headline.line1} baseDelay={200} className="bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent" />
+              <AnimatedWords text={headline.line1} baseDelay={200} className={isClassic ? 'text-[#1a1612]' : 'bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent'} />
             </h1>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold">
-              <AnimatedWords text={headline.line2} baseDelay={400} className="bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent" />
+              <AnimatedWords text={headline.line2} baseDelay={400} className={isClassic ? 'text-[#8B1A1A]' : 'bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent'} />
             </h1>
           </div>
           
           {/* Subtitle with Animation */}
           <div className="max-w-3xl mx-auto animate-fade-in-up animation-delay-600">
-            <p className="text-lg md:text-xl lg:text-2xl text-orange-100/90 font-light leading-relaxed">
+            <p className={`text-lg md:text-xl lg:text-2xl font-light leading-relaxed ${isClassic ? 'text-[#1a1612]/70' : 'text-orange-100/90'}`}>
               {subtitle}
             </p>
           </div>
@@ -547,12 +513,12 @@ const Hero: React.FC<HeroProps> = ({
               <div
                 className="px-8 py-6 rounded-xl"
                 style={{
-                  background: 'hsl(0 0% 0% / 0.3)',
+                  background: isClassic ? 'hsla(38, 33%, 88%, 0.6)' : 'hsl(0 0% 0% / 0.3)',
                   backdropFilter: 'blur(8px)',
-                  border: '1px solid hsl(45 100% 60% / 0.08)',
+                  border: isClassic ? '1px solid hsla(38, 33%, 70%, 0.4)' : '1px solid hsl(45 100% 60% / 0.08)',
                 }}
               >
-                <p className="text-sm md:text-base lg:text-lg font-light text-white/90 leading-[1.9] tracking-wide text-center">
+                <p className={`text-sm md:text-base lg:text-lg font-light leading-[1.9] tracking-wide text-center ${isClassic ? 'text-[#1a1612]/80' : 'text-white/90'}`}>
                   <AnimatedWords text={manifesto} baseDelay={800} />
                 </p>
               </div>
