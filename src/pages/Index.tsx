@@ -4,6 +4,7 @@ import SocialLinks from '@/components/SocialLinks';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import SEOHead from '@/components/SEOHead';
 import ThreePointsSection from '@/components/ThreePointsSection';
+import InspirationCarousel from '@/components/InspirationCarousel';
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -45,11 +46,9 @@ const Index = () => {
       />
       
       <div className="relative z-10">
-        <div className="h-[140vh]"></div>
         <div className="absolute top-0 left-0 right-0 z-20">
           <Navigation />
         </div>
-        <SocialLinks />
 
         {/* Bottom section with solid bg to cover the fixed hero */}
         <div style={{ backgroundColor: 'hsl(0 0% 0% / 0.6)' }}>
@@ -57,7 +56,11 @@ const Index = () => {
           <ThreePointsSection />
 
           <ArchEvolutionCTA />
-          <div className="h-8" />
+
+          {/* ─── Inspiration Carousel ─── */}
+          <InspirationCarousel />
+
+          <SocialLinks />
         </div>
       </div>
     </div>
