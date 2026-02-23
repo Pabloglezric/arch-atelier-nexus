@@ -58,7 +58,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   return (
     <li
       ref={slideRef}
-      className="flex flex-1 flex-col items-center justify-center relative text-center opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10"
+      className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-300 ease-in-out cursor-pointer"
       onClick={() => handleSlideClick(index)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -69,6 +69,8 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
             : "scale(1) rotateX(0deg)",
         transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
         transformOrigin: "bottom",
+        zIndex: current === index ? 2 : 1,
+        opacity: current === index ? 1 : 0,
       }}
     >
       <div
@@ -162,7 +164,7 @@ export function Carousel({ slides }: CarouselProps) {
   return (
     <div className="relative w-[70vmin] h-[70vmin] mx-auto" style={{ perspective: "1200px" }}>
       <ul
-        className="relative w-full h-full"
+        className="relative w-full h-full list-none m-0 p-0"
         style={{ transformStyle: "preserve-3d" }}
       >
         {slides.map((slide, index) => (

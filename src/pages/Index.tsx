@@ -50,6 +50,9 @@ const Index = () => {
           <Navigation />
         </div>
 
+        {/* Spacer to scroll past the fixed hero */}
+        <div className="h-screen" />
+
         {/* Bottom section with solid bg to cover the fixed hero */}
         <div style={{ backgroundColor: 'hsl(0 0% 0% / 0.6)' }}>
           {/* ─── Three Points Philosophy ─── */}
