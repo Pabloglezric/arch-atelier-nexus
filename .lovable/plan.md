@@ -1,68 +1,42 @@
 
 
-# Fix: Make ClassicMeshBackground Visible Across All Pages
+## Fix: Overlapping Sections and Broken Carousel Layout
 
-## Problem
+### Problems Identified
 
-The `ClassicMeshBackground` component renders as a **fixed** full-screen element (z-index 5), but it is invisible on most pages because they use **opaque dark backgrounds** that completely cover it:
+1. **Sections overlap the Hero**: The fixed hero (`fixed inset-0`) needs a spacer div so content scrolls past it before reaching the sections. The previous spacer was removed during the carousel addition, causing ThreePointsSection to render right at the top and overlap the hero text.
 
-| Page | Background | Classic-aware? |
-|------|-----------|----------------|
-| Index | `transparent` (Classic) / `hsl(0 0% 4%)` (Disruptive) | Yes |
-| InteractiveModels | `#f5f0e8` (Classic) / `hsl(0 0% 4%)` (Disruptive) | Yes |
-| **Portfolio** | `hsl(0 0% 4%)` always | **No -- blocks MeshGradient** |
-| **About** | `hsl(0 0% 4%)` always | **No -- blocks MeshGradient** |
-| **Contact** | `hsl(0 0% 4%)` always | **No -- blocks MeshGradient** |
-| **Inspiration** | `bg-black` always | **No -- blocks MeshGradient** |
+2. **Carousel slides stack vertically**: The `<li>` slide items are in normal document flow inside the `<ul>`, so all 7 slides render one below another, creating a massive vertical stack. The Aceternity carousel expects slides to be absolutely positioned on top of each other, with only the current slide prominent.
 
-Each of these pages also has its own canvas-based animated background (pixelated orbs / dithered gradients) that only makes sense for the Disruptive theme.
+### Changes
 
-## Solution
+#### 1. Fix `src/pages/Index.tsx` -- Add Hero Spacer Back
+- Add a `<div className="h-screen" />` spacer before the content sections, inside the `relative z-10` wrapper
+- This transparent spacer lets the user scroll past the fixed hero before the opaque content sections begin
+- The existing `backgroundColor: 'hsl(0 0% 0% / 0.6)'` wrapper stays as-is for the content below
 
-For each affected page, make the wrapper background and the canvas animation **theme-aware**:
-- In **Classic mode**: set the wrapper to `transparent` and hide the dark canvas animation, so the global `ClassicMeshBackground` shows through
-- In **Disruptive mode**: keep everything exactly as it is today
-- Adjust text colors on each page where needed so they remain readable against the parchment background in Classic mode
+#### 2. Fix `src/components/ui/carousel.tsx` -- Absolute Position Slides
+- Change each `<li>` slide to use `absolute inset-0` positioning so all slides stack on top of each other in the same space
+- Only the current (active) slide is fully visible; inactive slides scale down with `rotateX(8deg)` and lower opacity
+- Add `list-style-none` to the `<ul>` to remove bullet styling
+- The container keeps its `w-[70vmin] h-[70vmin]` sizing with `perspective: 1200px`
 
-## File Changes
+### Technical Details
 
-### 1. `src/pages/Portfolio.tsx`
-- Import `useTheme` hook
-- Change wrapper `backgroundColor` to `transparent` when Classic, keep `hsl(0 0% 4%)` when Disruptive
-- Conditionally hide the dark canvas animation in Classic mode
-- Adjust heading/text colors in Classic mode (dark ink instead of gold/grey)
-
-### 2. `src/pages/About.tsx`
-- Import `useTheme` hook
-- Change wrapper `backgroundColor` to `transparent` when Classic
-- Hide dark canvas animation in Classic mode
-- Adjust text colors for Classic readability
-
-### 3. `src/pages/Contact.tsx`
-- Import `useTheme` hook
-- Change wrapper `backgroundColor` to `transparent` when Classic
-- Hide dark canvas animation in Classic mode
-- Adjust text colors for Classic readability
-
-### 4. `src/pages/Inspiration.tsx`
-- Import `useTheme` hook
-- Change wrapper from `bg-black` to transparent when Classic
-- Hide dark canvas animation in Classic mode
-- Adjust text colors for Classic readability
-
-### 5. `src/components/ui/classic-mesh-background.tsx`
-- Increase opacity from 0.55 to 0.75 so the gradient is more clearly visible
-- This ensures the background is unmistakably present across all pages
-
-## Technical Notes
-
-```text
-Rendering stack in Classic mode (all pages, after fix):
-
-  [fixed, z-5]  ClassicMeshBackground (MeshGradient) -- VISIBLE
-  [page layer]  Page wrapper (transparent background)
-    [hidden]    Dark canvas animation -- NOT RENDERED
-    [z-1]       Page content (dark ink text on parchment)
+**Index.tsx** -- insert before the content `<div>`:
+```tsx
+{/* Spacer to scroll past the fixed hero */}
+<div className="h-screen" />
 ```
 
-The Disruptive theme remains completely untouched -- all changes are gated behind `isClassic` checks.
+**carousel.tsx** -- change slide `<li>` class from flow layout to absolute stacking:
+```tsx
+// Before (broken - normal flow, stacks vertically):
+className="flex flex-1 flex-col items-center justify-center relative text-center ... w-[70vmin] h-[70vmin] mx-[4vmin] z-10"
+
+// After (fixed - slides stack on top of each other):
+className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-100 transition-all duration-300 ease-in-out z-10 cursor-pointer"
+```
+
+Also adjust the inactive slide z-index so the active slide is always on top, and ensure the `<ul>` has `list-style: none`.
+

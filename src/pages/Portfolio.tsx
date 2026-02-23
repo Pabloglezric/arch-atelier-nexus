@@ -7,7 +7,6 @@ import ExpandedProjectCard from '@/components/portfolio/ExpandedProjectCard';
 import LightboxModal from '@/components/portfolio/LightboxModal';
 import CapabilitiesSection from '@/components/portfolio/CapabilitiesSection';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
-import { useTheme } from '@/hooks/useTheme';
 
 // Project images
 import sportsDirectStoreFront from '@/assets/01_Sports_Direct_StoreFront.png';
@@ -193,7 +192,6 @@ const projects: ProjectData[] = [
 ];
 
 const Portfolio = () => {
-  const { isClassic } = useTheme();
   const [activeFilter, setActiveFilter] = useState('All');
   const [lightboxProject, setLightboxProject] = useState<ProjectData | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -324,14 +322,12 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen" style={{ backgroundColor: isClassic ? 'transparent' : 'hsl(0 0% 4%)' }}>
-      {!isClassic && (
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 0 }}
-        />
-      )}
+    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 0 }}
+      />
 
       <SEOHead
         title="Portfolio - BIM Projects & Architectural Documentation | Juan Pablo Gonzalez Ricardez"
@@ -350,7 +346,7 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
               className="font-display text-5xl md:text-7xl font-bold mb-6"
-              style={{ color: isClassic ? '#1a1612' : 'hsl(45 100% 60%)' }}
+              style={{ color: 'hsl(45 100% 60%)' }}
             >
               Selected Work
             </motion.h1>
@@ -359,7 +355,7 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
               className="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed"
-              style={{ color: isClassic ? '#4a3f35' : 'hsl(0 0% 55%)' }}
+              style={{ color: 'hsl(0 0% 55%)' }}
             >
               Each project here was delivered under live construction pressure — real clients, real deadlines, real consequences for error. These are not concept studies. These are production-grade deliverables built to UK standards.
             </motion.p>

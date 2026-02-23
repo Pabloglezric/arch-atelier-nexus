@@ -12,7 +12,6 @@ import Contact from "./pages/Contact";
 import Inspiration from "./pages/Inspiration";
 import NotFound from "./pages/NotFound";
 import ThemeSwitcher from "./components/ThemeSwitcher";
-import ClassicMeshBackground from "./components/ui/classic-mesh-background";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +19,6 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <ThemeSwitcher />
-      <ClassicMeshBackground />
       <Toaster />
       <Sonner />
       <BrowserRouter>

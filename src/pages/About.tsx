@@ -7,7 +7,6 @@ import profilePhoto from '@/assets/jp-profile.jpg';
 import { Button } from '@/components/ui/button';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { GlowCard } from '@/components/ui/spotlight-card';
-import { useTheme } from '@/hooks/useTheme';
 
 const stats = [
 { value: '12+', label: 'Projects Delivered' },
@@ -67,7 +66,6 @@ const fadeUp = {
 };
 
 const About = () => {
-  const { isClassic } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -163,13 +161,11 @@ const About = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen" style={{ backgroundColor: isClassic ? 'transparent' : 'hsl(0 0% 4%)' }}>
-      {!isClassic && (
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 0 }} />
-      )}
+    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 0 }} />
 
 
       <SEOHead
@@ -188,20 +184,20 @@ const About = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-               className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-               style={{ color: isClassic ? '#1a1612' : 'hsl(0 0% 92%)' }}>
+              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              style={{ color: 'hsl(0 0% 92%)' }}>
 
-               I don't just model buildings.
-               <br />
-               <span style={{ color: isClassic ? '#8B1A1A' : 'hsl(45 100% 60%)' }}>I engineer certainty.</span>
+              I don't just model buildings.
+              <br />
+              <span style={{ color: 'hsl(45 100% 60%)' }}>I engineer certainty.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-               className="text-base md:text-lg tracking-wide mb-16"
-               style={{ color: isClassic ? '#4a3f35' : 'hsl(0 0% 50%)' }}>
+              className="text-base md:text-lg tracking-wide mb-16"
+              style={{ color: 'hsl(0 0% 50%)' }}>
 
               Architectural Technologist &nbsp;|&nbsp; BIM Specialist &nbsp;|&nbsp; Associate CIAT &nbsp;|&nbsp; Leeds, UK
             </motion.p>

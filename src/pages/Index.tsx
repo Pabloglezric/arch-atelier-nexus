@@ -5,7 +5,6 @@ import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import SEOHead from '@/components/SEOHead';
 import ThreePointsSection from '@/components/ThreePointsSection';
 import InspirationCarousel from '@/components/InspirationCarousel';
-import { useTheme } from '@/hooks/useTheme';
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -27,9 +26,8 @@ const websiteJsonLd = {
 };
 
 const Index = () => {
-  const { isClassic } = useTheme();
   return (
-    <div className="min-h-screen" style={{ backgroundColor: isClassic ? 'transparent' : 'hsl(0 0% 4%)' }}>
+    <div className="min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
       <SEOHead
         title="Juan Pablo Gonzalez Ricardez - BIM Specialist & Architectural Technologist, Leeds"
         description="BIM Specialist and Architectural Technologist in Leeds, UK. Expert in Revit, parametric design, LOD400 documentation, and RIBA Stages 3-4."
@@ -56,7 +54,7 @@ const Index = () => {
         <div className="h-screen" />
 
         {/* Bottom section with solid bg to cover the fixed hero */}
-        <div style={{ backgroundColor: isClassic ? 'hsla(38, 33%, 93%, 0.75)' : 'hsl(0 0% 0% / 0.6)' }}>
+        <div style={{ backgroundColor: 'hsl(0 0% 0% / 0.6)' }}>
           {/* ─── Three Points Philosophy ─── */}
           <ThreePointsSection />
 

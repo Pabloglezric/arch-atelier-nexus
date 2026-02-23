@@ -8,7 +8,6 @@ import { useToast } from '@/hooks/use-toast';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { supabase } from '@/integrations/supabase/client';
 import { GlowCard } from '@/components/ui/spotlight-card';
-import { useTheme } from '@/hooks/useTheme';
 
 type SubjectOption = 'Project Enquiry' | 'ArchEvolution' | 'General';
 
@@ -108,7 +107,6 @@ const drawDitheredOrbs = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasEleme
 };
 
 const Contact = () => {
-  const { isClassic } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
   const [subject, setSubject] = useState<SubjectOption>('General');
@@ -176,14 +174,12 @@ const Contact = () => {
   };
 
   return (
-    <div className="relative min-h-screen" style={{ backgroundColor: isClassic ? 'transparent' : 'hsl(0 0% 4%)' }}>
-      {!isClassic && (
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{ zIndex: 0 }}
-        />
-      )}
+    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0 0% 4%)' }}>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 0 }}
+      />
 
       <SEOHead
         title="Contact - Hire a BIM Specialist | Juan Pablo Gonzalez Ricardez"
@@ -202,17 +198,17 @@ const Contact = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-               style={{ color: isClassic ? '#1a1612' : 'hsl(0 0% 92%)' }}
-             >
-               Let's build something{' '}
-               <span style={{ color: isClassic ? '#8B1A1A' : 'hsl(45 100% 60%)' }}>precise.</span>
+              style={{ color: 'hsl(0 0% 0%)' }}
+            >
+              Let's build something{' '}
+              <span style={{ color: 'hsl(45 100% 60%)' }}>precise.</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-               className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
-               style={{ color: isClassic ? '#4a3f35' : 'hsl(0 0% 50%)' }}
+              className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
+              style={{ color: 'hsl(0 0% 50%)' }}
             >
               Whether you need a BIM consultant, a technical documentation specialist, or want to
               collaborate on an AI-powered design project — I want to hear from you.
