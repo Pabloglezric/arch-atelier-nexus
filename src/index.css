@@ -986,37 +986,38 @@ input[type="range"]::-moz-range-thumb {
   --radius: 14;
   --backdrop: transparent;
   --backup-border: hsl(0 0% 15% / 0.4);
-  --size: 200;
+  --size: 300;
   --outer: 1;
   --border-size: calc(var(--border, 2) * 1px);
-  --spotlight-size: calc(var(--size, 200) * 1px);
+  --spotlight-size: calc(var(--size, 300) * 1px);
   --hue: calc(var(--base) + (var(--xp, 0) * var(--spread, 0)));
 }
 
 /* Theme-based glow hues */
 [data-glow-theme="disruptive"] {
   --base: 38;
-  --spread: 30;
-  --saturation: 90;
+  --spread: 40;
+  --saturation: 100;
   --lightness: 60;
-  --bg-spot-opacity: 0.1;
-  --border-spot-opacity: 0.8;
-  --border-light-opacity: 0.6;
+  --bg-spot-opacity: 0.15;
+  --border-spot-opacity: 1;
+  --border-light-opacity: 0.8;
 }
 
 [data-glow-theme="classic"] {
   --base: 0;
-  --spread: 20;
+  --spread: 25;
   --saturation: 68;
-  --lightness: 32;
-  --bg-spot-opacity: 0.06;
-  --border-spot-opacity: 0.6;
-  --border-light-opacity: 0.4;
+  --lightness: 35;
+  --bg-spot-opacity: 0.1;
+  --border-spot-opacity: 0.8;
+  --border-light-opacity: 0.5;
 }
 
 .glow-card {
   position: relative;
   touch-action: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
   background-image: radial-gradient(
     var(--spotlight-size) var(--spotlight-size) at
     calc(var(--x, 0) * 1px)
@@ -1027,6 +1028,11 @@ input[type="range"]::-moz-range-thumb {
   background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
   background-position: 50% 50%;
   background-attachment: fixed;
+}
+
+.glow-card:hover {
+  transform: scale(1.03) translateY(-2px);
+  box-shadow: 0 8px 30px -8px hsl(var(--hue, 210) calc(var(--saturation, 80) * 1%) calc(var(--lightness, 50) * 1%) / 0.25);
 }
 
 [data-glow]::before,
