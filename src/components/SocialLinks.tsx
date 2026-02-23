@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Linkedin } from 'lucide-react';
+import { GlowCard } from '@/components/ui/spotlight-card';
 
 const SocialLinks = () => {
   return (
@@ -37,43 +38,33 @@ const SocialLinks = () => {
             href="https://www.linkedin.com/in/pablo-gonzalez-a1024177/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-4 p-8 rounded-xl transition-all duration-300 group"
-            style={{
-              backgroundColor: 'hsl(0 0% 6% / 0.6)',
-              border: '1px solid hsl(0 0% 14%)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'hsl(45, 100%, 60%, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'hsl(0, 0%, 14%)';
-            }}
+            className="block"
           >
-            <div
-              className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+            <GlowCard
+              className="flex flex-col items-center gap-4 p-8 rounded-xl transition-all duration-300 group"
               style={{
-                border: '1px solid hsl(0 0% 18%)',
-                color: 'hsl(0 0% 50%)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'hsl(45, 100%, 60%, 0.5)';
-                e.currentTarget.style.color = 'hsl(45, 100%, 60%)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'hsl(0, 0%, 18%)';
-                e.currentTarget.style.color = 'hsl(0, 0%, 50%)';
+                backgroundColor: 'hsl(0 0% 6% / 0.6)',
+                border: '1px solid hsl(0 0% 14%)',
               }}
             >
-              <Linkedin className="h-6 w-6" />
-            </div>
-            <div className="text-center">
-              <p className="font-semibold text-base mb-1" style={{ color: 'hsl(0 0% 88%)' }}>
-                LinkedIn
-              </p>
-              <p className="text-xs" style={{ color: 'hsl(0 0% 45%)' }}>
-                Professional insights and architectural industry updates
-              </p>
-            </div>
+              <div
+                className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                style={{
+                  border: '1px solid hsl(0 0% 18%)',
+                  color: 'hsl(0 0% 50%)',
+                }}
+              >
+                <Linkedin className="h-6 w-6" />
+              </div>
+              <div className="text-center">
+                <p className="font-semibold text-base mb-1" style={{ color: 'hsl(0 0% 88%)' }}>
+                  LinkedIn
+                </p>
+                <p className="text-xs" style={{ color: 'hsl(0 0% 45%)' }}>
+                  Professional insights and architectural industry updates
+                </p>
+              </div>
+            </GlowCard>
           </a>
         </motion.div>
       </div>

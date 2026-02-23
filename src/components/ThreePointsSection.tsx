@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { GlowCard } from '@/components/ui/spotlight-card';
 
 const principles = [
   {
@@ -64,23 +65,26 @@ const ThreePointsSection = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="p-8 rounded-lg text-center"
-              style={{
-                backgroundColor: 'hsl(0 0% 6%)',
-                border: '1px solid hsl(0 0% 12%)',
-                borderTopWidth: '2px',
-                borderTopColor: 'hsl(45 100% 60% / 0.5)',
-              }}
             >
-              <h3
-                className="font-display text-lg font-semibold mb-3"
-                style={{ color: 'hsl(45 100% 60%)' }}
+              <GlowCard
+                className="p-8 rounded-lg text-center h-full"
+                style={{
+                  backgroundColor: 'hsl(0 0% 6%)',
+                  border: '1px solid hsl(0 0% 12%)',
+                  borderTopWidth: '2px',
+                  borderTopColor: 'hsl(45 100% 60% / 0.5)',
+                }}
               >
-                {p.title}
-              </h3>
-              <p className="text-sm leading-relaxed" style={{ color: 'hsl(0 0% 45%)' }}>
-                {p.description}
-              </p>
+                <h3
+                  className="font-display text-lg font-semibold mb-3"
+                  style={{ color: 'hsl(45 100% 60%)' }}
+                >
+                  {p.title}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'hsl(0 0% 45%)' }}>
+                  {p.description}
+                </p>
+              </GlowCard>
             </motion.div>
           ))}
         </div>
