@@ -381,7 +381,7 @@ const Hero: React.FC<HeroProps> = ({
     return () => { els.forEach(el => { el.removeEventListener('mouseenter', handleEnter); el.removeEventListener('mouseleave', handleLeave); }); };
   }, []);
   return (
-    <div className={`fixed inset-0 w-full h-full overflow-hidden z-0 ${isClassic ? '' : 'bg-black'} ${className}`}>
+    <div className={`fixed inset-0 w-full h-full overflow-hidden ${isClassic ? 'z-[6]' : 'z-0 bg-black'} ${className}`}>
       <style dangerouslySetInnerHTML={{
         __html: `
         @keyframes word-appear {
@@ -435,7 +435,7 @@ const Hero: React.FC<HeroProps> = ({
       {/* Hero Content Overlay */}
       <div
         ref={contentRef}
-        className={`absolute inset-0 z-10 flex flex-col items-center justify-center ${isClassic ? 'text-[#1a1612]' : 'text-white'}`}
+        className={`absolute inset-0 flex flex-col items-center justify-center ${isClassic ? 'text-[#1a1612] z-[10]' : 'text-white z-10'}`}
         style={{
           transform: `translateY(${scrollY * 0.3}px)`,
           opacity: Math.max(0, 1 - scrollY / 700),
