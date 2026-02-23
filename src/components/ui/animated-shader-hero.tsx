@@ -1,4 +1,24 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { useTheme } from '@/hooks/useTheme';
+
+// Helper: split text into animated word spans
+const AnimatedWords: React.FC<{ text: string; baseDelay?: number; className?: string }> = ({ text, baseDelay = 0, className = '' }) => {
+  const words = text.split(/\s+/);
+  return (
+    <>
+      {words.map((word, i) => (
+        <span
+          key={i}
+          className={`word-animate ${className}`}
+          data-delay={baseDelay + i * 80}
+          style={{ display: 'inline-block', opacity: 0, margin: '0 0.12em' }}
+        >
+          {word}
+        </span>
+      ))}
+    </>
+  );
+};
 
 // Types for component props
 interface SocialLink {
@@ -346,10 +366,40 @@ const Hero: React.FC<HeroProps> = ({
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  const { isClassic } = useTheme();
+
+  // Trigger word-animate elements
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      document.querySelectorAll('.word-animate').forEach(el => {
+        const delay = parseInt(el.getAttribute('data-delay') || '0');
+        setTimeout(() => {
+          (el as HTMLElement).style.animation = 'word-appear 0.8s ease-out forwards';
+        }, delay);
+      });
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  // Word hover glow
+  useEffect(() => {
+    const handleEnter = (e: Event) => { (e.target as HTMLElement).style.textShadow = '0 0 20px rgba(203, 213, 225, 0.5)'; };
+    const handleLeave = (e: Event) => { (e.target as HTMLElement).style.textShadow = 'none'; };
+    const els = document.querySelectorAll('.word-animate');
+    els.forEach(el => { el.addEventListener('mouseenter', handleEnter); el.addEventListener('mouseleave', handleLeave); });
+    return () => { els.forEach(el => { el.removeEventListener('mouseenter', handleEnter); el.removeEventListener('mouseleave', handleLeave); }); };
+  }, []);
   return (
     <div className={`fixed inset-0 w-full h-full overflow-hidden bg-black z-0 ${className}`}>
       <style dangerouslySetInnerHTML={{
         __html: `
+        @keyframes word-appear {
+          0% { opacity: 0; transform: translateY(30px) scale(0.8); filter: blur(10px); }
+          50% { opacity: 0.8; transform: translateY(10px) scale(0.95); filter: blur(2px); }
+          100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        .word-animate { display: inline-block; opacity: 0; margin: 0 0.12em; transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; cursor: default; }
+        .word-animate:hover { transform: translateY(-2px); }
         @keyframes fade-in-down {
           from {
             opacity: 0;
@@ -461,13 +511,13 @@ const Hero: React.FC<HeroProps> = ({
             </p>
           )}
 
-          {/* Main Heading with Animation */}
+          {/* Main Heading with word animation */}
           <div className="space-y-2">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent animate-fade-in-up animation-delay-200">
-              {headline.line1}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-orange-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent">
+              <AnimatedWords text={headline.line1} baseDelay={200} />
             </h1>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-fade-in-up animation-delay-400">
-              {headline.line2}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text text-transparent">
+              <AnimatedWords text={headline.line2} baseDelay={400} />
             </h1>
           </div>
           
@@ -500,9 +550,9 @@ const Hero: React.FC<HeroProps> = ({
             </div>
           )}
 
-          {/* Manifesto Paragraph — emphasized */}
+          {/* Manifesto Paragraph — word animation */}
           {manifesto && (
-            <div className="max-w-[720px] mx-auto mt-20 animate-fade-in-up" style={{ animationDelay: '1s' }}>
+            <div className="max-w-[720px] mx-auto mt-20">
               <div
                 className="px-8 py-6 rounded-xl"
                 style={{
@@ -512,7 +562,7 @@ const Hero: React.FC<HeroProps> = ({
                 }}
               >
                 <p className="text-sm md:text-base lg:text-lg font-light text-white/90 leading-[1.9] tracking-wide text-center">
-                  {manifesto}
+                  <AnimatedWords text={manifesto} baseDelay={800} />
                 </p>
               </div>
             </div>
