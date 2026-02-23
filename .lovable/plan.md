@@ -1,60 +1,36 @@
 
 
-## Fix Classic Mode Issues on Interactive Models Page
+## Plan: Add Aceternity Carousel to Landing Page
 
-### Problems
+### Overview
+Replace the existing unused carousel component with the Aceternity UI carousel, add it to the landing page between the main content sections and the "Connect & Follow" section, and remove the background image. The carousel will display the same images used in the Inspiration gallery.
 
-1. **3D models not visible in Classic Mode**: The CSS rule `[data-theme="classic"] .interactive-models-page canvas { display: none !important; }` hides ALL canvases on the page, including the Three.js 3D model canvases. This was intended to hide only the `PaperDesignBackground` canvas, but it catches the model canvases too.
+### Changes
 
-2. **Fullscreen 3D models also broken**: The same CSS rule hides the canvas inside the fullscreen expanded viewer. The background image from `ClassicArchBackground` also bleeds into the expanded view.
+#### 1. Install dependency
+- Add `@tabler/icons-react` package
 
-3. **Close button overlaps Theme Switcher**: The close button is at `top-5 right-24` and the ThemeSwitcher is at `fixed top-4 right-4 z-[9999]`. From the screenshot, they visually clash.
+#### 2. Replace `src/components/ui/carousel.tsx`
+- Overwrite the existing shadcn/Embla carousel (currently unused) with the Aceternity carousel component
+- The component features 3D perspective transforms, mouse-tracking lighting effects, and slide navigation controls
+- Since the JSX was stripped during pasting, I will reconstruct the full component from the Aceternity registry source (minified version visible in search results), including proper class names like `[perspective:1200px]`, `[transform-style:preserve-3d]`, `w-[70vmin] h-[70vmin]`, etc.
 
-4. **Controls panel too high**: The controls panel is at `top-16 right-5`, which overlaps with the title/close button area.
+#### 3. Create `src/components/InspirationCarousel.tsx`
+- New wrapper component that imports the Aceternity `Carousel` and feeds it the 7 inspiration images from `src/assets/insp-*.png`
+- Each slide will have a descriptive title matching the Inspiration page items (e.g., "Waterfront Gallery Pavilion", "Shell Form Meditation Chapel")
+- Button text will say "View Gallery" linking to the `/inspiration` page
+- Works in both Classic and Disruptive themes
 
----
+#### 4. Update `src/pages/Index.tsx`
+- Remove the background image/canvas (the `h-[140vh]` spacer div that creates scroll space over the fixed hero)
+- Add the `InspirationCarousel` section between the `ThreePointsSection`/`ArchEvolutionCTA` block and the `SocialLinks` ("Connect & Follow") section
+- Move `SocialLinks` to appear after the carousel, at the very bottom
+- The page flow will be: Hero -> Navigation -> ThreePointsSection -> ArchEvolutionCTA -> **InspirationCarousel** -> SocialLinks (Connect & Follow)
 
-### Fixes
+### Technical Details
 
-#### 1. Fix the canvas visibility CSS (src/index.css)
-
-Replace the overly broad rule:
-```css
-/* BEFORE - hides ALL canvases including 3D models */
-[data-theme="classic"] .interactive-models-page canvas {
-  display: none !important;
-}
-```
-
-With a more targeted rule that only hides the background canvas, not the model canvases inside `.model-slot-card` or the fullscreen viewer:
-```css
-/* Only hide the ClassicArchBackground / PaperDesign background canvas */
-[data-theme="classic"] .interactive-models-page > .pointer-events-none canvas,
-[data-theme="classic"] .interactive-models-page > div:first-child canvas {
-  display: none !important;
-}
-```
-
-Since the component already conditionally renders `ClassicArchBackground` vs `PaperDesignBackground` based on `isClassic`, and `ClassicArchBackground` uses SVGs (no canvas), the simplest approach is to remove the broad canvas-hiding rule entirely and rely on the conditional rendering that already exists in the component.
-
-#### 2. Lower the close button and controls panel (src/pages/InteractiveModels.tsx)
-
-- Move close button from `top-5 right-24` to `top-14 right-5` (below the ThemeSwitcher instead of beside it)
-- Move controls panel from `top-16 right-5` to `top-24 right-5` (below the close button)
-- Raise the fullscreen viewer z-index from `z-50` to `z-[9998]` so it sits just below the ThemeSwitcher
-
-#### 3. Ensure fullscreen viewer always uses dark background (src/index.css)
-
-Add a rule to ensure the expanded fullscreen 3D viewer keeps its dark background and does not get the classic parchment treatment, and its canvases remain visible:
-```css
-[data-theme="classic"] .fixed.inset-0.z-\\[9998\\] canvas {
-  display: block !important;
-}
-```
-
----
-
-### Files to Modify
-
-- **src/index.css**: Remove the broad `canvas { display: none }` rule; add targeted rules to preserve 3D canvases in model cards and fullscreen viewer
-- **src/pages/InteractiveModels.tsx**: Lower close button position, lower controls panel position, bump fullscreen z-index to `z-[9998]`
+- The Aceternity carousel uses CSS perspective transforms and `requestAnimationFrame` for smooth mouse-tracking lighting effects on slides
+- Slides scale down with a `rotateX(8deg)` tilt when not active, and scale to full with `rotateX(0deg)` when selected
+- Navigation uses prev/next arrow buttons with `IconArrowNarrowRight` from `@tabler/icons-react`
+- The carousel container is `w-[70vmin] h-[70vmin]` making it responsive by viewport size
+- No additional CSS file needed -- everything uses Tailwind utility classes
