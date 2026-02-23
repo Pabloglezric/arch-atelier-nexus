@@ -1,36 +1,42 @@
 
 
-## Plan: Add Aceternity Carousel to Landing Page
+## Fix: Overlapping Sections and Broken Carousel Layout
 
-### Overview
-Replace the existing unused carousel component with the Aceternity UI carousel, add it to the landing page between the main content sections and the "Connect & Follow" section, and remove the background image. The carousel will display the same images used in the Inspiration gallery.
+### Problems Identified
+
+1. **Sections overlap the Hero**: The fixed hero (`fixed inset-0`) needs a spacer div so content scrolls past it before reaching the sections. The previous spacer was removed during the carousel addition, causing ThreePointsSection to render right at the top and overlap the hero text.
+
+2. **Carousel slides stack vertically**: The `<li>` slide items are in normal document flow inside the `<ul>`, so all 7 slides render one below another, creating a massive vertical stack. The Aceternity carousel expects slides to be absolutely positioned on top of each other, with only the current slide prominent.
 
 ### Changes
 
-#### 1. Install dependency
-- Add `@tabler/icons-react` package
+#### 1. Fix `src/pages/Index.tsx` -- Add Hero Spacer Back
+- Add a `<div className="h-screen" />` spacer before the content sections, inside the `relative z-10` wrapper
+- This transparent spacer lets the user scroll past the fixed hero before the opaque content sections begin
+- The existing `backgroundColor: 'hsl(0 0% 0% / 0.6)'` wrapper stays as-is for the content below
 
-#### 2. Replace `src/components/ui/carousel.tsx`
-- Overwrite the existing shadcn/Embla carousel (currently unused) with the Aceternity carousel component
-- The component features 3D perspective transforms, mouse-tracking lighting effects, and slide navigation controls
-- Since the JSX was stripped during pasting, I will reconstruct the full component from the Aceternity registry source (minified version visible in search results), including proper class names like `[perspective:1200px]`, `[transform-style:preserve-3d]`, `w-[70vmin] h-[70vmin]`, etc.
-
-#### 3. Create `src/components/InspirationCarousel.tsx`
-- New wrapper component that imports the Aceternity `Carousel` and feeds it the 7 inspiration images from `src/assets/insp-*.png`
-- Each slide will have a descriptive title matching the Inspiration page items (e.g., "Waterfront Gallery Pavilion", "Shell Form Meditation Chapel")
-- Button text will say "View Gallery" linking to the `/inspiration` page
-- Works in both Classic and Disruptive themes
-
-#### 4. Update `src/pages/Index.tsx`
-- Remove the background image/canvas (the `h-[140vh]` spacer div that creates scroll space over the fixed hero)
-- Add the `InspirationCarousel` section between the `ThreePointsSection`/`ArchEvolutionCTA` block and the `SocialLinks` ("Connect & Follow") section
-- Move `SocialLinks` to appear after the carousel, at the very bottom
-- The page flow will be: Hero -> Navigation -> ThreePointsSection -> ArchEvolutionCTA -> **InspirationCarousel** -> SocialLinks (Connect & Follow)
+#### 2. Fix `src/components/ui/carousel.tsx` -- Absolute Position Slides
+- Change each `<li>` slide to use `absolute inset-0` positioning so all slides stack on top of each other in the same space
+- Only the current (active) slide is fully visible; inactive slides scale down with `rotateX(8deg)` and lower opacity
+- Add `list-style-none` to the `<ul>` to remove bullet styling
+- The container keeps its `w-[70vmin] h-[70vmin]` sizing with `perspective: 1200px`
 
 ### Technical Details
 
-- The Aceternity carousel uses CSS perspective transforms and `requestAnimationFrame` for smooth mouse-tracking lighting effects on slides
-- Slides scale down with a `rotateX(8deg)` tilt when not active, and scale to full with `rotateX(0deg)` when selected
-- Navigation uses prev/next arrow buttons with `IconArrowNarrowRight` from `@tabler/icons-react`
-- The carousel container is `w-[70vmin] h-[70vmin]` making it responsive by viewport size
-- No additional CSS file needed -- everything uses Tailwind utility classes
+**Index.tsx** -- insert before the content `<div>`:
+```tsx
+{/* Spacer to scroll past the fixed hero */}
+<div className="h-screen" />
+```
+
+**carousel.tsx** -- change slide `<li>` class from flow layout to absolute stacking:
+```tsx
+// Before (broken - normal flow, stacks vertically):
+className="flex flex-1 flex-col items-center justify-center relative text-center ... w-[70vmin] h-[70vmin] mx-[4vmin] z-10"
+
+// After (fixed - slides stack on top of each other):
+className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-100 transition-all duration-300 ease-in-out z-10 cursor-pointer"
+```
+
+Also adjust the inactive slide z-index so the active slide is always on top, and ensure the `<ul>` has `list-style: none`.
+
