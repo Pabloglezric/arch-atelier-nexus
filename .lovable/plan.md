@@ -1,42 +1,50 @@
 
 
-## Fix: Overlapping Sections and Broken Carousel Layout
+# Fix: Make Classic Theme MeshGradient Background Visible
 
-### Problems Identified
+## Problem
 
-1. **Sections overlap the Hero**: The fixed hero (`fixed inset-0`) needs a spacer div so content scrolls past it before reaching the sections. The previous spacer was removed during the carousel addition, causing ThreePointsSection to render right at the top and overlap the hero text.
+The `ClassicMeshBackground` (MeshGradient) renders as a `fixed` element at `z-index: 0`, but it is completely hidden because every layer on top of it uses opaque dark backgrounds:
 
-2. **Carousel slides stack vertically**: The `<li>` slide items are in normal document flow inside the `<ul>`, so all 7 slides render one below another, creating a massive vertical stack. The Aceternity carousel expects slides to be absolutely positioned on top of each other, with only the current slide prominent.
+1. **Index page wrapper** -- `backgroundColor: 'hsl(0 0% 4%)'` (near-black, fully opaque)
+2. **Hero component** -- has `bg-black` class and the WebGL canvas has `background: 'black'`
+3. **Lower sections wrapper** -- `backgroundColor: 'hsl(0 0% 0% / 0.6)'` (60% black overlay)
 
-### Changes
+None of these backgrounds are theme-aware, so in Classic mode the parchment MeshGradient is painted but immediately covered by black.
 
-#### 1. Fix `src/pages/Index.tsx` -- Add Hero Spacer Back
-- Add a `<div className="h-screen" />` spacer before the content sections, inside the `relative z-10` wrapper
-- This transparent spacer lets the user scroll past the fixed hero before the opaque content sections begin
-- The existing `backgroundColor: 'hsl(0 0% 0% / 0.6)'` wrapper stays as-is for the content below
+## Solution
 
-#### 2. Fix `src/components/ui/carousel.tsx` -- Absolute Position Slides
-- Change each `<li>` slide to use `absolute inset-0` positioning so all slides stack on top of each other in the same space
-- Only the current (active) slide is fully visible; inactive slides scale down with `rotateX(8deg)` and lower opacity
-- Add `list-style-none` to the `<ul>` to remove bullet styling
-- The container keeps its `w-[70vmin] h-[70vmin]` sizing with `perspective: 1200px`
+Make the page and hero backgrounds transparent/parchment in Classic theme so the fixed MeshGradient shows through, while keeping the Disruptive theme unchanged.
 
-### Technical Details
+### File Changes
 
-**Index.tsx** -- insert before the content `<div>`:
-```tsx
-{/* Spacer to scroll past the fixed hero */}
-<div className="h-screen" />
+#### 1. `src/pages/Index.tsx`
+- Change the outer `div` background from the hardcoded dark color to a theme-aware value:
+  - **Classic**: `transparent` (let the MeshGradient show through)
+  - **Disruptive**: keep `hsl(0 0% 4%)`
+- Change the lower sections wrapper background:
+  - **Classic**: use a semi-transparent parchment overlay (e.g. `hsl(38 33% 93% / 0.7)`) so the gradient subtly shows through
+  - **Disruptive**: keep `hsl(0 0% 0% / 0.6)`
+- Import and use the `useTheme` hook
+
+#### 2. `src/components/ui/animated-shader-hero.tsx`
+- In **Classic** mode, hide the WebGL shader canvas and dark overlays since the hero doesn't need a dark shader background
+- Change the outer container from `bg-black` to transparent in Classic mode
+- Adjust text colors in Classic mode to work on parchment (dark ink instead of white)
+- The word animations and manifesto styling remain the same, just with Classic-appropriate colors
+
+## Technical Details
+
+```text
+Rendering stack (Classic theme, after fix):
+
+  [z-index: 0]  ClassicMeshBackground (fixed, MeshGradient) -- VISIBLE
+  [z-index: 0]  Index page wrapper (transparent bg)
+    Hero component (transparent bg, no shader canvas)
+      Title + Manifesto (dark ink text with word animations)
+    Lower sections (semi-transparent parchment overlay)
+      ThreePointsSection, Carousel, etc.
 ```
 
-**carousel.tsx** -- change slide `<li>` class from flow layout to absolute stacking:
-```tsx
-// Before (broken - normal flow, stacks vertically):
-className="flex flex-1 flex-col items-center justify-center relative text-center ... w-[70vmin] h-[70vmin] mx-[4vmin] z-10"
-
-// After (fixed - slides stack on top of each other):
-className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-100 transition-all duration-300 ease-in-out z-10 cursor-pointer"
-```
-
-Also adjust the inactive slide z-index so the active slide is always on top, and ensure the `<ul>` has `list-style: none`.
+The key principle: in Classic mode, every layer must be transparent or semi-transparent so the fixed MeshGradient behind them remains visible. The Disruptive theme is untouched.
 
