@@ -98,7 +98,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
       </div>
 
       <article
-        className={`relative p-[4vmin] transition-opacity duration-1000 ease-in-out ${
+        className={`absolute bottom-0 left-0 right-0 p-[4vmin] transition-opacity duration-1000 ease-in-out ${
           current === index ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
@@ -106,7 +106,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
           {title}
         </h2>
         <div className="flex justify-center">
-          <button className="mt-6 flex items-center gap-2 px-6 py-3 text-sm rounded-full border border-white/30 bg-white/10 text-white hover:bg-white/20 transition-colors duration-200 backdrop-blur-sm">
+          <button className="mt-4 flex items-center gap-2 px-6 py-3 text-sm rounded-full border border-white/30 bg-white/10 text-white hover:bg-white/20 transition-colors duration-200 backdrop-blur-sm">
             {button}
             <IconArrowNarrowRight className="w-4 h-4" />
           </button>
