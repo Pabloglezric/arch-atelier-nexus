@@ -28,7 +28,7 @@ const ClassicMeshBackground = () => {
           height: "100%",
           position: "absolute",
           inset: 0,
-          opacity: 0.55,
+          opacity: 0.75,
         }}
       />
       {/* Soft vignette to maintain classic parchment feel */}

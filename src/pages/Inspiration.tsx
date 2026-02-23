@@ -4,6 +4,7 @@ import Navigation from '@/components/Navigation';
 import SEOHead from '@/components/SEOHead';
 import ArchEvolutionCTA from '@/components/ArchEvolutionCTA';
 import { Heart } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 import inspGallery1 from '@/assets/insp-gallery-1.png';
 import inspGallery2 from '@/assets/insp-gallery-2.png';
@@ -103,6 +104,7 @@ const fadeUp = {
 };
 
 const Inspiration = () => {
+  const { isClassic } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [sortByLoved, setSortByLoved] = useState(false);
   const [votes, setVotes] = useState<Record<string, number>>(getVotes);
@@ -144,17 +146,17 @@ const Inspiration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className={`min-h-screen relative overflow-hidden ${isClassic ? 'text-[#1a1612]' : 'bg-black text-white'}`}>
       <SEOHead title="Inspiration | ArchEvolution" description="A living archive of ideas, aesthetics, and references that shape the way I think about design, precision, and innovation." />
-      <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none z-0" />
+      {!isClassic && <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none z-0" />}
       <Navigation />
 
       <main className="relative z-10 pt-32 pb-20">
         <div className="container mx-auto px-6">
           {/* Header */}
           <motion.div className="text-center mb-16 max-w-3xl mx-auto" initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <h1 className="font-playfair text-5xl md:text-7xl font-bold text-accent mb-6">Inspiration</h1>
-            <p className="text-lg md:text-xl leading-relaxed" style={{ color: 'hsl(45, 10%, 55%)' }}>
+            <h1 className="font-playfair text-5xl md:text-7xl font-bold mb-6" style={{ color: isClassic ? '#1a1612' : 'hsl(45, 100%, 60%)' }}>Inspiration</h1>
+            <p className="text-lg md:text-xl leading-relaxed" style={{ color: isClassic ? '#4a3f35' : 'hsl(45, 10%, 55%)' }}>
               A living archive of ideas, aesthetics, and references that shape the way I think about design, precision, and innovation. Updated constantly.
             </p>
           </motion.div>
