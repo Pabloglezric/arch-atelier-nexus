@@ -185,7 +185,7 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-              style={{ color: 'hsl(0 0% 92%)' }}>
+              style={{ color: 'hsl(0 0% 0%)' }}>
 
               I don't just model buildings.
               <br />
