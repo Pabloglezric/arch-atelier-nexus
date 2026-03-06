@@ -13,13 +13,14 @@ interface UserMenuProps {
   email: string;
   isAdmin: boolean;
   onSignOut: () => void;
+  themeColor?: string;
 }
 
-const UserMenu = ({ email, isAdmin, onSignOut }: UserMenuProps) => {
+const UserMenu = ({ email, isAdmin, onSignOut, themeColor = 'hsl(45, 100%, 60%)' }: UserMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-2" style={{ color: 'hsl(45, 100%, 60%)' }}>
+        <Button variant="ghost" size="sm" className="gap-2" style={{ color: themeColor }}>
           <User className="h-4 w-4" />
           <span className="hidden lg:inline max-w-[120px] truncate text-xs">{email}</span>
         </Button>
