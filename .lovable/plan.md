@@ -1,107 +1,42 @@
 
 
-# Phase 1: Authentication, Admin Role, and Newsletter System
+# Plan: Auth Page Marketing + Theme Visibility Fixes
 
-## Overview
-Build a complete auth system with admin/user roles, newsletter subscriptions, and admin newsletter sending — all using the existing Resend API key and Lovable Cloud backend.
+## Issues Identified
 
-## Database Schema
+1. **Auth page is hardcoded dark theme** — uses `bg-black` and gold/amber colors regardless of classic vs disruptive theme. In Classic mode the page looks out of place.
+2. **Auth page lacks marketing** — it's a plain "Welcome / Sign in or create an account" with no value proposition for signing up.
+3. **Navigation Sign In button** uses gold color in both themes — should adapt to classic theme colors.
 
-### Tables to create via migration:
+## Changes
 
-1. **`profiles`** — stores user metadata
-   - `id` (uuid, PK, references auth.users)
-   - `email` (text, not null)
-   - `full_name` (text)
-   - `created_at` (timestamptz, default now())
+### 1. Redesign Auth page with marketing benefits section (`src/pages/Auth.tsx`)
+- Add a two-column layout (on desktop): left side = marketing/benefits, right side = auth form
+- Marketing section highlights what users get by signing up:
+  - Access to Revit families and templates
+  - Interactive 3D parametric models (Disruptive mode)
+  - Newsletter with architectural news and updates
+  - Growing library of resources
+- Theme-aware styling: detect `isClassic` and use appropriate background/text colors
+- On mobile: benefits shown above the form
 
-2. **`user_roles`** — role-based access (per security guidelines)
-   - `id` (uuid, PK)
-   - `user_id` (uuid, references auth.users, not null)
-   - `role` (app_role enum: 'admin', 'user')
-   - Unique constraint on (user_id, role)
+### 2. Theme-aware AuthForm (`src/components/auth/AuthForm.tsx`)
+- Adapt input, button, and tab colors for classic vs disruptive theme using `useTheme` hook
+- Classic: warm earth tones on light background
+- Disruptive: current dark + gold styling
 
-3. **`newsletter_subscribers`** — email list
-   - `id` (uuid, PK)
-   - `user_id` (uuid, references auth.users, nullable — allows future non-auth subscriptions)
-   - `email` (text, unique, not null)
-   - `subscribed_at` (timestamptz, default now())
-   - `is_active` (boolean, default true)
+### 3. Theme-aware Navigation auth elements (`src/components/Navigation.tsx`)
+- Sign In button color should adapt to classic theme (dark text instead of gold)
+- UserMenu trigger should also adapt
 
-4. **`newsletters`** — sent newsletters log
-   - `id` (uuid, PK)
-   - `subject` (text, not null)
-   - `content` (text, not null)
-   - `sent_by` (uuid, references auth.users)
-   - `sent_at` (timestamptz, default now())
-   - `recipient_count` (integer)
+### 4. Theme-aware Account page (`src/pages/Account.tsx`)
+- Same treatment: adapt background and text colors for classic mode
 
-### Database functions & triggers:
-- `has_role(user_id, role)` — security definer function for RLS
-- Trigger on auth.users insert → auto-create profile
-- RLS policies on all tables
-
-### Admin setup:
-- After you sign up with your email, I will insert an admin role for that email via a database function that checks the email.
-
-## Authentication Pages
-
-### `/auth` page with two tabs:
-- **Sign Up**: email, password, full name. On signup, user is auto-subscribed to newsletter (with opt-out checkbox).
-- **Sign In**: email, password. Redirects to home after login.
-- **Forgot Password** link → sends reset email via built-in auth.
-
-Styled to match the dark theme with gold accents.
-
-## Navigation Changes
-- Add "Sign In" button to navigation (visible when logged out)
-- Show user avatar/icon + dropdown when logged in
-- Admin users see an "Admin" link in the dropdown
-
-## Newsletter Features
-
-### For regular users:
-- Newsletter opt-in checkbox during signup
-- Manage subscription toggle in a simple account settings area
-
-### For admin (you):
-- **`/admin/newsletter`** page — compose and send newsletters
-- Simple rich text editor (subject + body)
-- Preview before sending
-- "Send to All Subscribers" button
-- Edge function `send-newsletter` that:
-  - Verifies admin role
-  - Fetches all active subscribers
-  - Sends emails via Resend in batches
-  - Logs the newsletter in the `newsletters` table
-
-## Edge Functions
-
-### `send-newsletter/index.ts`
-- Validates JWT and checks admin role
-- Fetches active subscribers from `newsletter_subscribers`
-- Sends emails via Resend API (already configured)
-- Returns success/failure count
-
-## File Changes Summary
-
-| Action | File |
-|--------|------|
-| Create | `src/pages/Auth.tsx` — login/signup page |
-| Create | `src/pages/AdminNewsletter.tsx` — compose & send |
-| Create | `src/components/auth/AuthForm.tsx` — form component |
-| Create | `src/components/auth/UserMenu.tsx` — logged-in dropdown |
-| Create | `src/hooks/useAuth.ts` — auth state hook |
-| Create | `src/hooks/useAdmin.ts` — admin role check hook |
-| Create | `src/components/auth/ProtectedRoute.tsx` — route guard |
-| Create | `supabase/functions/send-newsletter/index.ts` |
-| Modify | `src/components/Navigation.tsx` — add auth UI |
-| Modify | `src/App.tsx` — add routes |
-| Migration | Create tables, enum, functions, RLS policies, trigger |
-
-## What's NOT in this phase (Phase 2 later):
-- Admin CMS for editing portfolio cards
-- Drag-and-drop image management
-- Content editing across pages
-- Card templates system
+### Files to modify:
+| File | Change |
+|------|--------|
+| `src/pages/Auth.tsx` | Two-column layout with marketing benefits, theme-aware |
+| `src/components/auth/AuthForm.tsx` | Theme-aware colors |
+| `src/components/Navigation.tsx` | Theme-aware Sign In button |
+| `src/pages/Account.tsx` | Theme-aware styling |
 
