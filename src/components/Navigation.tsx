@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Github, Youtube, Users } from 'lucide-react';
+import { Menu, X, Github, Youtube, Users, LogIn } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
+import { useAuth } from '@/hooks/useAuth';
+import { useAdmin } from '@/hooks/useAdmin';
+import UserMenu from '@/components/auth/UserMenu';
+
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { isClassic } = useTheme();
+  const { user, loading, signOut } = useAuth();
+  const { isAdmin } = useAdmin(user?.id);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -16,6 +23,7 @@ const Navigation = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const allNavItems = [{
     name: 'Home',
     path: '/'
@@ -37,19 +45,7 @@ const Navigation = () => {
     path: '/contact'
   }];
   const navItems = allNavItems.filter(item => !item.disruptiveOnly || !isClassic);
-  const socialLinks = [{
-    icon: Github,
-    href: '#',
-    label: 'GitHub'
-  }, {
-    icon: Youtube,
-    href: '#',
-    label: 'YouTube'
-  }, {
-    icon: Users,
-    href: '#',
-    label: 'Skool Community'
-  }];
+
   return <nav className={`fixed top-0 left-0 right-0 z-50 transition-smooth ${isScrolled ? 'glass-effect shadow-elegant' : 'bg-black/30 backdrop-blur-md'}`}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-center relative">
@@ -61,13 +57,20 @@ const Navigation = () => {
               </Link>)}
           </div>
 
-          {/* Social Links */}
-          <div className="hidden md:flex items-center space-x-4">
-            {socialLinks.map((social, index) => <Button key={index} variant="ghost" size="sm" asChild>
-                
-
-
-              </Button>)}
+          {/* Auth Section — pinned right */}
+          <div className="hidden md:flex items-center absolute right-0">
+            {!loading && (
+              user ? (
+                <UserMenu email={user.email || ''} isAdmin={isAdmin} onSignOut={signOut} />
+              ) : (
+                <Button asChild variant="ghost" size="sm" style={{ color: 'hsl(45, 100%, 60%)' }}>
+                  <Link to="/auth" className="flex items-center gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Sign In
+                  </Link>
+                </Button>
+              )
+            )}
           </div>
 
           {/* Mobile Menu Button — pinned left */}
@@ -89,6 +92,19 @@ const Navigation = () => {
               </motion.div>
             )}
           </Button>
+
+          {/* Mobile Auth — pinned right */}
+          <div className="md:hidden absolute right-0">
+            {!loading && (
+              user ? (
+                <UserMenu email={user.email || ''} isAdmin={isAdmin} onSignOut={signOut} />
+              ) : (
+                <Button asChild variant="ghost" size="sm" style={{ color: 'hsl(45, 100%, 60%)' }}>
+                  <Link to="/auth"><LogIn className="h-5 w-5" /></Link>
+                </Button>
+              )
+            )}
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -104,7 +120,7 @@ const Navigation = () => {
           height: 0
         }} className="md:hidden mt-4 pb-4">
               <div className="flex flex-col space-y-4">
-                {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth ${location.pathname === item.path ? '' : ''}`} style={{ color: location.pathname === item.path ? '#8B1A1A' : (isClassic ? '#1a1612' : 'white') }}>
+                {navItems.map((item) => <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`font-medium transition-smooth`} style={{ color: location.pathname === item.path ? '#8B1A1A' : (isClassic ? '#1a1612' : 'white') }}>
                     {item.name}
                   </Link>)}
               </div>
