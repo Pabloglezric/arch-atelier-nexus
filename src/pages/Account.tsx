@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useTheme } from '@/hooks/useTheme';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
@@ -9,9 +10,14 @@ import { Loader2 } from 'lucide-react';
 
 const Account = () => {
   const { user } = useAuth();
+  const { isClassic } = useTheme();
   const { toast } = useToast();
   const [subscribed, setSubscribed] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const fg = isClassic ? '#1a1612' : 'hsl(45, 100%, 60%)';
+  const fgMuted = isClassic ? '#1a1612aa' : 'hsla(45, 100%, 60%, 0.7)';
+  const borderColor = isClassic ? '#1a161220' : 'hsla(45, 100%, 60%, 0.13)';
 
   useEffect(() => {
     if (!user) return;
@@ -46,18 +52,21 @@ const Account = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className={`min-h-screen ${isClassic ? 'bg-[#f5f0e8]' : 'bg-black'}`}>
       <Navigation />
       <div className="pt-32 pb-16 px-6 max-w-lg mx-auto">
-        <h1 className="text-2xl font-display font-bold mb-8" style={{ color: 'hsl(45, 100%, 60%)' }}>Account Settings</h1>
-        <div className="p-6 rounded-lg border border-amber-500/20 bg-black/50">
-          <p className="text-sm mb-4" style={{ color: 'hsla(45, 100%, 60%, 0.7)' }}>{user?.email}</p>
+        <h1 className="text-2xl font-display font-bold mb-8" style={{ color: fg }}>Account Settings</h1>
+        <div
+          className="p-6 rounded-lg"
+          style={{ border: `1px solid ${borderColor}`, background: isClassic ? '#fff' : 'rgba(0,0,0,0.5)' }}
+        >
+          <p className="text-sm mb-4" style={{ color: fgMuted }}>{user?.email}</p>
           {loading ? (
-            <Loader2 className="h-5 w-5 animate-spin text-amber-500" />
+            <Loader2 className="h-5 w-5 animate-spin" style={{ color: fg }} />
           ) : (
             <div className="flex items-center gap-3">
               <Switch checked={subscribed} onCheckedChange={toggleSubscription} />
-              <Label style={{ color: 'hsl(45, 100%, 60%)' }}>Newsletter subscription</Label>
+              <Label style={{ color: fg }}>Newsletter subscription</Label>
             </div>
           )}
         </div>
