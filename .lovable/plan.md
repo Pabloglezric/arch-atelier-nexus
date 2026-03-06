@@ -1,42 +1,107 @@
 
 
-## Fix: Overlapping Sections and Broken Carousel Layout
+# Phase 1: Authentication, Admin Role, and Newsletter System
 
-### Problems Identified
+## Overview
+Build a complete auth system with admin/user roles, newsletter subscriptions, and admin newsletter sending — all using the existing Resend API key and Lovable Cloud backend.
 
-1. **Sections overlap the Hero**: The fixed hero (`fixed inset-0`) needs a spacer div so content scrolls past it before reaching the sections. The previous spacer was removed during the carousel addition, causing ThreePointsSection to render right at the top and overlap the hero text.
+## Database Schema
 
-2. **Carousel slides stack vertically**: The `<li>` slide items are in normal document flow inside the `<ul>`, so all 7 slides render one below another, creating a massive vertical stack. The Aceternity carousel expects slides to be absolutely positioned on top of each other, with only the current slide prominent.
+### Tables to create via migration:
 
-### Changes
+1. **`profiles`** — stores user metadata
+   - `id` (uuid, PK, references auth.users)
+   - `email` (text, not null)
+   - `full_name` (text)
+   - `created_at` (timestamptz, default now())
 
-#### 1. Fix `src/pages/Index.tsx` -- Add Hero Spacer Back
-- Add a `<div className="h-screen" />` spacer before the content sections, inside the `relative z-10` wrapper
-- This transparent spacer lets the user scroll past the fixed hero before the opaque content sections begin
-- The existing `backgroundColor: 'hsl(0 0% 0% / 0.6)'` wrapper stays as-is for the content below
+2. **`user_roles`** — role-based access (per security guidelines)
+   - `id` (uuid, PK)
+   - `user_id` (uuid, references auth.users, not null)
+   - `role` (app_role enum: 'admin', 'user')
+   - Unique constraint on (user_id, role)
 
-#### 2. Fix `src/components/ui/carousel.tsx` -- Absolute Position Slides
-- Change each `<li>` slide to use `absolute inset-0` positioning so all slides stack on top of each other in the same space
-- Only the current (active) slide is fully visible; inactive slides scale down with `rotateX(8deg)` and lower opacity
-- Add `list-style-none` to the `<ul>` to remove bullet styling
-- The container keeps its `w-[70vmin] h-[70vmin]` sizing with `perspective: 1200px`
+3. **`newsletter_subscribers`** — email list
+   - `id` (uuid, PK)
+   - `user_id` (uuid, references auth.users, nullable — allows future non-auth subscriptions)
+   - `email` (text, unique, not null)
+   - `subscribed_at` (timestamptz, default now())
+   - `is_active` (boolean, default true)
 
-### Technical Details
+4. **`newsletters`** — sent newsletters log
+   - `id` (uuid, PK)
+   - `subject` (text, not null)
+   - `content` (text, not null)
+   - `sent_by` (uuid, references auth.users)
+   - `sent_at` (timestamptz, default now())
+   - `recipient_count` (integer)
 
-**Index.tsx** -- insert before the content `<div>`:
-```tsx
-{/* Spacer to scroll past the fixed hero */}
-<div className="h-screen" />
-```
+### Database functions & triggers:
+- `has_role(user_id, role)` — security definer function for RLS
+- Trigger on auth.users insert → auto-create profile
+- RLS policies on all tables
 
-**carousel.tsx** -- change slide `<li>` class from flow layout to absolute stacking:
-```tsx
-// Before (broken - normal flow, stacks vertically):
-className="flex flex-1 flex-col items-center justify-center relative text-center ... w-[70vmin] h-[70vmin] mx-[4vmin] z-10"
+### Admin setup:
+- After you sign up with your email, I will insert an admin role for that email via a database function that checks the email.
 
-// After (fixed - slides stack on top of each other):
-className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-100 transition-all duration-300 ease-in-out z-10 cursor-pointer"
-```
+## Authentication Pages
 
-Also adjust the inactive slide z-index so the active slide is always on top, and ensure the `<ul>` has `list-style: none`.
+### `/auth` page with two tabs:
+- **Sign Up**: email, password, full name. On signup, user is auto-subscribed to newsletter (with opt-out checkbox).
+- **Sign In**: email, password. Redirects to home after login.
+- **Forgot Password** link → sends reset email via built-in auth.
+
+Styled to match the dark theme with gold accents.
+
+## Navigation Changes
+- Add "Sign In" button to navigation (visible when logged out)
+- Show user avatar/icon + dropdown when logged in
+- Admin users see an "Admin" link in the dropdown
+
+## Newsletter Features
+
+### For regular users:
+- Newsletter opt-in checkbox during signup
+- Manage subscription toggle in a simple account settings area
+
+### For admin (you):
+- **`/admin/newsletter`** page — compose and send newsletters
+- Simple rich text editor (subject + body)
+- Preview before sending
+- "Send to All Subscribers" button
+- Edge function `send-newsletter` that:
+  - Verifies admin role
+  - Fetches all active subscribers
+  - Sends emails via Resend in batches
+  - Logs the newsletter in the `newsletters` table
+
+## Edge Functions
+
+### `send-newsletter/index.ts`
+- Validates JWT and checks admin role
+- Fetches active subscribers from `newsletter_subscribers`
+- Sends emails via Resend API (already configured)
+- Returns success/failure count
+
+## File Changes Summary
+
+| Action | File |
+|--------|------|
+| Create | `src/pages/Auth.tsx` — login/signup page |
+| Create | `src/pages/AdminNewsletter.tsx` — compose & send |
+| Create | `src/components/auth/AuthForm.tsx` — form component |
+| Create | `src/components/auth/UserMenu.tsx` — logged-in dropdown |
+| Create | `src/hooks/useAuth.ts` — auth state hook |
+| Create | `src/hooks/useAdmin.ts` — admin role check hook |
+| Create | `src/components/auth/ProtectedRoute.tsx` — route guard |
+| Create | `supabase/functions/send-newsletter/index.ts` |
+| Modify | `src/components/Navigation.tsx` — add auth UI |
+| Modify | `src/App.tsx` — add routes |
+| Migration | Create tables, enum, functions, RLS policies, trigger |
+
+## What's NOT in this phase (Phase 2 later):
+- Admin CMS for editing portfolio cards
+- Drag-and-drop image management
+- Content editing across pages
+- Card templates system
 
