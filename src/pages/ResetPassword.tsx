@@ -37,8 +37,11 @@ const ResetPassword = () => {
 
   if (!isRecovery) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <p style={{ color: 'hsl(45, 100%, 60%)' }}>Invalid or expired reset link.</p>
+      <div className="min-h-screen bg-black">
+        <Navigation />
+        <div className="pt-32 pb-16 px-6 flex items-center justify-center">
+          <p style={{ color: 'hsl(45, 100%, 60%)' }}>Invalid or expired reset link.</p>
+        </div>
       </div>
     );
   }
